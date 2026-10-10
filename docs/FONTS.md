@@ -1,85 +1,85 @@
-_(You may browse this at https://github.com/ocornut/imgui/blob/master/docs/FONTS.md or view this file with any Markdown viewer)_
+_（你可以在 https://github.com/ocornut/imgui/blob/master/docs/FONTS.md 浏览本文档，或用任意 Markdown 阅读器查看本文件）_
 
-## Dear ImGui: Using Fonts
+## Dear ImGui：使用字体
 
-The code in Dear ImGui embeds a copy of [ProggyClean.ttf](https://github.com/bluescan/proggyfonts) by Tristan Grimmer,
-a 13 pixels high, pixel-perfect font used by default. ProggyClean does not scale very nicely.
+Dear ImGui 的代码内嵌了一份由 Tristan Grimmer 制作的 [ProggyClean.ttf](https://github.com/bluescan/proggyfonts)，
+这是一款 13 像素高、像素级精确的字体，默认使用。ProggyClean 的缩放效果并不理想。
 
-The code in Dear ImGui embeds a partial copy of [ProggyForever.ttf](https://github.com/ocornut/proggyforever) by Disco Hello & Tristan Grimmer,
-a new font mimicking ProggyClean which does scale nicely.
+Dear ImGui 的代码内嵌了一份由 Disco Hello 与 Tristan Grimmer 制作的 [ProggyForever.ttf](https://github.com/ocornut/proggyforever) 的部分副本，
+这是一款模仿 ProggyClean 的新字体，缩放效果很好。
 
-We embed fonts in the code so you can use Dear ImGui without any file system access.
-If you don't use them you can set `IMGUI_DISABLE_DEFAULT_FONT` in your [imconfig.h](https://github.com/ocornut/imgui/blob/master/imconfig.h) file to ship binaries without the fonts and save about ~26 KB.
+我们将字体内嵌在代码中，这样你无需任何文件系统访问即可使用 Dear ImGui。
+如果你不使用它们，可以在 [imconfig.h](https://github.com/ocornut/imgui/blob/master/imconfig.h) 文件中设置 `IMGUI_DISABLE_DEFAULT_FONT`，从而发布不含这些字体的二进制文件，并节省约 26 KB。
 
-Calling io.Fonts->AddFontDefaultVector() loads ProggyForever.
-Calling io.Fonts->AddFontDefaultBitmap() loads ProggyClean.
-Calling io.Fonts->AddFontDefault() selects one based on the expected default font size (when `style.FontSizeBase * style.FontScaleMain * style.FontSizeDpi >= 15` we use ProggyForever).
+调用 io.Fonts->AddFontDefaultVector() 会加载 ProggyForever。
+调用 io.Fonts->AddFontDefaultBitmap() 会加载 ProggyClean。
+调用 io.Fonts->AddFontDefault() 会根据预期的默认字体大小选择其中之一（当 `style.FontSizeBase * style.FontScaleMain * style.FontSizeDpi >= 15` 时，我们使用 ProggyForever）。
 
-You may also load external .TTF/.OTF files, see instructions on this page.
-In the [misc/fonts/](https://github.com/ocornut/imgui/tree/master/misc/fonts) folder you can find a few suggested fonts, provided as a convenience.
+你也可以加载外部的 .TTF/.OTF 文件，参见本页的说明。
+在 [misc/fonts/](https://github.com/ocornut/imgui/tree/master/misc/fonts) 文件夹中，你可以找到一些推荐的字体，谨供取用。
 
-**Also read the FAQ:** https://www.dearimgui.com/faq (there is a Fonts section!)
+**另请阅读 FAQ：** https://www.dearimgui.com/faq （其中有 Fonts 章节！）
 
-## Index
-- [Troubleshooting](#troubleshooting)
-- [New! Dynamic Fonts system in 1.92 (June 2025)](#new-dynamic-fonts-system-in-192-june-2025)
-- [How should I handle DPI in my application?](#how-should-i-handle-dpi-in-my-application)
-- [Fonts Loading Instructions](#fonts-loading-instructions)
-- [Loading Font Data from Memory](#loading-font-data-from-memory)
-- [Loading Font Data Embedded In Source Code](#loading-font-data-embedded-in-source-code)
-- [Using Icon Fonts](#using-icon-fonts)
-  - [Excluding Overlapping Ranges](#excluding-overlapping-ranges)
-- [Using FreeType Rasterizer (imgui_freetype)](#using-freetype-rasterizer-imgui_freetype)
-- [Using Colorful Glyphs/Emojis](#using-colorful-glyphsemojis)
-- [Using Custom Glyph Ranges](#using-custom-glyph-ranges)
-- [Using Custom Colorful Icons](#using-custom-colorful-icons)
-- [About Filenames](#about-filenames)
-- [About UTF-8 Encoding](#about-utf-8-encoding)
-- [Debug Tools](#debug-tools)
-- [Credits/Licenses For Fonts Included In Repository](#creditslicenses-for-fonts-included-in-repository)
-- [Font Links](#font-links)
+## <a id="index"></a>目录
+- [疑难解答](#troubleshooting)
+- [新特性！1.92（2025 年 6 月）的动态字体系统](#new-dynamic-fonts-system-in-192-june-2025)
+- [我应该在应用程序中如何处理 DPI？](#how-should-i-handle-dpi-in-my-application)
+- [字体加载说明](#fonts-loading-instructions)
+- [从内存加载字体数据](#loading-font-data-from-memory)
+- [加载内嵌在源代码中的字体数据](#loading-font-data-embedded-in-source-code)
+- [使用图标字体](#using-icon-fonts)
+  - [排除重叠的范围](#excluding-overlapping-ranges)
+- [使用 FreeType 光栅化器 (imgui_freetype)](#using-freetype-rasterizer-imgui_freetype)
+- [使用彩色字形/表情符号](#using-colorful-glyphsemojis)
+- [使用自定义字形范围](#using-custom-glyph-ranges)
+- [使用自定义彩色图标](#using-custom-colorful-icons)
+- [关于文件名](#about-filenames)
+- [关于 UTF-8 编码](#about-utf-8-encoding)
+- [调试工具](#debug-tools)
+- [仓库中所含字体的鸣谢/许可证](#creditslicenses-for-fonts-included-in-repository)
+- [字体链接](#font-links)
 
 ---------------------------------------
 
-## Troubleshooting
+## <a id="troubleshooting"></a>疑难解答
 
-**A vast majority of font and text related issues encountered comes from 4 things:**
+**绝大多数与字体和文本相关的问题都源于以下 4 个方面：**
 
-### (1) Invalid filename due to use of `\` or unexpected working directory.
+### (1) 文件名无效，原因是使用了 `\` 或工作目录不符合预期。
 
-See [About Filenames](#about-filenames). AddFontXXX() functions should assert if the filename is incorrect.
+参见 [关于文件名](#about-filenames)。如果文件名不正确，AddFontXXX() 函数应当会触发断言。
 
-### (2) Invalid UTF-8 encoding of your non-ASCII strings.
+### (2) 非 ASCII 字符串的 UTF-8 编码无效。
 
-See [About UTF-8 Encoding](#about-utf-8-encoding). Use the encoding viewer to confirm encoding of string literal in your source code is correct.
+参见 [关于 UTF-8 编码](#about-utf-8-encoding)。使用编码查看器确认你源代码中字符串字面量的编码是否正确。
 
-### (3) Missing glyph ranges.
+### (3) 缺少字形范围。
 
-🆕 **Since 1.92, with an up to date backend: specifying glyph ranges is unnecessary.**
+🆕 **自 1.92 起，配合最新的后端：不再需要指定字形范围。**
 
-⏪ Before 1.92: you need to load a font with explicit glyph ranges if you want to use non-ASCII characters. See [Fonts Loading Instructions](#fonts-loading-instructions). Use [Debug Tools](#debug-tools) confirm loaded fonts and loaded glyph ranges.
+⏪ 在 1.92 之前：如果你想使用非 ASCII 字符，就需要加载带有显式字形范围的字体。参见 [字体加载说明](#fonts-loading-instructions)。使用 [调试工具](#debug-tools) 确认已加载的字体和已加载的字形范围。
 
-This was a previous  constraint of Dear ImGui (lifted in 1.92): when loading a font you need to specify which characters glyphs to load.
-All loaded fonts glyphs are rendered into a single texture atlas ahead of time. Calling either of `io.Fonts->GetTexDataAsAlpha8()`, `io.Fonts->GetTexDataAsRGBA32()` or `io.Fonts->Build()` will build the atlas. This is generally called by the Renderer backend, e.g. `ImGui_ImplDX11_NewFrame()` calls it. **If you use custom glyphs ranges, make sure the array is persistent** and available during the calls to `GetTexDataAsAlpha8()/GetTexDataAsRGBA32()/Build()`.
+这是 Dear ImGui 以前的一项限制（在 1.92 中解除）：加载字体时，你需要指定要加载哪些字符的字形。
+所有已加载字体的字形都会预先渲染到一个单独的纹理图集中。调用 `io.Fonts->GetTexDataAsAlpha8()`、`io.Fonts->GetTexDataAsRGBA32()` 或 `io.Fonts->Build()` 中的任意一个都会构建图集。这通常由渲染器后端调用，例如 `ImGui_ImplDX11_NewFrame()` 会调用它。**如果你使用自定义字形范围，请确保该数组是持久的**，并在调用 `GetTexDataAsAlpha8()/GetTexDataAsRGBA32()/Build()` 期间可用。
 
-### (4) Font atlas texture fails to upload to GPU.
+### (4) 字体图集纹理无法上传到 GPU。
 
-🆕 **Since 1.92, with an up to date backend: atlas is built incrementally and dynamically resized, this is less likely to happen**
+🆕 **自 1.92 起，配合最新的后端：图集会增量构建并动态调整大小，这种情况不太可能发生**
 
-:rewind: This is often of byproduct of point 3. If you have large number of glyphs or multiple fonts, the texture may become too big for your graphics API. **The typical result of failing to upload a texture is if every glyph or everything appears as empty white rectangles.** Mind the fact that some graphics drivers have texture size limitation. If you are building a PC application, mind the fact that your users may use hardware with lower limitations than yours.
+:rewind: 这通常是第 3 点的副产品。如果你有大量的字形或多种字体，纹理可能会对你的图形 API 来说变得过大。**纹理上传失败的典型表现是每个字形或所有内容都显示为空的白色矩形。** 请注意，某些图形驱动存在纹理大小限制。如果你在开发 PC 应用程序，请注意你的用户可能使用限制比你更低的硬件。
 
 ![empty squares](https://github.com/user-attachments/assets/68b50fb5-8b9d-4c38-baec-6ac384f06d26)
 
-Some solutions:
-- You may reduce oversampling, e.g. `font_config.OversampleH = 1`, this will half your texture size for a quality loss.
-  Note that while OversampleH = 2 looks visibly very close to 3 in most situations, with OversampleH = 1 the quality drop will be noticeable. Read about oversampling [here](https://github.com/nothings/stb/blob/master/tests/oversample).
-- Reduce glyphs ranges by calculating them from source localization data.
-  You can use the `ImFontGlyphRangesBuilder` for this purpose and rebuilding your atlas between frames when new characters are needed. This will be the biggest win!
-- Set `io.Fonts.Flags |= ImFontAtlasFlags_NoPowerOfTwoHeight;` to disable rounding the texture height to the next power of two.
+一些解决方案：
+- 你可以降低过采样，例如 `font_config.OversampleH = 1`，这会使你的纹理尺寸减半，但会损失一些质量。
+  注意，在大多数情况下 OversampleH = 2 在视觉上与 3 非常接近，但使用 OversampleH = 1 时质量下降会很明显。关于过采样，请阅读[此处](https://github.com/nothings/stb/blob/master/tests/oversample)。
+- 根据源语言的本地化数据计算字形范围，从而缩减范围。
+  你可以为此使用 `ImFontGlyphRangesBuilder`，并在需要新字符时于帧之间重建图集。这将带来最大的收益！
+- 设置 `io.Fonts.Flags |= ImFontAtlasFlags_NoPowerOfTwoHeight;` 以禁用将纹理高度向上取整到下一个 2 的幂。
 
-### (5) Reduce texture resizes/copy on startup
+### (5) 减少启动时的纹理调整大小/复制
 
-🆕 Since 1.92, the ImFontAtlas is initially created using a 512x128 texture, then grows as glyphs and fonts are used. Atlas growth leads to alloc+copy, and both the old and new sized textures are present in memory for a short time (typically one frame). If you use known fonts and want to reduce initial growth, you may set `TexMinWidth` and `TexMinHeight` during initializaton.
+🆕 自 1.92 起，ImFontAtlas 初始时使用 512x128 的纹理创建，随后随着字形和字体的使用而增长。图集增长会导致分配+复制，并且新旧两种尺寸的纹理会短暂地（通常一帧）同时存在于内存中。如果你使用已知的字体并希望减少初始增长，可以在初始化期间设置 `TexMinWidth` 和 `TexMinHeight`。
 
 ```cpp
 ImFontAtlas* atlas = io.Fonts;
@@ -88,145 +88,145 @@ atlas->TexMinHeight = 1024;
 atlas->AddFont(...);
 ```
 
-##### [Return to Index](#index)
+##### [返回目录](#index)
 
 ---------------------------------------
 
-## New! Dynamic Fonts system in 1.92 (June 2025)
+## <a id="new-dynamic-fonts-system-in-192-june-2025"></a>新特性！1.92（2025 年 6 月）的动态字体系统
 
-v1.92 introduces a newer, dynamic font system. It requires backend to support the `ImGuiBackendFlags_HasTextures` feature:
-- Users of icons, Asian and non-English languages do not need to pre-build all glyphs ahead of time. Saving on loading time, memory, and also reducing issues with missing glyphs. Specifying glyph ranges is not needed anymore.
-- `PushFont(nullptr, new_size)` may be used anytime to change font size.
-- Packing custom rectangles is more convenient as pixels may be written to immediately.
-- Any update to fonts previously required backend specific calls to re-upload the texture, and said calls were not portable across backends. It is now possible to scale fonts etc. in a way that doesn't require you to make backend-specific calls.
-- It is possible to plug a custom loader/backend to any font source.
+v1.92 引入了更新的动态字体系统。它要求后端支持 `ImGuiBackendFlags_HasTextures` 特性：
+- 使用图标、亚洲语言和非英语语言的用户不再需要预先构建所有字形。这样可以节省加载时间、内存，并减少字形缺失的问题。不再需要指定字形范围。
+- 可以随时使用 `PushFont(nullptr, new_size)` 更改字体大小。
+- 打包自定义矩形更加方便，因为可以立即写入像素。
+- 以前对字体的任何更新都需要调用特定于后端的函数来重新上传纹理，而这些调用无法跨后端移植。现在可以缩放字体等，而无需进行特定于后端的调用。
+- 可以为任何字体源接入自定义的加载器/后端。
 
-See [#8465](https://github.com/ocornut/imgui/issues/8465) for more details.
+更多详情请参见 [#8465](https://github.com/ocornut/imgui/issues/8465)。
 
 
-##### [Return to Index](#index)
-
----------------------------------------
-
-## How should I handle DPI in my application?
-
-Since 1.92, with an updated backend, you can set `style.FontScaleDpi = your_content_scale;` to scale all fonts.
-<BR>You can call  `style.ScaleAllSizes(xxx)` at init time or every frame at the beginning of your main loop to scale sizes/paddings.
-<BR>Since 1.92, with an updated backend, macOS style pixel/backing style scale is automatically handled.
-<BR>See [FAQ entry](https://github.com/ocornut/imgui/blob/master/docs/FAQ.md#q-how-should-i-handle-dpi-in-my-application) for more details.
-
-##### [Return to Index](#index)
+##### [返回目录](#index)
 
 ---------------------------------------
 
-## Fonts Loading Instructions
+## <a id="how-should-i-handle-dpi-in-my-application"></a>我应该在应用程序中如何处理 DPI？
 
-**Select base size**
+自 1.92 起，配合更新过的后端，你可以设置 `style.FontScaleDpi = your_content_scale;` 来缩放所有字体。
+<BR>你可以在初始化时调用 `style.ScaleAllSizes(xxx)`，或在主循环开头每帧调用一次，以缩放尺寸/内边距。
+<BR>自 1.92 起，配合更新过的后端，macOS 风格的像素/后备缩放会被自动处理。
+<BR>更多详情请参见 [FAQ 条目](https://github.com/ocornut/imgui/blob/master/docs/FAQ.md#q-how-should-i-handle-dpi-in-my-application)。
+
+##### [返回目录](#index)
+
+---------------------------------------
+
+## <a id="fonts-loading-instructions"></a>字体加载说明
+
+**选择基础大小**
 ```cpp
 ImGuiStyle& style = ImGui::GetStyle();
 style.FontSizeBase = 20.0f;
 ```
 
-**Load default font:**
+**加载默认字体：**
 ```cpp
 ImGuiIO& io = ImGui::GetIO();
-io.Fonts->AddFontDefaultVector();  // Load embedded scalable font.
+io.Fonts->AddFontDefaultVector();  // 加载内嵌的可缩放字体。
 ```
 ```cpp
-io.Fonts->AddFontDefaultBitmap();  // Load embedded bitmap font (legacy).
+io.Fonts->AddFontDefaultBitmap();  // 加载内嵌的位图字体（旧版）。
 ```
 ```cpp
-io.Fonts->AddFontDefault();        // Load embedded font (legacy: auto-selected between the two above).
+io.Fonts->AddFontDefault();        // 加载内嵌字体（旧版：在上述两者之间自动选择）。
 ```
 
-**Load .TTF/.OTF file with:**
+**加载 .TTF/.OTF 文件：**
 
-🆕 **Since 1.92, with an up to date backend: passing a size is not necessary**
+🆕 **自 1.92 起，配合最新的后端：无需传入大小**
 ```cpp
 ImGuiIO& io = ImGui::GetIO();
 io.Fonts->AddFontFromFileTTF("font.ttf");
 ```
-:rewind: **Before 1.92, or without an up to date backend:**
+:rewind: **在 1.92 之前，或没有最新的后端时：**
 ```cpp
 ImGuiIO& io = ImGui::GetIO();
 io.Fonts->AddFontFromFileTTF("font.ttf", size_pixels);
 ```
-If you get an assert stating "Could not load font file!", your font filename is likely incorrect. Read [About filenames](#about-filenames) carefully.
+如果你遇到提示 "Could not load font file!" 的断言，很可能是你的字体文件名不正确。请仔细阅读 [关于文件名](#about-filenames)。
 
-**Load multiple fonts:**
+**加载多个字体：**
 ```cpp
-// Init
+// 初始化
 ImGuiIO& io = ImGui::GetIO();
 ImFont* font1 = io.Fonts->AddFontFromFileTTF("font.ttf",);
 ImFont* font2 = io.Fonts->AddFontFromFileTTF("anotherfont.otf");
 ```
 
-In your application loop, select which font to use:
+在你的应用程序循环中，选择要使用的字体：
 ```cpp
-ImGui::Text("Hello"); // use the default font (which is the first loaded font)
-ImGui::PushFont(font2, 0.0f); // change font, keep current size
+ImGui::Text("Hello"); // 使用默认字体（即第一个加载的字体）
+ImGui::PushFont(font2, 0.0f); // 更换字体，保持当前大小
 ImGui::Text("Hello with another font");
 ImGui::PopFont();
 ```
 
-**For advanced options create a ImFontConfig structure and pass it to the AddFont() function (it will be copied internally):**
+**如需高级选项，请创建 ImFontConfig 结构体并将其传给 AddFont() 函数（它会在内部被复制）：**
 ```cpp
 ImFontConfig config;
 config.OversampleH = 1.0f;
 ImFont* font = io.Fonts->AddFontFromFileTTF("font.ttf", size_pixels, &config);
 ```
 
-**Combine multiple fonts into one:**
+**将多个字体合并为一个：**
 
-🆕 **Since 1.92, with an up to date backend: specifying glyph ranges is unnecessary.**
+🆕 **自 1.92 起，配合最新的后端：不再需要指定字形范围。**
 ```cpp
-// Load a first font
+// 加载第一个字体
 ImFont* font = io.Fonts->AddFontDefaultVector();
 ImFontConfig config;
 config.MergeMode = true;
-io.Fonts->AddFontFromFileTTF("DroidSans.ttf", 0.0f, &config);           // Merge into first font to add e.g. Asian characters
-io.Fonts->AddFontFromFileTTF("fontawesome-webfont.ttf", 0.0f, &config); // Merge into first font to add Icons
+io.Fonts->AddFontFromFileTTF("DroidSans.ttf", 0.0f, &config);           // 合并到第一个字体中，例如添加亚洲字符
+io.Fonts->AddFontFromFileTTF("fontawesome-webfont.ttf", 0.0f, &config); // 合并到第一个字体中以添加图标
 ```
-:rewind: **Before 1.92, or without an up to date backend:**
+:rewind: **在 1.92 之前，或没有最新的后端时：**
 ```cpp
-// Load a first font
+// 加载第一个字体
 ImFont* font = io.Fonts->AddFontDefault();
 
-// Add character ranges and merge into the previous font
-// The ranges array is not copied by the AddFont* functions and is used lazily
-// so ensure it is available at the time of building or calling GetTexDataAsRGBA32().
-static const ImWchar icons_ranges[] = { 0xf000, 0xf3ff, 0 }; // Will not be copied by AddFont* so keep in scope.
+// 添加字符范围并合并到前一个字体中
+// ranges 数组不会被 AddFont* 函数复制，而是延迟使用，
+// 因此请确保在构建或调用 GetTexDataAsRGBA32() 时它仍然可用。
+static const ImWchar icons_ranges[] = { 0xf000, 0xf3ff, 0 }; // 不会被 AddFont* 复制，因此请保持其作用域。
 ImFontConfig config;
 config.MergeMode = true;
-io.Fonts->AddFontFromFileTTF("DroidSans.ttf", 18.0f, &config, io.Fonts->GetGlyphRangesJapanese()); // Merge into first font
-io.Fonts->AddFontFromFileTTF("fontawesome-webfont.ttf", 18.0f, &config, icons_ranges);             // Merge into first font
+io.Fonts->AddFontFromFileTTF("DroidSans.ttf", 18.0f, &config, io.Fonts->GetGlyphRangesJapanese()); // 合并到第一个字体中
+io.Fonts->AddFontFromFileTTF("fontawesome-webfont.ttf", 18.0f, &config, icons_ranges);             // 合并到第一个字体中
 io.Fonts->Build();
 ```
 
-**Add a fourth parameter to bake specific font ranges only:**
+**添加第四个参数以仅烘焙特定的字体范围：**
 
-🆕 **Since 1.92, with an up to date backend: specifying glyph ranges is unnecessary. All the GetGlyphRangesXXX() functions are marked obsolete.**
+🆕 **自 1.92 起，配合最新的后端：不再需要指定字形范围。所有 GetGlyphRangesXXX() 函数都已标记为过时。**
 ```cpp
-// Basic Latin, Extended Latin
+// 基本拉丁文、扩展拉丁文
 io.Fonts->AddFontFromFileTTF("font.ttf", size_pixels, nullptr, io.Fonts->GetGlyphRangesDefault());
 
-// Default + Selection of 2500 Ideographs used by Simplified Chinese
+// 默认范围 + 简体中文使用的 2500 个表意文字选集
 io.Fonts->AddFontFromFileTTF("font.ttf", size_pixels, nullptr, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
 
-// Default + Hiragana, Katakana, Half-Width, Selection of 1946 Ideographs
+// 默认范围 + 平假名、片假名、半角字符、1946 个表意文字选集
 io.Fonts->AddFontFromFileTTF("font.ttf", size_pixels, nullptr, io.Fonts->GetGlyphRangesJapanese());
 ```
-See [Using Custom Glyph Ranges](#using-custom-glyph-ranges) section to create your own ranges.
+有关创建你自己的范围，请参见 [使用自定义字形范围](#using-custom-glyph-ranges) 一节。
 
-**Example loading and using a Japanese font:**
+**加载并使用日文字体的示例：**
 
-🆕 **Since 1.92, with an up to date backend:**
+🆕 **自 1.92 起，配合最新的后端：**
 ```cpp
 ImGuiIO& io = ImGui::GetIO();
 io.Fonts->AddFontFromFileTTF("NotoSansCJKjp-Medium.otf");
 ```
 
-:rewind: **Before 1.92, or without an up to date backend:**
+:rewind: **在 1.92 之前，或没有最新的后端时：**
 ```cpp
 ImGuiIO& io = ImGui::GetIO();
 io.Fonts->AddFontFromFileTTF("NotoSansCJKjp-Medium.otf", 20.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());
@@ -236,175 +236,175 @@ io.Fonts->AddFontFromFileTTF("NotoSansCJKjp-Medium.otf", 20.0f, nullptr, io.Font
 ImGui::Text(u8"こんにちは！テスト %d", 123);
 if (ImGui::Button(u8"ロード"))
 {
-    // do stuff
+    // 执行一些操作
 }
 ImGui::InputText("string", buf, IM_COUNTOF(buf));
 ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
 ```
 
 ![sample code output](https://raw.githubusercontent.com/wiki/ocornut/imgui/web/v160/code_sample_02_jp.png)
-<br>_(settings: Dark style (left), Light style (right) / Font: NotoSansCJKjp-Medium, 20px / Rounding: 5)_
+<br>_（设置：Dark 风格（左）、Light 风格（右）/ 字体：NotoSansCJKjp-Medium, 20px / 圆角：5）_
 
-##### [Return to Index](#index)
+##### [返回目录](#index)
 
 ---------------------------------------
 
-## Loading Font Data from Memory
+## <a id="loading-font-data-from-memory"></a>从内存加载字体数据
 
 ```cpp
 ImFont* font = io.Fonts->AddFontFromMemoryTTF(data, data_size, size_pixels, ...);
 ```
 
-IMPORTANT: `AddFontFromMemoryTTF()` by default transfer ownership of the data buffer to the font atlas, which will attempt to free it on destruction.
-This was to avoid an unnecessary copy, and is perhaps not a good API (a future version will redesign it).
-If you want to keep ownership of the data and free it yourself, you need to clear the `FontDataOwnedByAtlas` field:
+重要：`AddFontFromMemoryTTF()` 默认会把数据缓冲区的所有权转移给字体图集，图集将在析构时尝试释放它。
+这样做是为了避免不必要的复制，但或许并不是一个好的 API（未来的版本会重新设计它）。
+如果你想保留数据的所有权并自行释放它，你需要清除 `FontDataOwnedByAtlas` 字段：
 
 ```cpp
 ImFontConfig font_cfg;
 font_cfg.FontDataOwnedByAtlas = false;
 ImFont* font = io.Fonts->AddFontFromMemoryTTF(data, data_size, size_pixels, &font_cfg);
 ```
-IMPORTANT: Since 1.92, when using `FontDataOwnedByAtlas = false`, font data needs to available until `atlas->RemoveFont()`, or more typically until a shutdown of the owning context or font atlas. It was not immediately noticeable in 1.92.0 due to a bug in handling `FontDataOwnedByAtlas = false`, which was fixed in 1.92.6.
+重要：自 1.92 起，使用 `FontDataOwnedByAtlas = false` 时，字体数据需要一直可用，直到 `atlas->RemoveFont()`，或者更常见的是直到拥有它的上下文或字体图集关闭。由于 1.92.0 中处理 `FontDataOwnedByAtlas = false` 的一个 bug，这个问题当时并未立刻显现，该 bug 已在 1.92.6 中修复。
 
-##### [Return to Index](#index)
+##### [返回目录](#index)
 
 ---------------------------------------
 
-## Loading Font Data Embedded In Source Code
+## <a id="loading-font-data-embedded-in-source-code"></a>加载内嵌在源代码中的字体数据
 
-- Compile and use [binary_to_compressed_c.cpp](https://github.com/ocornut/imgui/blob/master/misc/fonts/binary_to_compressed_c.cpp) to create a compressed C style array that you can embed in source code.
-- See the documentation in [binary_to_compressed_c.cpp](https://github.com/ocornut/imgui/blob/master/misc/fonts/binary_to_compressed_c.cpp) for instructions on how to use the tool.
-- You may find a precompiled version binary_to_compressed_c.exe for Windows inside the demo binaries package (see [README](https://github.com/ocornut/imgui/blob/master/docs/README.md)).
-- The tool can optionally output Base85 encoding to reduce the size of _source code_ but the read-only arrays in the actual binary will be about 20% bigger.
+- 编译并使用 [binary_to_compressed_c.cpp](https://github.com/ocornut/imgui/blob/master/misc/fonts/binary_to_compressed_c.cpp)，生成可内嵌到源代码中的压缩 C 风格数组。
+- 有关如何使用该工具的说明，请参见 [binary_to_compressed_c.cpp](https://github.com/ocornut/imgui/blob/master/misc/fonts/binary_to_compressed_c.cpp) 中的文档。
+- 你可以在演示程序的二进制包中找到适用于 Windows 的预编译版本 binary_to_compressed_c.exe（参见 [README](https://github.com/ocornut/imgui/blob/master/docs/README.md)）。
+- 该工具可以选择输出 Base85 编码以减小 _源代码_ 的大小，但实际二进制文件中的只读数组会大约增大 20%。
 
-Then load the font with:
+然后使用以下方式加载字体：
 ```cpp
 ImFont* font = io.Fonts->AddFontFromMemoryCompressedTTF(compressed_data, compressed_data_size, size_pixels, ...);
 ```
-or
+或
 ```cpp
 ImFont* font = io.Fonts->AddFontFromMemoryCompressedBase85TTF(compressed_data_base85, size_pixels, ...);
 ```
 
-##### [Return to Index](#index)
+##### [返回目录](#index)
 
 ---------------------------------------
 
-## Using Icon Fonts
+## <a id="using-icon-fonts"></a>使用图标字体
 
-Using an icon font (such as [FontAwesome](http://fontawesome.io) or [OpenFontIcons](https://github.com/traverseda/OpenFontIcons)) is an easy and practical way to use icons in your Dear ImGui application.
-A common pattern is to merge the icon font within your main font, so you can embed icons directly from your strings without having to change fonts back and forth.
+使用图标字体（例如 [FontAwesome](http://fontawesome.io) 或 [OpenFontIcons](https://github.com/traverseda/OpenFontIcons)）是在你的 Dear ImGui 应用程序中使用图标的一种简单而实用的方式。
+一种常见做法是把图标字体合并到你的主字体中，这样你就可以在字符串中直接嵌入图标，而无需反复来回切换字体。
 
-To refer to the icon UTF-8 codepoints from your C++ code, you may use those headers files created by Juliette Foucaut: https://github.com/juliettef/IconFontCppHeaders.
+要在你的 C++ 代码中引用图标的 UTF-8 码点，你可以使用由 Juliette Foucaut 创建的那些头文件：https://github.com/juliettef/IconFontCppHeaders 。
 
-So you can use `ICON_FA_SEARCH` as a string that will render as a "Search" icon.
+这样你就可以使用 `ICON_FA_SEARCH` 作为字符串，它会渲染为一个 "Search" 图标。
 
-🆕 **Since 1.92, with an up to date backend: specifying glyph ranges is unnecessary. You can omit this parameter.**
-Example Setup:
+🆕 **自 1.92 起，配合最新的后端：不再需要指定字形范围。你可以省略该参数。**
+示例设置：
 ```cpp
-// Merge icons into default tool font
+// 将图标合并到默认的工具字体中
 #include "IconsFontAwesome.h"
 ImGuiIO& io = ImGui::GetIO();
 io.Fonts->AddFontDefaultVector();
 ImFontConfig config;
 config.MergeMode = true;
-config.GlyphMinAdvanceX = 13.0f; // Use if you want to make the icon monospaced
+config.GlyphMinAdvanceX = 13.0f; // 如果你想让图标等宽，可以使用这一项
 io.Fonts->AddFontFromFileTTF("fonts/fontawesome-webfont.ttf", 13.0f, &config);
 ```
-:rewind: **Before 1.92:**
+:rewind: **在 1.92 之前：**
 ```cpp
-// Merge icons into default tool font
+// 将图标合并到默认的工具字体中
 #include "IconsFontAwesome.h"
 ImGuiIO& io = ImGui::GetIO();
 io.Fonts->AddFontDefault();
 
 ImFontConfig config;
 config.MergeMode = true;
-config.GlyphMinAdvanceX = 13.0f; // Use if you want to make the icon monospaced
+config.GlyphMinAdvanceX = 13.0f; // 如果你想让图标等宽，可以使用这一项
 static const ImWchar icon_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
 io.Fonts->AddFontFromFileTTF("fonts/fontawesome-webfont.ttf", 13.0f, &config, icon_ranges);
 ```
-Example Usage:
+示例用法：
 ```cpp
-// Usage, e.g.
+// 用法，例如
 ImGui::Text("%s among %d items", ICON_FA_SEARCH, count);
 ImGui::Button(ICON_FA_SEARCH " Search");
-// C string _literals_ can be concatenated at compilation time, e.g. "hello" " world"
-// ICON_FA_SEARCH is defined as a string literal so this is the same as "A" "B" becoming "AB"
+// C 字符串_字面量_可以在编译期拼接，例如 "hello" " world"
+// ICON_FA_SEARCH 被定义为字符串字面量，所以这等同于 "A" "B" 变成 "AB"
 ```
-See Links below for other icons fonts and related tools.
+有关其他图标字体和相关工具，请参见下方的链接。
 
-**Monospace Icons?**
+**等宽图标？**
 
-To make your icon look more monospace and facilitate alignment, you may want to set the `ImFontConfig::GlyphMinAdvanceX` value when loading an icon font.
-If you `GlyphMinAdvanceX` you need to pass a `font_size` to `AddFontXXX()` calls, as the MinAdvanceX value will be specified for the given size and scaled otherwise.
+为了让你的图标看起来更等宽并便于对齐，你可能希望在加载图标字体时设置 `ImFontConfig::GlyphMinAdvanceX` 的值。
+如果你使用 `GlyphMinAdvanceX`，你需要向 `AddFontXXX()` 调用传入 `font_size`，因为 MinAdvanceX 值是针对给定大小指定的，否则会按比例缩放。
 
-**Screenshot**
+**截图**
 
-Here's an application using icons ("Avoyd", https://www.avoyd.com):
+下面是一个使用了图标的应用程序（"Avoyd"，https://www.avoyd.com ） ：
 ![avoyd](https://user-images.githubusercontent.com/8225057/81696852-c15d9e80-9464-11ea-9cab-2a4d4fc84396.jpg)
 
-##### [Return to Index](#index)
+##### [返回目录](#index)
 
 ---------------------------------------
 
-### Excluding Overlapping Ranges
+### <a id="excluding-overlapping-ranges"></a>排除重叠的范围
 
-🆕 **Since 1.92, with an up to date backend: glyphs ranges are ignored**: when loading a glyph, input fonts in the merge list are queried in order. The first font which has the glyph loads it.
-<BR>‼️ **If you are merging several fonts, you may have undesirable overlapping ranges.** You can use `ImFontConfig::GlyphExcludeRanges[] `to specify ranges to ignore in a given Input.
+🆕 **自 1.92 起，配合最新的后端：字形范围会被忽略**：加载某个字形时，会按顺序查询合并列表中的输入字体。第一个拥有该字形的字体负责加载它。
+<BR>‼️ **如果你合并了多个字体，可能会出现不希望的重叠范围。** 你可以使用 `ImFontConfig::GlyphExcludeRanges[] ` 来指定在某个输入中要忽略的范围。
 
 ```cpp
-// Add Font Source 1 but ignore ICON_MIN_FA..ICON_MAX_FA range
+// 添加字体源 1，但忽略 ICON_MIN_FA..ICON_MAX_FA 范围
 static ImWchar exclude_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
 ImFontConfig cfg1;
 cfg1.GlyphExcludeRanges = exclude_ranges;
 io.Fonts->AddFontFromFileTTF("segoeui.ttf", 0.0f, &cfg1);
 
-// Add Font Source 2, which expects to use the range above
+// 添加字体源 2，它期望使用上面的范围
 ImFontConfig cfg2;
 cfg2.MergeMode = true;
 io.Fonts->AddFontFromFileTTF("FontAwesome4.ttf", 0.0f, &cfg2);
 ```
-Another (silly) example:
+另一个（有点无聊的）例子：
 ```cpp
-// Remove 'A'-'Z' from first font
+// 从第一个字体中移除 'A'-'Z'
 static ImWchar exclude_ranges[] = { 'A', 'Z', 0 };
 ImFontConfig cfg1;
 cfg1.GlyphExcludeRanges = exclude_ranges;
 io.Fonts->AddFontFromFileTTF("segoeui.ttf", 0.0f, &cfg1);
 
-// Load another font to fill the gaps
+// 加载另一个字体来填补空缺
 ImFontConfig cfg2;
 cfg2.MergeMode = true;
 io.Fonts->AddFontFromFileTTF("Roboto-Medium.ttf", 0.0f, &cfg2);
 ```
 ![image](https://github.com/user-attachments/assets/f3d751d3-1aee-4698-bd9b-f511902f56bb)
 
-You can use `Metrics/Debugger->Fonts->Font->Input Glyphs Overlap Detection Tool` to see list of glyphs available in multiple font sources. This can facilitate understanding which font input is providing which glyph.
+你可以使用 `Metrics/Debugger->Fonts->Font->Input Glyphs Overlap Detection Tool` 查看在多个字体源中都可用的字形列表。这有助于理解哪个字体输入源提供哪个字形。
 
-##### [Return to Index](#index)
-
----------------------------------------
-
-## Using FreeType Rasterizer (imgui_freetype)
-
-- Dear ImGui uses [stb_truetype.h](https://github.com/nothings/stb/) to rasterize fonts (with optional oversampling). This technique and its implementation are not ideal for fonts rendered at small sizes, which may appear a little blurry or hard to read.
-- You can however use `imgui_freetype.cpp` from the [misc/freetype/](https://github.com/ocornut/imgui/tree/master/misc/freetype) folder. Compile with this file and add `#define IMGUI_ENABLE_FREETYPE` to your imconfig.h file or build system to automatically activate it.
-- FreeType supports auto-hinting which tends to improve the readability of small fonts. It makes a big difference especially at smaller resolutions.
-- Read documentation in the [misc/freetype/](https://github.com/ocornut/imgui/tree/master/misc/freetype) folder.
-- Correct sRGB space blending will have an important effect on your font rendering quality.
-
-##### [Return to Index](#index)
+##### [返回目录](#index)
 
 ---------------------------------------
 
-## Using Colorful Glyphs/Emojis
+## <a id="using-freetype-rasterizer-imgui_freetype"></a>使用 FreeType 光栅化器 (imgui_freetype)
 
-- Rendering of colored emojis is supported by imgui_freetype with FreeType 2.10+.
-- You will need to load fonts with the `ImGuiFreeTypeBuilderFlags_LoadColor` flag.
-- Emojis are frequently encoded in upper Unicode layers (character codes >0x10000) and will need dear imgui compiled with `IMGUI_USE_WCHAR32`.
-- Not all types of color fonts are supported by FreeType at the moment.
-- Stateful Unicode features such as skin tone modifiers are not supported by the text renderer.
+- Dear ImGui 使用 [stb_truetype.h](https://github.com/nothings/stb/) 来光栅化字体（可选过采样）。这种技术及其实现对于以小尺寸渲染的字体并不理想，可能会显得有点模糊或难以辨认。
+- 不过你可以使用 [misc/freetype/](https://github.com/ocornut/imgui/tree/master/misc/freetype) 文件夹中的 `imgui_freetype.cpp`。编译该文件，并在你的 imconfig.h 文件或构建系统中添加 `#define IMGUI_ENABLE_FREETYPE` 即可自动启用它。
+- FreeType 支持自动微调（auto-hinting），这通常能改善小字体的可读性。在较小的分辨率下效果尤为显著。
+- 请阅读 [misc/freetype/](https://github.com/ocornut/imgui/tree/master/misc/freetype) 文件夹中的文档。
+- 正确的 sRGB 空间混合会对你的字体渲染质量产生重要影响。
+
+##### [返回目录](#index)
+
+---------------------------------------
+
+## <a id="using-colorful-glyphsemojis"></a>使用彩色字形/表情符号
+
+- imgui_freetype 配合 FreeType 2.10+ 支持彩色表情符号的渲染。
+- 你需要使用 `ImGuiFreeTypeBuilderFlags_LoadColor` 标志加载字体。
+- 表情符号通常编码在 Unicode 的较高层（字符码 >0x10000），需要以 `IMGUI_USE_WCHAR32` 编译 dear imgui。
+- 目前 FreeType 并不支持所有类型的彩色字体。
+- 文本渲染器不支持肤色修饰符等有状态的 Unicode 特性。
 
 ![colored glyphs](https://user-images.githubusercontent.com/8225057/106171241-9dc4ba80-6191-11eb-8a69-ca1467b206d1.png)
 
@@ -417,60 +417,60 @@ cfg.FontLoaderFlags |= ImGuiFreeTypeLoaderFlags_LoadColor;
 io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\seguiemj.ttf", 16.0f, &cfg);
 ```
 
-##### [Return to Index](#index)
+##### [返回目录](#index)
 
 ---------------------------------------
 
-## Using Custom Glyph Ranges
+## <a id="using-custom-glyph-ranges"></a>使用自定义字形范围
 
-🆕 **Since 1.92, with an up to date backend: specifying glyph ranges is unnecessary. Therefore this is not really useful any more.**
+🆕 **自 1.92 起，配合最新的后端：不再需要指定字形范围。因此这部分内容其实已不再有用。**
 
-:rewind: You can use the `ImFontGlyphRangesBuilder` helper to create glyph ranges based on text input. For example: for a game where your script is known, if you can feed your entire script to it and only build the characters the game needs.
+:rewind: 你可以使用 `ImFontGlyphRangesBuilder` 辅助工具，根据文本输入创建字形范围。例如：对于脚本已知的游戏，如果你能把整个脚本喂给它，就只构建游戏需要的字符。
 ```cpp
 ImVector<ImWchar> ranges;
 ImFontGlyphRangesBuilder builder;
-builder.AddText("Hello world");                        // Add a string (here "Hello world" contains 7 unique characters)
-builder.AddChar(0x7262);                               // Add a specific character
-builder.AddRanges(io.Fonts->GetGlyphRangesJapanese()); // Add one of the default ranges
-builder.BuildRanges(&ranges);                          // Build the final result (ordered ranges with all the unique characters submitted)
+builder.AddText("Hello world");                        // 添加一个字符串（这里的 "Hello world" 包含 7 个唯一字符）
+builder.AddChar(0x7262);                               // 添加一个特定字符
+builder.AddRanges(io.Fonts->GetGlyphRangesJapanese()); // 添加一个默认范围
+builder.BuildRanges(&ranges);                          // 构建最终结果（包含所有已提交唯一字符的有序范围）
 
 io.Fonts->AddFontFromFileTTF("myfontfile.ttf", size_in_pixels, nullptr, ranges.Data);
-io.Fonts->Build();                                     // Build the atlas while 'ranges' is still in scope and not deleted.
+io.Fonts->Build();                                     // 在 'ranges' 仍然在作用域内且未被删除时构建图集。
 ```
 
-##### [Return to Index](#index)
+##### [返回目录](#index)
 
 ---------------------------------------
 
-## Using Custom Colorful Icons
+## <a id="using-custom-colorful-icons"></a>使用自定义彩色图标
 
-🆕 **Since 1.92, with an up to date backend: this system has been revamped.**
+🆕 **自 1.92 起，配合最新的后端：该系统已被重新设计。**
 
-TL;DR; With the new system, it is recommended that you create a custom `ImFontLoader` and register your fonts with it.
-`AddCustomRectFontGlyph()` has been obsoleted because its API does not make much sense with resizable fonts.
+TL;DR; 在新系统中，建议你创建一个自定义的 `ImFontLoader` 并向其注册你的字体。
+`AddCustomRectFontGlyph()` 已被废弃，因为它的 API 对于可调整大小的字体来说意义不大。
 
-You can ask questions in [#8466](https://github.com/ocornut/imgui/issues/8466).
+你可以在 [#8466](https://github.com/ocornut/imgui/issues/8466) 中提问。
 
-:rewind: **Before 1.92:**
+:rewind: **在 1.92 之前：**
 
-As an alternative to rendering colorful glyphs using imgui_freetype with `ImGuiFreeTypeBuilderFlags_LoadColor`, you may allocate your own space in the texture atlas and write yourself into it. **(This is a BETA api, use if you are familiar with dear imgui and with your rendering backend)**
+作为使用 imgui_freetype 配合 `ImGuiFreeTypeBuilderFlags_LoadColor` 渲染彩色字形的替代方案，你可以在纹理图集中分配你自己的空间并自行写入。**（这是一个 BETA API，如果你熟悉 dear imgui 和你的渲染后端，再使用它）**
 
-- You can use the `ImFontAtlas::AddCustomRect()` and `ImFontAtlas::AddCustomRectFontGlyph()` api to register rectangles that will be packed into the font atlas texture. Register them before building the atlas, then call Build()`.
-- You can then use `ImFontAtlas::GetCustomRect(int)` to query the position/size of your rectangle within the texture, and blit/copy any graphics data of your choice into those rectangles.
-- This API is beta because it is likely to change in order to support multi-dpi (multiple viewports on multiple monitors with varying DPI scale).
+- 你可以使用 `ImFontAtlas::AddCustomRect()` 和 `ImFontAtlas::AddCustomRectFontGlyph()` API 注册将被打包到字体图集纹理中的矩形。在构建图集之前注册它们，然后调用 `Build()`。
+- 然后你可以使用 `ImFontAtlas::GetCustomRect(int)` 查询你的矩形在纹理中的位置/大小，并将你选择的任意图形数据 blit/复制到这些矩形中。
+- 该 API 仍处于 beta 阶段，因为它很可能会为了支持多 DPI（多个显示器上的多个视口，且 DPI 缩放各不相同）而发生变化。
 
-#### Pseudo-code:
+#### 伪代码：
 ```cpp
-// Add font, then register two custom 13x13 rectangles mapped to glyph 'a' and 'b' of this font
+// 添加字体，然后注册两个自定义的 13x13 矩形，分别映射到该字体的字形 'a' 和 'b'
 ImFont* font = io.Fonts->AddFontDefaultVector();
 int rect_ids[2];
 rect_ids[0] = io.Fonts->AddCustomRectFontGlyph(font, 'a', 13, 13, 13+1);
 rect_ids[1] = io.Fonts->AddCustomRectFontGlyph(font, 'b', 13, 13, 13+1);
 
-// Build atlas
+// 构建图集
 io.Fonts->Build();
 
-// Retrieve texture in RGBA format
+// 以 RGBA 格式获取纹理
 unsigned char* tex_pixels = nullptr;
 int tex_width, tex_height;
 io.Fonts->GetTexDataAsRGBA32(&tex_pixels, &tex_width, &tex_height);
@@ -478,7 +478,7 @@ io.Fonts->GetTexDataAsRGBA32(&tex_pixels, &tex_width, &tex_height);
 for (int rect_n = 0; rect_n < IM_COUNTOF(rect_ids); rect_n++)
     if (const ImTextureRect* rect = io.Fonts->GetCustomRect(rect_ids[rect_n]))
     {
-        // Fill the custom rectangle with red pixels (in reality you would draw/copy your bitmap data here!)
+        // 用红色像素填充自定义矩形（实际上你会在这里绘制/复制你的位图数据！）
         for (int y = 0; y < rect->Height; y++)
         {
             ImU32* p = (ImU32*)tex_pixels + (rect->Y + y) * tex_width + (rect->X);
@@ -488,38 +488,38 @@ for (int rect_n = 0; rect_n < IM_COUNTOF(rect_ids); rect_n++)
     }
 ```
 
-##### [Return to Index](#index)
+##### [返回目录](#index)
 
 ---------------------------------------
 
-## About Filenames
+## <a id="about-filenames"></a>关于文件名
 
-**Please note that many new C/C++ users have issues loading their files _because the filename they provide is wrong_ due to incorrect assumption of what is the current directory.**
+**请注意，许多 C/C++ 新手在加载文件时遇到问题，_是因为他们提供的文件名是错误的_，根源在于对当前目录的错误假设。**
 
-Two things to watch for:
+需要注意两点：
 
-(1) In C/C++ and most programming languages if you want to use a backslash `\` within a string literal, you need to write it double backslash `\\`. At it happens, Windows uses backslashes as a path separator, so be mindful.
+(1) 在 C/C++ 和大多数编程语言中，如果你想在字符串字面量中使用反斜杠 `\`，你需要写成双反斜杠 `\\`。而 Windows 恰好使用反斜杠作为路径分隔符，因此请务必留意。
 ```cpp
-io.Fonts->AddFontFromFileTTF("MyFiles\MyImage01.jpg", ...);   // This is INCORRECT!!
-io.Fonts->AddFontFromFileTTF("MyFiles\\MyImage01.jpg", ...);  // This is CORRECT
+io.Fonts->AddFontFromFileTTF("MyFiles\MyImage01.jpg", ...);   // 这是错误的！！
+io.Fonts->AddFontFromFileTTF("MyFiles\\MyImage01.jpg", ...);  // 这是正确的
 ```
-In some situations, you may also use `/` path separator under Windows.
+在某些情况下，你在 Windows 下也可以使用 `/` 路径分隔符。
 
-(2) Make sure your IDE/debugger settings starts your executable from the right working (current) directory. In Visual Studio you can change your working directory in project `Properties > General > Debugging > Working Directory`. People assume that their execution will start from the root folder of the project, where by default it often starts from the folder where object or executable files are stored.
+(2) 确保你的 IDE/调试器设置从正确的工作（当前）目录启动你的可执行文件。在 Visual Studio 中，你可以在项目的 `Properties > General > Debugging > Working Directory` 中更改工作目录。人们常以为程序会从项目的根文件夹开始运行，但默认情况下它往往从存放目标文件或可执行文件的文件夹开始运行。
 ```cpp
-io.Fonts->AddFontFromFileTTF("MyImage01.jpg", ...);       // Relative filename depends on your Working Directory when running your program!
-io.Fonts->AddFontFromFileTTF("../MyImage01.jpg", ...);    // Load from the parent folder of your Working Directory
+io.Fonts->AddFontFromFileTTF("MyImage01.jpg", ...);       // 相对文件名取决于你运行程序时的工作目录！
+io.Fonts->AddFontFromFileTTF("../MyImage01.jpg", ...);    // 从工作目录的上一级文件夹加载
 ```
-##### [Return to Index](#index)
+##### [返回目录](#index)
 
 ---------------------------------------
 
-## About UTF-8 Encoding
+## <a id="about-utf-8-encoding"></a>关于 UTF-8 编码
 
-**For non-ASCII characters display, a common user issue is not passing correctly UTF-8 encoded strings.**
+**在显示非 ASCII 字符时，一个常见的用户问题是传入的字符串没有正确地以 UTF-8 编码。**
 
-(1) We provide a function `ImGui::DebugTextEncoding(const char* text)` which you can call to verify the content of your UTF-8 strings.
-This is a convenient way to confirm that your encoding is correct.
+(1) 我们提供了函数 `ImGui::DebugTextEncoding(const char* text)`，你可以调用它来验证 UTF-8 字符串的内容。
+这是确认你的编码是否正确的一种便捷方式。
 
 ```cpp
 ImGui::SeparatorText("CORRECT");
@@ -530,119 +530,119 @@ ImGui::DebugTextEncoding("こんにちは");
 ```
 ![UTF-8 Encoding viewer](https://github.com/ocornut/imgui/assets/8225057/61c1696a-9a94-46c5-9627-cf91211111f0)
 
-You can also find this tool under `Metrics/Debuggers->Tools->UTF-8 Encoding viewer` if you want to paste from clipboard, but this won't validate the UTF-8 encoding done by your compiler.
+如果你想从剪贴板粘贴，也可以在这个位置找到该工具：`Metrics/Debuggers->Tools->UTF-8 Encoding viewer`，但它不会验证由你的编译器完成的 UTF-8 编码。
 
-(2) To encode in UTF-8:
+(2) 以 UTF-8 编码：
 
-There are also compiler-specific ways to enforce UTF-8 encoding by default:
+也有一些特定于编译器的方法可以默认强制使用 UTF-8 编码：
 
-- Visual Studio compiler: `/utf-8` command-line flag.
-- Visual Studio compiler: `#pragma execution_character_set("utf-8")` inside your code.
-- Since May 2023 we have changed the Visual Studio projects of all our examples to use `/utf-8` ([see commit](https://github.com/ocornut/imgui/commit/513af1efc9080857bbd10000d98f98f2a0c96803)).
+- Visual Studio 编译器：`/utf-8` 命令行标志。
+- Visual Studio 编译器：在你的代码中使用 `#pragma execution_character_set("utf-8")`。
+- 自 2023 年 5 月起，我们已将我们所有示例的 Visual Studio 项目改为使用 `/utf-8`（[参见提交](https://github.com/ocornut/imgui/commit/513af1efc9080857bbd10000d98f98f2a0c96803)）。
 
-Or, since C++11, you can use the `u8"my text"` syntax to encode literal strings as UTF-8. e.g.:
+或者，自 C++11 起，你可以使用 `u8"my text"` 语法将字面量字符串编码为 UTF-8。例如：
 ```cpp
 ImGui::Text(u8"hello");
-ImGui::Text(u8"こんにちは");   // this will always be encoded as UTF-8
-ImGui::Text("こんにちは");     // the encoding of this is depending on compiler settings/flags and may be incorrect.
+ImGui::Text(u8"こんにちは");   // 这总是会被编码为 UTF-8
+ImGui::Text("こんにちは");     // 它的编码取决于编译器设置/标志，可能是错误的。
 ```
 
-Since C++20, because the C++ committee hate its users, they decided to change the `u8""` syntax to not return `const char*` but a new type `const char8_t*` which doesn't cast to `const char*`.
-Because of type usage of `u8""` in C++20 is a little more tedious:
+自 C++20 起，由于 C++ 委员会讨厌它的用户，他们决定修改 `u8""` 语法，使其不再返回 `const char*`，而是返回一个新类型 `const char8_t*`，该类型不会转换为 `const char*`。
+因此在 C++20 中，`u8""` 的类型使用会稍微麻烦一些：
 ```cpp
 ImGui::Text((const char*)u8"こんにちは");
 ```
-However, you can disable this behavior completely using the compiler option [`/Zc:char8_t-`](https://learn.microsoft.com/en-us/cpp/build/reference/zc-char8-t?view=msvc-170) for MSVC and [`-fno-char8_t`](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1423r3.html) for Clang and GCC.
-##### [Return to Index](#index)
+不过，你可以分别使用 MSVC 的编译器选项 [`/Zc:char8_t-`](https://learn.microsoft.com/en-us/cpp/build/reference/zc-char8-t?view=msvc-170) 以及 Clang 和 GCC 的 [`-fno-char8_t`](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1423r3.html) 来完全禁用这一行为。
+##### [返回目录](#index)
 
 ---------------------------------------
 
-## Debug Tools
+## <a id="debug-tools"></a>调试工具
 
 #### Metrics/Debugger->Fonts
-You can use the `Metrics/Debugger` window (available in `Demo>Tools`) to browse your fonts and understand what's going on if you have an issue. You can also reach it in `Demo->Tools->Style Editor->Fonts`. The same information are also available in the Style Editor under Fonts.
+你可以使用 `Metrics/Debugger` 窗口（位于 `Demo>Tools` 中）浏览你的字体，并在遇到问题时了解发生了什么。你也可以在 `Demo->Tools->Style Editor->Fonts` 中找到它。相同的信息在 Style Editor 的 Fonts 下也可查看。
 
 ![Fonts debugging](https://user-images.githubusercontent.com/8225057/135429892-0e41ef8d-33c5-4991-bcf6-f997a0bcfd6b.png)
 
-#### UTF-8 Encoding Viewer**
-You can use the `UTF-8 Encoding viewer` in `Metrics/Debugger` to verify the content of your UTF-8 strings. From C/C++ code, you can call `ImGui::DebugTextEncoding("my string");` function to verify that your UTF-8 encoding is correct.
+#### UTF-8 编码查看器**
+你可以使用 `Metrics/Debugger` 中的 `UTF-8 Encoding viewer` 验证 UTF-8 字符串的内容。在 C/C++ 代码中，你可以调用 `ImGui::DebugTextEncoding("my string");` 函数来验证你的 UTF-8 编码是否正确。
 
 ![UTF-8 Encoding viewer](https://user-images.githubusercontent.com/8225057/166505963-8a0d7899-8ee8-4558-abb2-1ae523dc02f9.png)
 
-##### [Return to Index](#index)
+##### [返回目录](#index)
 
 ---------------------------------------
 
-## Credits/Licenses For Fonts Included In Repository
+## <a id="creditslicenses-for-fonts-included-in-repository"></a>仓库中所含字体的鸣谢/许可证
 
-Embedded in source code:
+内嵌在源代码中：
 
-**ProggyClean.ttf**, by Tristan Grimmer
+**ProggyClean.ttf**，作者 Tristan Grimmer
 <br>MIT License
-<br>(recommended loading setting: Size = 13.0, GlyphOffset.y = +1, PixelSnapH = true)
+<br>（推荐的加载设置：Size = 13.0, GlyphOffset.y = +1, PixelSnapH = true）
 <br>https://github.com/bluescan/proggyfonts
 
-**ProggyForever.ttf**, by Disco Hello, Tristan Grimmer
+**ProggyForever.ttf**，作者 Disco Hello、Tristan Grimmer
 <BR>MIT License
 <BR>https://github.com/ocornut/proggyforever
 
-Extra fonts files are available in the `misc/fonts/` folder.
-Compared to 2014 when they were first introduced, we now have better font support and we embed ProggyForever.
-I believe all the files here are unnecessary nowadays. You can find font yourself. They might eventually be removed.
+`misc/fonts/` 文件夹中还提供了额外的字体文件。
+与 2014 年首次引入它们时相比，我们现在有了更好的字体支持，并且内嵌了 ProggyForever。
+我认为如今这里的文件都已不再必要。你可以自己寻找字体。它们最终可能会被移除。
 
-**Roboto-Medium.ttf**, by Christian Robetson
+**Roboto-Medium.ttf**，作者 Christian Robetson
 <br>Apache License 2.0
 <br>https://fonts.google.com/specimen/Roboto
 
-**Cousine-Regular.ttf**, by Steve Matteson
-<br>Digitized data copyright (c) 2010 Google Corporation.
-<br>Licensed under the SIL Open Font License, Version 1.1
+**Cousine-Regular.ttf**，作者 Steve Matteson
+<br>数字化数据版权 (c) 2010 Google Corporation。
+<br>依据 SIL Open Font License 1.1 版授权
 <br>https://fonts.google.com/specimen/Cousine
 
-**DroidSans.ttf**, by Steve Matteson
+**DroidSans.ttf**，作者 Steve Matteson
 <br>Apache License 2.0
 <br>https://www.fontsquirrel.com/fonts/droid-sans
 
-**ProggyTiny.ttf**, by Tristan Grimmer
+**ProggyTiny.ttf**，作者 Tristan Grimmer
 <br>MIT License
-<br>(recommended loading setting: Size = 10.0, GlyphOffset.y = +1)
+<br>（推荐的加载设置：Size = 10.0, GlyphOffset.y = +1）
 <br>https://github.com/bluescan/proggyfonts
 
-**Karla-Regular.ttf**, by Jonathan Pinhorn
+**Karla-Regular.ttf**，作者 Jonathan Pinhorn
 <br>SIL OPEN FONT LICENSE Version 1.1
 
-##### [Return to Index](#index)
+##### [返回目录](#index)
 
-## Font Links
+## <a id="font-links"></a>字体链接
 
-#### ICON FONTS
+#### 图标字体
 
-- C/C++ header for icon fonts (#define with code points to use in source code string literals) https://github.com/juliettef/IconFontCppHeaders
+- 图标字体的 C/C++ 头文件（用 #define 定义码点，以便在源代码字符串字面量中使用）https://github.com/juliettef/IconFontCppHeaders
 - FontAwesome https://fortawesome.github.io/Font-Awesome
 - OpenFontIcons https://github.com/traverseda/OpenFontIcons
 - Google Icon Fonts https://design.google.com/icons/
-- Kenney Icon Font (Game Controller Icons) https://github.com/nicodinh/kenney-icon-font
-- IcoMoon - Custom Icon font builder https://icomoon.io/app
+- Kenney Icon Font（游戏手柄图标）https://github.com/nicodinh/kenney-icon-font
+- IcoMoon - 自定义图标字体构建器 https://icomoon.io/app
 
-#### REGULAR FONTS
+#### 常规字体
 
-- Google Noto Fonts (worldwide languages) https://www.google.com/get/noto/
+- Google Noto Fonts（面向世界各地的语言）https://www.google.com/get/noto/
 - Open Sans Fonts https://fonts.google.com/specimen/Open+Sans
-- (Japanese) M+ fonts by Coji Morishita http://mplus-fonts.sourceforge.jp/mplus-outline-fonts/index-en.html
+- （日文）由 Coji Morishita 制作的 M+ 字体 http://mplus-fonts.sourceforge.jp/mplus-outline-fonts/index-en.html
 
-#### MONOSPACE FONTS
+#### 等宽字体
 
 <img width="1172" height="715" alt="image" src="https://github.com/user-attachments/assets/c9702534-4877-41c9-ae0d-252933c26ced" />
 
-- Proggy Fonts, by Tristan Grimmer https://github.com/bluescan/proggyfonts
-- Sweet16, Sweet16 Mono, by Martin Sedlak (Latin + Supplemental + Extended A) https://github.com/kmar/Sweet16Font
-- Google Noto Mono Fonts: https://www.google.com/get/noto/
-- Typefaces for source code beautification: https://github.com/chrissimpkins/codeface
-- Programmation fonts: http://s9w.github.io/font_compare/
-- Inconsolata: http://www.levien.com/type/myfonts/inconsolata.html
-- Adobe Source Code Pro: Monospaced font family for ui & coding environments https://github.com/adobe-fonts/source-code-pro
-- Monospace/Fixed Width Programmer's Fonts http://www.lowing.org/fonts/
+- Proggy Fonts，作者 Tristan Grimmer https://github.com/bluescan/proggyfonts
+- Sweet16、Sweet16 Mono，作者 Martin Sedlak（拉丁文 + 补充字符 + 扩展 A）https://github.com/kmar/Sweet16Font
+- Google Noto Mono Fonts：https://www.google.com/get/noto/
+- 用于美化源代码的字体：https://github.com/chrissimpkins/codeface
+- 编程字体：http://s9w.github.io/font_compare/
+- Inconsolata：http://www.levien.com/type/myfonts/inconsolata.html
+- Adobe Source Code Pro：适用于 UI 和编码环境的等宽字体家族 https://github.com/adobe-fonts/source-code-pro
+- 等宽/固定宽度程序员字体 http://www.lowing.org/fonts/
 
-Or use Arial Unicode or other Unicode fonts provided with Windows for full characters coverage (not sure of their licensing).
+或者使用 Windows 自带的 Arial Unicode 或其他 Unicode 字体以获得完整的字符覆盖（其许可证情况不太确定）。
 
-##### [Return to Index](#index)
+##### [返回目录](#index)

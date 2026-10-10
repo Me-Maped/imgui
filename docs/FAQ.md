@@ -1,126 +1,126 @@
-# FAQ (Frequently Asked Questions)
+# <a id="faq-frequently-asked-questions"></a>FAQ（常见问题解答）
 
-You may link to this document using short form:
+你可以使用短链接引用本文档：
   https://www.dearimgui.com/faq
-or its real address:
+或它的真实地址：
   https://github.com/ocornut/imgui/blob/master/docs/FAQ.md
-or view this file with any Markdown viewer.
+或者用任意 Markdown 查看器查看此文件。
 
 
-## Index
+## <a id="index"></a>索引
 
-### Basics
+### <a id="basics"></a>基础
 
-- [Where is the documentation?](#q-where-is-the-documentation)
-- [What is this library called?](#q-what-is-this-library-called)
-- [What is the difference between Dear ImGui and traditional UI toolkits?](#q-what-is-the-difference-between-dear-imgui-and-traditional-ui-toolkits)
-- [Which version should I get?](#q-which-version-should-i-get)
+- [文档在哪里？](#q-where-is-the-documentation)
+- [这个库叫什么名字？](#q-what-is-this-library-called)
+- [Dear ImGui 与传统 UI 工具包有何区别？](#q-what-is-the-difference-between-dear-imgui-and-traditional-ui-toolkits)
+- [我应该使用哪个版本？](#q-which-version-should-i-get)
 
-### Integration
+### <a id="integration"></a>集成
 
-- **[How to get started?](#q-how-to-get-started)**
-- **[How can I tell whether to dispatch mouse/keyboard to Dear ImGui or my application?](#q-how-can-i-tell-whether-to-dispatch-mousekeyboard-to-dear-imgui-or-my-application)**
-- [How can I enable keyboard or gamepad controls?](#q-how-can-i-enable-keyboard-or-gamepad-controls)
-- [How can I use this on a machine without mouse, keyboard or screen? (input share, remote display)](#q-how-can-i-use-this-on-a-machine-without-mouse-keyboard-or-screen-input-share-remote-display)
-- [How can I create my own backend?](#q-how-can-i-create-my-own-backend)
-- [I integrated Dear ImGui in my engine and little squares are showing instead of text...](#q-i-integrated-dear-imgui-in-my-engine-and-little-squares-are-showing-instead-of-text)
-- [I integrated Dear ImGui in my engine and some elements are clipping or disappearing when I move windows around...](#q-i-integrated-dear-imgui-in-my-engine-and-some-elements-are-clipping-or-disappearing-when-i-move-windows-around)
-- [I integrated Dear ImGui in my engine and some elements are displaying outside their expected windows boundaries...](#q-i-integrated-dear-imgui-in-my-engine-and-some-elements-are-displaying-outside-their-expected-windows-boundaries)
+- **[如何开始？](#q-how-to-get-started)**
+- **[我如何判断应该把鼠标/键盘事件分发给 Dear ImGui 还是我的应用程序？](#q-how-can-i-tell-whether-to-dispatch-mousekeyboard-to-dear-imgui-or-my-application)**
+- [如何启用键盘或游戏手柄控制？](#q-how-can-i-enable-keyboard-or-gamepad-controls)
+- [如何在没有鼠标、键盘或屏幕的机器上使用它？（输入共享、远程显示）](#q-how-can-i-use-this-on-a-machine-without-mouse-keyboard-or-screen-input-share-remote-display)
+- [如何创建我自己的后端？](#q-how-can-i-create-my-own-backend)
+- [我把 Dear ImGui 集成到引擎中，但显示的是小方块而不是文字……](#q-i-integrated-dear-imgui-in-my-engine-and-little-squares-are-showing-instead-of-text)
+- [我把 Dear ImGui 集成到引擎中，移动窗口时有些元素被裁剪或消失……](#q-i-integrated-dear-imgui-in-my-engine-and-some-elements-are-clipping-or-disappearing-when-i-move-windows-around)
+- [我把 Dear ImGui 集成到引擎中，有些元素显示在了预期窗口边界之外……](#q-i-integrated-dear-imgui-in-my-engine-and-some-elements-are-displaying-outside-their-expected-windows-boundaries)
 
-### Usage
+### <a id="usage"></a>用法
 
-- **[About the ID Stack system...](#q-about-the-id-stack-system)**
-  - **[How can I have multiple widgets with the same label?](#q-how-can-i-have-multiple-widgets-with-the-same-label) (using `##` or `PushID()`)**
-  - **[How can I have widgets with an empty label?](#q-how-can-i-have-widgets-with-an-empty-label) (using `##`)**
-  - **[How can I make a label dynamic?](#q-how-can-i-make-a-label-dynamic) (using `###`)**
-  - **[General description of the label and ID Stack system.](#general-description-of-the-label-and-id-stack-system)**
-- [How can I display an image?](#q-how-can-i-display-an-image), [What are ImTextureID/ImTextureRef?](#q-what-are-imtextureidimtextureref)
-- [How can I use maths operators with ImVec2?](#q-how-can-i-use-maths-operators-with-imvec2)
-- [How can I use my own maths types instead of ImVec2/ImVec4?](#q-how-can-i-use-my-own-maths-types-instead-of-imvec2imvec4)
-- [How can I interact with standard C++ types (such as std::string and std::vector)?](#q-how-can-i-interact-with-standard-c-types-such-as-stdstring-and-stdvector)
-- [How can I display custom shapes? (using low-level ImDrawList API)](#q-how-can-i-display-custom-shapes-using-low-level-imdrawlist-api)
-- [About Multi-Threading](#about-multi-threading)
+- **[关于 ID 栈系统……](#q-about-the-id-stack-system)**
+  - **[如何让多个控件使用相同的标签？](#q-how-can-i-have-multiple-widgets-with-the-same-label)（使用 `##` 或 `PushID()`）**
+  - **[如何让控件使用空标签？](#q-how-can-i-have-widgets-with-an-empty-label)（使用 `##`）**
+  - **[如何让标签动态变化？](#q-how-can-i-make-a-label-dynamic)（使用 `###`）**
+  - **[标签与 ID 栈系统的总体说明。](#general-description-of-the-label-and-id-stack-system)**
+- [如何显示图像？](#q-how-can-i-display-an-image)、[ImTextureID/ImTextureRef 是什么？](#q-what-are-imtextureidimtextureref)
+- [如何对 ImVec2 使用数学运算符？](#q-how-can-i-use-maths-operators-with-imvec2)
+- [如何使用我自己的数学类型代替 ImVec2/ImVec4？](#q-how-can-i-use-my-own-maths-types-instead-of-imvec2imvec4)
+- [如何与标准 C++ 类型（如 std::string 和 std::vector）交互？](#q-how-can-i-interact-with-standard-c-types-such-as-stdstring-and-stdvector)
+- [如何显示自定义形状？（使用低层 ImDrawList API）](#q-how-can-i-display-custom-shapes-using-low-level-imdrawlist-api)
+- [关于多线程](#about-multi-threading)
 
-### Fonts, Text
+### <a id="fonts-text"></a>字体、文本
 
-- [How should I handle DPI in my application?](#q-how-should-i-handle-dpi-in-my-application)
-- [How can I load a different font than the default?](#q-how-can-i-load-a-different-font-than-the-default)
-- [How can I easily use icons in my application?](#q-how-can-i-easily-use-icons-in-my-application)
-- [How can I load multiple fonts?](#q-how-can-i-load-multiple-fonts)
-- [How can I display and input non-Latin characters such as Chinese, Japanese, Korean, Cyrillic?](#q-how-can-i-display-and-input-non-latin-characters-such-as-chinese-japanese-korean-cyrillic)
+- [我的应用程序中应该如何处理 DPI？](#q-how-should-i-handle-dpi-in-my-application)
+- [如何加载非默认的字体？](#q-how-can-i-load-a-different-font-than-the-default)
+- [如何在我的应用程序中方便地使用图标？](#q-how-can-i-easily-use-icons-in-my-application)
+- [如何加载多种字体？](#q-how-can-i-load-multiple-fonts)
+- [如何显示并输入非拉丁字符，例如中文、日文、韩文、西里尔文？](#q-how-can-i-display-and-input-non-latin-characters-such-as-chinese-japanese-korean-cyrillic)
 
-### Concerns
+### <a id="concerns"></a>顾虑
 
-- [Who uses Dear ImGui?](#q-who-uses-dear-imgui)
-- [Can you create elaborate/serious tools with Dear ImGui?](#q-can-you-create-elaborateserious-tools-with-dear-imgui)
-- [Can you reskin the look of Dear ImGui?](#q-can-you-reskin-the-look-of-dear-imgui)
-- [Why using C++ (as opposed to C)?](#q-why-using-c-as-opposed-to-c)
+- [谁在使用 Dear ImGui？](#q-who-uses-dear-imgui)
+- [可以用 Dear ImGui 创建复杂/严肃的工具吗？](#q-can-you-create-elaborateserious-tools-with-dear-imgui)
+- [可以更换 Dear ImGui 的外观吗？](#q-can-you-reskin-the-look-of-dear-imgui)
+- [为什么使用 C++（而不是 C）？](#q-why-using-c-as-opposed-to-c)
 
-### Community
+### <a id="community"></a>社区
 
-- [How can I help?](#q-how-can-i-help)
+- [我该如何提供帮助？](#q-how-can-i-help)
 
 --------
 
-# Q&A: Basics
+# <a id="qa-basics"></a>问答：基础
 
-### Q: Where is the documentation?
+### <a id="q-where-is-the-documentation"></a>问：文档在哪里？
 
-**This library is poorly documented at the moment and expects the user to be acquainted with C/C++.**
-- The [Wiki](https://github.com/ocornut/imgui/wiki) is a hub to many resources and links.
-- Handy [Getting Started](https://github.com/ocornut/imgui/wiki/Getting-Started) guide to integrate Dear ImGui in an existing application.
-- 20+ standalone example applications using e.g. OpenGL/DirectX are provided in the [examples/](https://github.com/ocornut/imgui/blob/master/examples/) folder to explain how to integrate Dear ImGui with your own engine/application. You can run those applications and explore them.
-- See demo code in [imgui_demo.cpp](https://github.com/ocornut/imgui/blob/master/imgui_demo.cpp) and particularly the `ImGui::ShowDemoWindow()` function. The demo covers most features of Dear ImGui, so you can read the code and see its output.
-- See pthom's online [imgui_explorer](https://pthom.github.io/imgui_explorer) which is a web version of the demo with a source code browser.
-- See documentation: [Backends](https://github.com/ocornut/imgui/blob/master/docs/BACKENDS.md), [Examples](https://github.com/ocornut/imgui/blob/master/docs/EXAMPLES.md), [Fonts](https://github.com/ocornut/imgui/blob/master/docs/FONTS.md).
-- See documentation and comments at the top of [imgui.cpp](https://github.com/ocornut/imgui/blob/master/imgui.cpp) + general API comments in [imgui.h](https://github.com/ocornut/imgui/blob/master/imgui.h).
-- The [Glossary](https://github.com/ocornut/imgui/wiki/Glossary) page may be useful.
-- The [Issues](https://github.com/ocornut/imgui/issues) and [Discussions](https://github.com/ocornut/imgui/discussions) sections can be searched for past questions and issues.
-- Your programming IDE is your friend, find the type or function declaration to find comments associated with it.
-- The `ImGui::ShowMetricsWindow()` function exposes lots of internal information and tools. Although it is primarily designed as a debugging tool, having access to that information tends to help understands concepts.
+**这个库目前的文档还很不完善，并且假定用户熟悉 C/C++。**
+- [Wiki](https://github.com/ocornut/imgui/wiki) 是许多资源和链接的集散地。
+- 实用的[入门](https://github.com/ocornut/imgui/wiki/Getting-Started)指南，介绍如何将 Dear ImGui 集成到现有应用程序中。
+- [examples/](https://github.com/ocornut/imgui/blob/master/examples/) 文件夹中提供了 20 多个使用 OpenGL/DirectX 等的独立示例应用程序，用于说明如何将 Dear ImGui 与自己的引擎/应用程序集成。你可以运行这些应用程序并探索它们。
+- 参见 [imgui_demo.cpp](https://github.com/ocornut/imgui/blob/master/imgui_demo.cpp) 中的演示代码，尤其是 `ImGui::ShowDemoWindow()` 函数。该演示涵盖了 Dear ImGui 的大部分功能，因此你可以阅读代码并查看其输出。
+- 参见 pthom 的在线 [imgui_explorer](https://pthom.github.io/imgui_explorer)，它是带源码浏览器的网页版演示。
+- 参见文档：[Backends](https://github.com/ocornut/imgui/blob/master/docs/BACKENDS.md)、[Examples](https://github.com/ocornut/imgui/blob/master/docs/EXAMPLES.md)、[Fonts](https://github.com/ocornut/imgui/blob/master/docs/FONTS.md)。
+- 参见 [imgui.cpp](https://github.com/ocornut/imgui/blob/master/imgui.cpp) 顶部的文档和注释，以及 [imgui.h](https://github.com/ocornut/imgui/blob/master/imgui.h) 中通用的 API 注释。
+- [术语表](https://github.com/ocornut/imgui/wiki/Glossary)页面可能会有用。
+- 可以在 [Issues](https://github.com/ocornut/imgui/issues) 和 [Discussions](https://github.com/ocornut/imgui/discussions) 版块中搜索以往的问题和议题。
+- 你的编程 IDE 是你的好帮手，找到类型或函数声明即可找到与之关联的注释。
+- `ImGui::ShowMetricsWindow()` 函数会暴露大量内部信息和工具。虽然它主要被设计为调试工具，但能访问这些信息通常有助于理解相关概念。
 
-##### [Return to Index](#index)
-
----
-
-### Q. What is this library called?
-
-**This library is called Dear ImGui**. Please refer to it as Dear ImGui (not ImGui, not IMGUI).
-
-(The library misleadingly started its life in 2014 as "ImGui" due to the fact that I didn't give it a proper name when I released 1.0, and had no particular expectation that it would take off. However, the term IMGUI (immediate-mode graphical user interface) was coined before and is being used in variety of other situations e.g. Unity uses it own implementation of the IMGUI paradigm. To reduce the ambiguity without affecting existing code bases, I have decided in December 2015 a fully qualified name "Dear ImGui" for this library.
-
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
 ---
 
-### Q: What is the difference between Dear ImGui and traditional UI toolkits?
+### <a id="q-what-is-this-library-called"></a>问：这个库叫什么名字？
 
-Here's a very simplified comparison between the approach taken by Dear ImGui vs traditional toolkits:
+**这个库叫做 Dear ImGui**。请称它为 Dear ImGui（而不是 ImGui，也不是 IMGUI）。
 
-| Dear ImGui | Qt/GTK/WPF... |
+（这个库在 2014 年发布 1.0 版本时误打误撞地以 "ImGui" 之名诞生，因为当时我没有给它起一个合适的名字，也完全没有预料到它会流行起来。然而，IMGUI（immediate-mode graphical user interface，即时模式图形用户界面）这个术语在此之前就已被创造出来，并被用于各种其他场合，例如 Unity 就使用了自己的 IMGUI 范式实现。为了在不影响现有代码库的前提下减少歧义，我在 2015 年 12 月为这个库决定了一个完全限定名称 "Dear ImGui"。
+
+##### [返回索引](#index)
+
+---
+
+### <a id="q-what-is-the-difference-between-dear-imgui-and-traditional-ui-toolkits"></a>问：Dear ImGui 与传统 UI 工具包有何区别？
+
+以下是对 Dear ImGui 与传统工具包所采用方法的非常简化的比较：
+
+| Dear ImGui | Qt/GTK/WPF…… |
 |--------------------------|--------------------------|
-| UI fully issued on every update. | UI issued once then later modified. |
-| UI layout is fully dynamic and can change at any time.<BR>UI is generally emitted programmatically, which empowers reflecting a dynamic set of data. | UI layout is mostly static.<BR>UI may be emitted programmatically or from data created by offline tools. UI need extra code to evolve, which is often tedious and error-prone if it needs to be reflecting dynamic data and systems. |
-| UI system is optimized for the worst case and designed to be optimal even under frequent changes. | UI system is optimized for the case where nothing changes. Performances tends to degrade when anything changes. |
-| Application can submit UI based on arbitrary logic without bookkeeping all aspects of that logic. | Application needs more bookkeeping of UI elements. |
-| UI library stores minimal amounts of data. At one point in time, it typically doesn't know or remember which other widgets are displayed and which widgets are coming next. As a result, certain layout features (alignment, resizing) are not as easy to implement or require ad-hoc code. | UI library stores entire widgets tree and state. UI library can use this retained data to easily layout things. |
-| UI code may be added anywhere.<BR>You can even create UI to edit a local variable! | UI code needs to be added in dedicated spots. |
-| UI layout/logic/action/data bindings are all nearby in the code. | UI layout/logic/action/data bindings in distinct functions, files or formats. |
-| Data is naturally always synchronized. | Use callback/signal/slot for synchronizing data (error-prone). |
-| API is simple and easy to learn. In particular, doing basic things is very easy.<BR>Attractive to more programmers. | API is more complex and specialized.<BR>Tends to require specialized programmers. |
-| API is low-level. Few abstractions, uses raw language types and your existing data. | API are higher-level. More abstractions, advanced language features. |
-| Less fancy look and feel. But keeps improving :) | Standard look and feel. |
-| Compile yourself. Easy to debug, hack, modify, study. | Mostly use precompiled libraries. Compiling, modifying or studying is daunting if not impossible. |
-| Run on every platform (incl. web, consoles, mobiles, legacy systems). | Run on major desktop platforms. |
+| 每次更新都完整地发出 UI。 | UI 只发出一次，之后再进行修改。 |
+| UI 布局完全是动态的，可以随时变化。<BR>UI 通常以编程方式发出，这有利于反映动态的数据集合。 | UI 布局大多是静态的。<BR>UI 可以通过编程方式发出，也可以来自离线工具创建的数据。UI 需要额外的代码才能演进，而如果需要反映动态数据和系统，这往往既繁琐又容易出错。 |
+| UI 系统针对最坏情况进行了优化，即使频繁变化也能保持最优性能。 | UI 系统针对没有任何变化的情况进行了优化。一旦发生变化，性能往往会下降。 |
+| 应用程序可以基于任意逻辑提交 UI，而无需记录该逻辑的所有方面。 | 应用程序需要对 UI 元素进行更多的记录管理。 |
+| UI 库存储的数据量极少。在某一时刻，它通常不知道也不记得还显示了哪些其他控件、接下来会来哪些控件。因此，某些布局功能（对齐、调整大小）实现起来不那么容易，或者需要专门的代码。 | UI 库存储整个控件树和状态。UI 库可以利用这些保留的数据轻松地进行布局。 |
+| UI 代码可以添加在任何地方。<BR>你甚至可以创建 UI 来编辑一个局部变量！ | UI 代码需要添加在专门的位置。 |
+| UI 布局/逻辑/操作/数据绑定在代码中都彼此相邻。 | UI 布局/逻辑/操作/数据绑定位于不同的函数、文件或格式中。 |
+| 数据天然始终同步。 | 使用回调/信号/槽来同步数据（容易出错）。 |
+| API 简单易学。特别是做基本的事情非常容易。<BR>对更多程序员有吸引力。 | API 更复杂、更专门化。<BR>往往需要专门的程序员。 |
+| API 是低层的。抽象很少，使用原始的语言类型和你已有的数据。 | API 层次更高。有更多抽象和高级语言特性。 |
+| 外观不那么花哨。但在不断改进 :) | 标准的外观。 |
+| 自己编译。易于调试、改造、修改、研究。 | 大多使用预编译库。编译、修改或研究即使并非不可能，也令人生畏。 |
+| 可在所有平台运行（包括 Web、游戏主机、移动设备、遗留系统）。 | 在主要桌面平台上运行。 |
 
-Idiomatic Dear ImGui code:
+地道的 Dear ImGui 代码：
 ```cpp
 if (ImGui::Button("Save"))
     MySaveFunction();
 
 ImGui::SliderFloat("Slider", &m_MyValue, 0.0f, 1.0f);
 ```
-Idiomatic code with traditional toolkit:
+使用传统工具包的地道代码：
 ```cpp
 UiButton* button = new UiButton("Save");
 button->OnClick = &MySaveFunction;
@@ -131,60 +131,60 @@ slider->SetRange(0.0f, 1.0f);
 slider->BindData<float>(&m_MyValue);
 parent->Add(slider);
 ```
-This is only meant to give you a intuitive feeling of the main differences, but pros & cons go deeper than that.
+这只是为了让你对主要区别有一个直观感受，但其中的优劣比这要深入得多。
 
-Some of those properties are typically associated to the umbrella term "IMGUI", but the term has no simple and well-agreed definition. There are many erroneous statements and misunderstandings with what IMGUI means. It is partly caused by the fact that most popular IMGUI implementations (including Dear ImGui) have originated from game industry needs and have targeted specific use cases, causing people to conflate IMGUI properties with what a specific library does. However, it is perfectly possible to implement an IMGUI library that would have very different properties than e.g. Dear ImGui. My take on defining what an IMGUI is:
+其中一些特性通常与笼统的术语 "IMGUI" 相关联，但该术语并没有简单且公认的定义。关于 IMGUI 的含义存在许多错误的说法和误解。部分原因是大多数流行的 IMGUI 实现（包括 Dear ImGui）都源自游戏行业的需求，并针对特定的用例，导致人们将 IMGUI 的特性与某个特定库的行为混为一谈。然而，完全有可能实现一个与 Dear ImGui 特性截然不同的 IMGUI 库。我对 IMGUI 定义的理解是：
 
-**IMGUI refers to the API: literally the interface between the application and the UI system.**
-- An IMGUI API favors the application code owning its data and being the single source of truth for it.
-- An IMGUI API tries to minimize the application having to retain/manage data related to the UI system.
-- An IMGUI API tries to minimize the UI system having to retain/manage data related to the application.
-- Synchronization between application data and UI data is natural and less error-prone.
+**IMGUI 指的是 API：字面意义上就是应用程序与 UI 系统之间的接口。**
+- IMGUI API 倾向于让应用程序代码拥有自己的数据，并成为数据的唯一事实来源。
+- IMGUI API 尽量减少应用程序需要保留/管理与 UI 系统相关的数据。
+- IMGUI API 尽量减少 UI 系统需要保留/管理与应用程序相关的数据。
+- 应用程序数据与 UI 数据之间的同步是自然而然的，并且更不容易出错。
 
-**IMGUI does NOT refer to the implementation. Whatever happens inside the UI library code doesn't matter.**
-<BR>Also see: [Links to many articles about the IMGUI paradigm](https://github.com/ocornut/imgui/wiki/#about-the-imgui-paradigm).
+**IMGUI 并不指实现。UI 库代码内部发生什么都不重要。**
+<BR>另见：[关于 IMGUI 范式的许多文章链接](https://github.com/ocornut/imgui/wiki/#about-the-imgui-paradigm)。
 
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
 ---
 
-### Q: Which version should I get?
-I occasionally tag [Releases](https://github.com/ocornut/imgui/releases) but it is generally safe and recommended to sync to master/latest. The library is fairly stable and regressions tend to be fixed fast when reported.
+### <a id="q-which-version-should-i-get"></a>问：我应该使用哪个版本？
+我偶尔会打上[发布版本](https://github.com/ocornut/imgui/releases)标签，但一般来说，同步到 master/最新版本是安全且推荐的。这个库相当稳定，并且一旦报告回归问题，通常很快就会被修复。
 
-You may use the ['docking'](https://github.com/ocornut/imgui/tree/docking) branch which includes:
-- [Docking features](https://github.com/ocornut/imgui/wiki/Docking)
-- [Multi-viewport features](https://github.com/ocornut/imgui/wiki/Multi-Viewports)
+你可以使用 ['docking'](https://github.com/ocornut/imgui/tree/docking) 分支，它包含：
+- [停靠（Docking）功能](https://github.com/ocornut/imgui/wiki/Docking)
+- [多视口（Multi-viewport）功能](https://github.com/ocornut/imgui/wiki/Multi-Viewports)
 
-Many projects are using this branch and it is kept in sync with master regularly.
+许多项目都在使用这个分支，并且它会定期与 master 保持同步。
 
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
 ----
 
-# Q&A: Integration
+# <a id="qa-integration"></a>问答：集成
 
-### Q: How to get started?
+### <a id="q-how-to-get-started"></a>问：如何开始？
 
-Read [Getting Started](https://github.com/ocornut/imgui/wiki/Getting-Started). <BR>
-Read [docs/EXAMPLES.md](https://github.com/ocornut/imgui/blob/master/docs/EXAMPLES.md). <BR>
-Read [docs/BACKENDS.md](https://github.com/ocornut/imgui/blob/master/docs/BACKENDS.md). <BR>
-Read `PROGRAMMER GUIDE` section of [imgui.cpp](https://github.com/ocornut/imgui/blob/master/imgui.cpp). <BR>
-The [Wiki](https://github.com/ocornut/imgui/wiki) is a hub to many resources and links.
+阅读[入门指南](https://github.com/ocornut/imgui/wiki/Getting-Started)。<BR>
+阅读 [docs/EXAMPLES.md](https://github.com/ocornut/imgui/blob/master/docs/EXAMPLES.md)。<BR>
+阅读 [docs/BACKENDS.md](https://github.com/ocornut/imgui/blob/master/docs/BACKENDS.md)。<BR>
+阅读 [imgui.cpp](https://github.com/ocornut/imgui/blob/master/imgui.cpp) 的 `PROGRAMMER GUIDE`（程序员指南）部分。<BR>
+[Wiki](https://github.com/ocornut/imgui/wiki) 是许多资源和链接的集散地。
 
-For first-time users having issues compiling/linking/running or issues loading fonts, please use [GitHub Discussions](https://github.com/ocornut/imgui/discussions).
+对于初次使用、在编译/链接/运行或加载字体方面遇到问题的用户，请使用 [GitHub Discussions](https://github.com/ocornut/imgui/discussions)。
 
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
 ---
 
-### Q: How can I tell whether to dispatch mouse/keyboard to Dear ImGui or my application?
+### <a id="q-how-can-i-tell-whether-to-dispatch-mousekeyboard-to-dear-imgui-or-my-application"></a>问：我如何判断应该把鼠标/键盘事件分发给 Dear ImGui 还是我的应用程序？
 
-You can read the `io.WantCaptureMouse`, `io.WantCaptureKeyboard` and `io.WantTextInput` flags from the ImGuiIO structure.
-- When `io.WantCaptureMouse` is set, you need to discard/hide the mouse inputs from your underlying application.
-- When `io.WantCaptureKeyboard` is set, you need to discard/hide the keyboard inputs from your underlying application.
-- When `io.WantTextInput` is set, you can notify your OS/engine to popup an on-screen keyboard, if available (e.g. on a mobile phone, or console OS).
+你可以从 ImGuiIO 结构中读取 `io.WantCaptureMouse`、`io.WantCaptureKeyboard` 和 `io.WantTextInput` 标志。
+- 当设置了 `io.WantCaptureMouse` 时，你需要对底层应用程序屏蔽/隐藏鼠标输入。
+- 当设置了 `io.WantCaptureKeyboard` 时，你需要对底层应用程序屏蔽/隐藏键盘输入。
+- 当设置了 `io.WantTextInput` 时，你可以通知你的操作系统/引擎弹出屏幕键盘（如果有的话，例如在手机上或主机操作系统中）。
 
-Important: you should always pass your mouse/keyboard inputs to Dear ImGui, regardless of the value `io.WantCaptureMouse`/`io.WantCaptureKeyboard`. This is because e.g. we need to detect that you clicked in the void to unfocus its own windows, and other reasons.
+重要：无论 `io.WantCaptureMouse`/`io.WantCaptureKeyboard` 的值如何，你都应该始终把鼠标/键盘输入传给 Dear ImGui。这是因为，例如我们需要检测你点击了空白区域以便让其自身的窗口失去焦点，以及其它原因。
 
 ```cpp
 void MyLowLevelMouseButtonHandler(int button, bool down)
@@ -199,68 +199,68 @@ void MyLowLevelMouseButtonHandler(int button, bool down)
 }
 ```
 
-**Note:** The `io.WantCaptureMouse` is more correct that any manual attempt to "check if the mouse is hovering a window" (don't do that!). It handles mouse dragging correctly (both dragging that started over your application or over a Dear ImGui window) and handle e.g. popup and modal windows blocking inputs.
+**注意：** `io.WantCaptureMouse` 比任何手动尝试“检查鼠标是否悬停在某个窗口上”都要更正确（不要那样做！）。它能正确处理鼠标拖拽（无论是从你的应用程序上开始拖拽，还是从某个 Dear ImGui 窗口上开始拖拽），并能处理例如弹出窗口和模态窗口对输入的拦截。
 
-**Note:** Text input widget releases focus on the "KeyDown" event of the Return key, so the subsequent "KeyUp" event that your application receive will typically have `io.WantCaptureKeyboard == false`. Depending on your application logic it may or not be inconvenient to receive that KeyUp event. You might want to track which key-downs were targeted for Dear ImGui, e.g. with an array of bool, and filter out the corresponding key-ups.)
+**注意：** 文本输入控件会在回车键的 "KeyDown" 事件时释放焦点，因此你的应用程序随后收到的 "KeyUp" 事件通常会带有 `io.WantCaptureKeyboard == false`。根据你的应用程序逻辑，收到该 KeyUp 事件可能会也可能不会造成不便。你可能想跟踪哪些按键按下事件是针对 Dear ImGui 的，例如用一个 bool 数组，并过滤掉相应的按键抬起事件。）
 
-##### [Return to Index](#index)
-
----
-
-### Q: How can I enable keyboard or gamepad controls?
-- The gamepad/keyboard navigation is fairly functional and keeps being improved. The initial focus was to support game controllers, but keyboard is becoming increasingly and decently usable. Gamepad support is particularly useful to use Dear ImGui on a game console (e.g. PS4, Switch, XB1) without a mouse connected!
-- Keyboard: set `io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard` to enable.
-- Gamepad: set `io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad` to enable (with a supporting backend).
-- See [Control Sheets for Gamepads](https://www.dearimgui.com/controls_sheets) (reference PNG/PSD for PS4, XB1, Switch gamepads).
-- See `USING GAMEPAD/KEYBOARD NAVIGATION CONTROLS` section of [imgui.cpp](https://github.com/ocornut/imgui/blob/master/imgui.cpp) for more details.
-
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
 ---
 
-### Q: How can I use this on a machine without mouse, keyboard or screen? (input share, remote display)
-- You can share your computer mouse seamlessly with your console/tablet/phone using solutions such as [Synergy](https://symless.com/synergy)
-This is the preferred solution for developer productivity.
-In particular, the [micro-synergy-client repository](https://github.com/symless/micro-synergy-client) has simple
-and portable source code (uSynergy.c/.h) for a small embeddable client that you can use on any platform to connect
-to your host computer, based on the Synergy 1.x protocol. Make sure you download the Synergy 1 server on your computer.
-Console SDK also sometimes provide equivalent tooling or wrapper for Synergy-like protocols.
-- Game console users: consider emulating a mouse cursor with DualShock4 touch pad or a spare analog stick as a mouse-emulation fallback.
-- You may also use a third party solution such as [netImgui](https://github.com/sammyfreg/netImgui), [Remote ImGui](https://github.com/JordiRos/remoteimgui) or [imgui-ws](https://github.com/ggerganov/imgui-ws) which sends the vertices to render over the local network, allowing you to use Dear ImGui even on a screen-less machine. See [Wiki](https://github.com/ocornut/imgui/wiki) index for most details.
-- For touch inputs, you can increase the hit box of widgets (via the `style.TouchPadding` setting) to accommodate for the lack of precision of touch inputs, but it is recommended you use a mouse or gamepad to allow optimizing for screen real-estate and precision.
+### <a id="q-how-can-i-enable-keyboard-or-gamepad-controls"></a>问：如何启用键盘或游戏手柄控制？
+- 游戏手柄/键盘导航功能相当可用，并且一直在改进。最初的关注点是对游戏手柄的支持，但键盘的可用性正变得越来越好。游戏手柄支持在使用 Dear ImGui 于游戏主机（例如 PS4、Switch、XB1）且没有连接鼠标时特别有用！
+- 键盘：设置 `io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard` 以启用。
+- 游戏手柄：设置 `io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad` 以启用（需要支持它的后端）。
+- 参见[游戏手柄的按键说明图](https://www.dearimgui.com/controls_sheets)（适用于 PS4、XB1、Switch 游戏手柄的 PNG/PSD 参考图）。
+- 更多细节参见 [imgui.cpp](https://github.com/ocornut/imgui/blob/master/imgui.cpp) 的 `USING GAMEPAD/KEYBOARD NAVIGATION CONTROLS` 部分。
 
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
 ---
 
-### Q: How can I create my own backend?
-- See [docs/BACKENDS.md](https://github.com/ocornut/imgui/blob/master/docs/BACKENDS.md).
-- See Documentation at the top of imgui.cpp.
+### <a id="q-how-can-i-use-this-on-a-machine-without-mouse-keyboard-or-screen-input-share-remote-display"></a>问：如何在没有鼠标、键盘或屏幕的机器上使用它？（输入共享、远程显示）
+- 你可以借助 [Synergy](https://symless.com/synergy) 等方案，把电脑鼠标无缝共享给主机/平板/手机。
+这是提升开发者效率的首选方案。
+特别是 [micro-synergy-client 仓库](https://github.com/symless/micro-synergy-client) 提供了简单
+且可移植的源代码（uSynergy.c/.h），实现了一个小型可嵌入客户端，你可以在任何平台上使用它，基于 Synergy 1.x 协议
+连接到你的宿主计算机。请确保在电脑上下载 Synergy 1 服务端。
+主机 SDK 有时也提供类似 Synergy 协议的等价工具或封装。
+- 游戏主机用户：考虑用 DualShock4 触摸板或一个闲置的模拟摇杆来模拟鼠标光标，作为鼠标模拟的备选方案。
+- 你也可以使用第三方方案，例如 [netImgui](https://github.com/sammyfreg/netImgui)、[Remote ImGui](https://github.com/JordiRos/remoteimgui) 或 [imgui-ws](https://github.com/ggerganov/imgui-ws)，它们通过网络发送顶点进行渲染，让你即使在无屏幕的机器上也能使用 Dear ImGui。大部分细节参见 [Wiki](https://github.com/ocornut/imgui/wiki) 索引。
+- 对于触摸输入，你可以增大控件的命中区域（通过 `style.TouchPadding` 设置）来适应触摸输入精度不足的问题，但建议你使用鼠标或游戏手柄，以便针对屏幕空间利用率和精度进行优化。
 
-##### [Return to Index](#index)
-
----
-
-### Q: I integrated Dear ImGui in my engine and little squares are showing instead of text...
-Your renderer backend is not using the font texture correctly or it hasn't been uploaded to the GPU.
-- If this happens using standard backends (before 1.92): A) have you modified the font atlas after `ImGui_ImplXXX_NewFrame()`? B) maybe the texture failed to upload, which **can if your texture atlas is too big**. Also see [docs/FONTS.md](https://github.com/ocornut/imgui/blob/master/docs/FONTS.md).
-- If this happens using standard backends (after 1.92): please report.
-- If this happens with a custom backend: make sure you have uploaded the font texture to the GPU, that all shaders are rendering states are setup properly (e.g. texture is bound). Compare your code to existing backends and use a graphics debugger such as [RenderDoc](https://renderdoc.org) to debug your rendering states.
-
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
 ---
 
-### Q: I integrated Dear ImGui in my engine and some elements are clipping or disappearing when I move windows around...
-### Q: I integrated Dear ImGui in my engine and some elements are displaying outside their expected windows boundaries...
-You are probably mishandling the clipping rectangles in your render function.
-Each draw command needs the triangle rendered using the clipping rectangle provided in the ImDrawCmd structure (`ImDrawCmd->CllipRect`).
-Rectangles provided by Dear ImGui are defined as
+### <a id="q-how-can-i-create-my-own-backend"></a>问：如何创建我自己的后端？
+- 参见 [docs/BACKENDS.md](https://github.com/ocornut/imgui/blob/master/docs/BACKENDS.md)。
+- 参见 imgui.cpp 顶部的文档。
+
+##### [返回索引](#index)
+
+---
+
+### <a id="q-i-integrated-dear-imgui-in-my-engine-and-little-squares-are-showing-instead-of-text"></a>问：我把 Dear ImGui 集成到引擎中，但显示的是小方块而不是文字……
+你的渲染后端没有正确使用字体纹理，或者它还没有被上传到 GPU。
+- 如果是在使用标准后端时发生（1.92 之前）：A) 你是否在 `ImGui_ImplXXX_NewFrame()` 之后修改了字体图集？B) 可能是纹理上传失败，**如果你的纹理图集太大就会这样**。另见 [docs/FONTS.md](https://github.com/ocornut/imgui/blob/master/docs/FONTS.md)。
+- 如果是在使用标准后端时发生（1.92 之后）：请报告问题。
+- 如果是在使用自定义后端时发生：请确保你已经把字体纹理上传到 GPU，并且所有着色器和渲染状态都设置正确（例如纹理已绑定）。将你的代码与现有后端进行比较，并使用 [RenderDoc](https://renderdoc.org) 之类的图形调试器来调试你的渲染状态。
+
+##### [返回索引](#index)
+
+---
+
+### <a id="q-i-integrated-dear-imgui-in-my-engine-and-some-elements-are-clipping-or-disappearing-when-i-move-windows-around"></a>问：我把 Dear ImGui 集成到引擎中，移动窗口时有些元素被裁剪或消失……
+### <a id="q-i-integrated-dear-imgui-in-my-engine-and-some-elements-are-displaying-outside-their-expected-windows-boundaries"></a>问：我把 Dear ImGui 集成到引擎中，有些元素显示在了预期窗口边界之外……
+你的渲染函数中很可能没有正确处理裁剪矩形。
+每条绘制命令都需要使用 ImDrawCmd 结构中提供的裁剪矩形（`ImDrawCmd->CllipRect`）来渲染三角形。
+Dear ImGui 提供的矩形定义方式为
 `(x1=left,y1=top,x2=right,y2=bottom)`
-and **NOT** as
-`(x1,y1,width,height)`.
-Refer to rendering backends in the [backends/](https://github.com/ocornut/imgui/tree/master/backends) folder for references of how to handle the `ClipRect` field.
-For example, the [DirectX11 backend](https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_dx11.cpp) does this:
+而**不是**
+`(x1,y1,width,height)`。
+关于如何处理 `ClipRect` 字段，请参考 [backends/](https://github.com/ocornut/imgui/tree/master/backends) 文件夹中的渲染后端。
+例如，[DirectX11 后端](https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_dx11.cpp)就是这么做的：
 ```cpp
 // Project scissor/clipping rectangles into framebuffer space
 ImVec2 clip_off = draw_data->DisplayPos;
@@ -274,24 +274,24 @@ const D3D11_RECT r = { (LONG)clip_min.x, (LONG)clip_min.y, (LONG)clip_max.x, (LO
 ctx->RSSetScissorRects(1, &r);
 ```
 
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
 ---
 
-# Q&A: Usage
+# <a id="qa-usage"></a>问答：用法
 
-## Q: About the ID Stack system...
+## <a id="q-about-the-id-stack-system"></a>问：关于 ID 栈系统……
 
-**USING THE SAME LABEL+ID IS THE MOST COMMON USER MISTAKE!**
-<br>**USING AN EMPTY LABEL IS THE SAME AS USING THE SAME LABEL AS YOUR PARENT WIDGET!**
-<br>Read the questions in this section for a more general understand of how labels and ID works in Dear ImGui.
+**使用相同的标签+ID 是最常见的用户错误！**
+<br>**使用空标签等同于使用与父级控件相同的标签！**
+<br>阅读本节中的问题，以更全面地理解 Dear ImGui 中标签和 ID 的工作方式。
 
-TL;DR;
-- Widgets labels are also used to compute Widgets unique identifiers.
-- Unique identifiers are hashes of the label + of the parent scope (e.g. parent window or parent tree node labels).
-- You can use `PushID()` to append to the identifier without making it visible.
-- You can use `"##something"` in a label to append to the identifier without making it visible.
-- You can use `"###something"` in a label to make the identifier ignore the visible part.
+简而言之；
+- 控件标签也用于计算控件的唯一标识符。
+- 唯一标识符是标签和父级作用域（例如父窗口或父树节点标签）的哈希值。
+- 你可以使用 `PushID()` 向标识符追加内容，同时不使其可见。
+- 你可以在标签中使用 `"##something"` 向标识符追加内容，同时不使其可见。
+- 你可以在标签中使用 `"###something"` 使标识符忽略可见部分。
 
 <table>
 <tr>
@@ -323,9 +323,9 @@ ImGui::End();
 </tr>
 </table>
 
-### Q: How can I have multiple widgets with the same label?
+### <a id="q-how-can-i-have-multiple-widgets-with-the-same-label"></a>问：如何让多个控件使用相同标签？
 
-A. When widgets are in a same scope and finite, you can use a `"##something"` suffix which will be part of the identifier but not visible as a label.
+A. 当控件位于同一作用域内且数量有限时，你可以使用 `"##something"` 后缀，该后缀将成为标识符的一部分，但不会作为标签显示。
 
 ```cpp
 Button("Play");        // Label = "Play",   ID = hash of ("MyWindow", "Play")
@@ -333,7 +333,7 @@ Button("Play##foo1");  // Label = "Play",   ID = hash of ("MyWindow", "Play##foo
 Button("Play##foo2");  // Label = "Play",   ID = hash of ("MyWindow", "Play##foo2")  // Different from other buttons
 ```
 
-B. More generally, e.g. in loops, you can use `PushID()/PopID()` to push a prefix which will be part of the identifier.
+B. 更一般地，例如在循环中，你可以使用 `PushID()/PopID()` 压入一个前缀，该前缀将成为标识符的一部分。
 
 ```cpp
 // Using PushID() with a string
@@ -356,29 +356,29 @@ for (int i = 0; i < 100; i++)
 }
 ```
 
-### Q: How can I have widgets with an empty label?
+### <a id="q-how-can-i-have-widgets-with-an-empty-label"></a>问：如何让控件使用空标签？
 
-If you want to completely hide the label, but still need an ID:
+如果你想完全隐藏标签，但仍需要 ID：
 
 ```cpp
 Checkbox("##On", &b);  // Label = "",       ID = hash of (..., "##On")   // No visible label, just a checkbox!
 ```
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
-### Q: How can I make a label dynamic?
+### <a id="q-how-can-i-make-a-label-dynamic"></a>问：如何让标签动态变化？
 
-Dear ImGui is very dynamic so you can submit different widgets every frame.
-However, in order to preserve widget state (eg. which tree node is open; which button is focused) the library internaly refers to their unique ID.
+Dear ImGui 非常动态，因此你可以在每一帧提交不同的控件。
+然而，为了保留控件状态（例如哪个树节点处于打开状态、哪个按钮处于焦点状态），库内部会引用它们的唯一 ID。
 
-Occasionally you might want to change a label while preserving a constant ID. This allows you to change/animate labels while persisting associated state.
-For example, you may want to include varying information in a window title bar or button label.
+有时你可能希望在保持 ID 不变的同时更改标签。这样可以在保留关联状态的同时更改/动态显示标签。
+例如，你可能希望在窗口标题栏或按钮标签中包含不断变化的信息。
 
-Using "###" exclude the preceeding part from ID computation:
+使用 "###" 可将前面部分排除在 ID 计算之外：
 ```cpp
 Button("Hello###ID");   // Label = "Enable",   ID = hash of (..., "ID")
 Button("World###ID");   // Label = "Disable",  ID = hash of (..., "ID")  // Same ID, different label
 ```
-Using a same ID ensure that associated related e.g. weither the widget is focused, won't be lost when the label changes.
+使用相同的 ID 可确保相关状态（例如控件是否处于焦点）不会在标签变化时丢失。
 
 <table>
 <tr>
@@ -402,31 +402,31 @@ ImGui::End();
 </tr>
 </table>
 
-(Hint: I'd suggest wrapping sprintf in something more compact to use, e.g. [ocornut/Str](https://github.com/ocornut/Str) for what I personally use).
+（提示：我建议将 sprintf 包装成更紧凑易用的形式，例如我个人使用的 [ocornut/Str](https://github.com/ocornut/Str)。）
 
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
-### General description of the label and ID Stack system
+### <a id="general-description-of-the-label-and-id-stack-system"></a>标签和 ID 栈系统的一般说明
 
-Dear ImGui internally needs to uniquely identify UI elements.
-Elements that are typically not clickable (such as calls to Text() functions) don't need an ID.
-Interactive widgets (such as calls to Button() functions) need a unique ID.
+Dear ImGui 内部需要唯一标识 UI 元素。
+通常不可点击的元素（例如对 Text() 函数的调用）不需要 ID。
+交互式控件（例如对 Button() 函数的调用）需要唯一 ID。
 
-**Unique IDs are used internally to track active widgets and occasionally associate state to widgets.<BR>
-Unique IDs are implicitly built from the hash of multiple elements that identify the "path" to the UI element.**
+**唯一 ID 在内部用于跟踪活动控件，并偶尔将状态关联到控件。<BR>
+唯一 ID 是由多个元素的哈希值隐式构建的，这些元素标识了指向 UI 元素的“路径”。**
 
-You can use `Demo>Tools>ID Stack Tool` or call `ImGui::ShowIDStackToolWindow()`. The tool display intermediate values leading to the creation of a unique ID, making things easier to debug and understand.
+你可以使用 `Demo>Tools>ID Stack Tool` 或调用 `ImGui::ShowIDStackToolWindow()`。该工具会显示创建唯一 ID 的中间值，使调试和理解更加容易。
 
 ![Stack tool](https://user-images.githubusercontent.com/8225057/136235657-a0ea5665-dcd1-423f-9be6-dc3f8ced8f12.png)
 
-- Unique ID are often derived from a string label and at minimum scoped within their host window:
+- 唯一 ID 通常派生自字符串标签，并且至少限定在其宿主窗口的作用域内：
 ```cpp
 Begin("MyWindow");
 Button("OK");          // Label = "OK",     ID = hash of ("MyWindow", "OK")
 Button("Cancel");      // Label = "Cancel", ID = hash of ("MyWindow", "Cancel")
 End();
 ```
-- Other elements such as tree nodes, etc. also pushes to the ID stack:
+- 其他元素（例如树节点等）也会压入 ID 栈：
 ```cpp
 Begin("MyWindow");
 if (TreeNode("MyTreeNode"))
@@ -436,7 +436,7 @@ if (TreeNode("MyTreeNode"))
 }
 End();
 ```
-- Two items labeled "OK" in different windows or different tree locations won't collide:
+- 在不同窗口或不同树位置中，两个标签为 “OK” 的项不会发生冲突：
 ```cpp
 Begin("MyFirstWindow");
 Button("OK");          // Label = "OK",     ID = hash of ("MyFirstWindow", "OK")
@@ -446,7 +446,7 @@ Button("OK");          // Label = "OK",     ID = hash of ("MyOtherWindow", "OK")
 End();
 ```
 
-- If you have a same ID twice in the same location, you'll have a conflict:
+- 如果在同一位置两次使用相同的 ID，就会发生冲突：
 ```cpp
 Begin("MyWindow");
 Button("OK");
@@ -454,13 +454,12 @@ Button("OK");      // ERROR: ID collision with the first button! Interacting wit
 Button("");        // ERROR: ID collision with Begin("MyWindow")!
 End();
 ```
-Fear not! This is easy to solve and there are many ways to solve it!
+别担心！这很容易解决，而且有很多解决方法！
 
-- Solving ID conflict in a simple/local context:
-When passing a label you can optionally specify extra ID information within the string itself.
-Use "##" to pass a complement to the ID that won't be visible to the end-user.
-This helps solve the simple collision cases when you know e.g. at compilation time which items
-are going to be created:
+- 在简单/局部上下文中解决 ID 冲突：
+传递标签时，你可以选择在字符串本身中指定额外的 ID 信息。
+使用 "##" 传递 ID 的补充信息，这些信息不会对最终用户可见。
+当你知道在编译时将要创建哪些项等情况时，这有助于解决简单的冲突情况：
 ```cpp
 Begin("MyWindow");
 Button("Play");        // Label = "Play",   ID = hash of ("MyWindow", "Play")
@@ -470,13 +469,11 @@ Button("##foo");       // Label = "",       ID = hash of ("MyWindow", "##foo")  
 End();
 ```
 
-- Solving ID conflict in a more general manner:
-Use `PushID()` / `PopID()` to create scopes and manipulate the ID stack, as to avoid ID conflicts
-within the same window. This is the most convenient way of distinguishing ID when iterating and
-creating many UI elements programmatically.
-You can push a pointer, a string, or an integer value into the ID stack.
-Remember that IDs are formed from the concatenation of _everything_ pushed into the ID stack.
-At each level of the stack, we store the seed used for items at this level of the ID stack.
+- 以更通用的方式解决 ID 冲突：
+使用 `PushID()` / `PopID()` 创建作用域并操作 ID 栈，以避免同一窗口内的 ID 冲突。在以编程方式迭代和创建大量 UI 元素时，这是区分 ID 最方便的方法。
+你可以将指针、字符串或整数值压入 ID 栈。
+请记住，ID 是由压入 ID 栈的_所有内容_连接而成的。
+在栈的每一层，我们存储用于该 ID 栈层级中各项的种子。
 ```cpp
 Begin("Window");
 for (int i = 0; i < 100; i++)
@@ -501,7 +498,7 @@ for (int i = 0; i < 100; i++)
 }
 End();
 ```
-- You can stack multiple prefixes into the ID stack:
+- 你可以将多个前缀堆叠到 ID 栈中：
 ```cpp
 Button("Click");       // Label = "Click",  ID = hash of (..., "Click")
 PushID("node");
@@ -511,7 +508,7 @@ PushID("node");
   PopID();
 PopID();
 ```
-- Tree nodes implicitly create a scope for you by calling `PushID()`:
+- 树节点通过调用 `PushID()` 隐式为你创建作用域：
 ```cpp
 Button("Click");       // Label = "Click",  ID = hash of (..., "Click")
 if (TreeNode("node"))  // <-- this function call will do a PushID() for you (unless instructed not to, with a special flag)
@@ -521,51 +518,48 @@ if (TreeNode("node"))  // <-- this function call will do a PushID() for you (unl
 }
 ```
 
-When working with trees, IDs are used to preserve the open/close state of each tree node.
-Depending on your use cases you may want to use strings, indices, or pointers as ID.
-- e.g. when following a single pointer that may change over time, using a static string as ID
-will preserve your node open/closed state when the targeted object change.
-- e.g. when displaying a list of objects, using indices or pointers as ID will preserve the
-node open/closed state differently. See what makes more sense in your situation!
+处理树结构时，ID 用于保留每个树节点的打开/关闭状态。
+根据你的使用场景，你可能希望使用字符串、索引或指针作为 ID。
+- 例如，当跟踪一个可能随时间变化的单一指针时，使用静态字符串作为 ID，可以在目标对象发生变化时保留节点的打开/关闭状态。
+- 例如，在显示对象列表时，使用索引或指针作为 ID 会以不同方式保留节点的打开/关闭状态。请根据你的具体情况判断哪种方式更合理！
 
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
 ---
+### <a id="q-how-can-i-display-an-image"></a>问：如何显示一张图片？
+### <a id="q-what-are-imtextureidimtextureref"></a>问：ImTextureID/ImTextureRef 是什么？
 
-### Q: How can I display an image?
-### Q: What are ImTextureID/ImTextureRef?
+**简要说明：**
+- 你可以使用 `ImGui::Image()`、`ImGui::ImageButton()` 等函数，或更低层的 `ImDrawList::AddImage()`，来发出使用你自己纹理的绘制调用。
+- 若要加载并显示你自己的纹理，请参阅 [Wiki](https://github.com/ocornut/imgui/wiki) 上的 [Image Loading and Displaying Examples](https://github.com/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples)。
+- 实际纹理以何种方式标识取决于用户/引擎。这些标识符以不透明的 ImTextureID 值的形式被存储和传递。
+- 默认情况下 ImTextureID 最多可存储 64 位。如有需要，你可以 `#define` 将其设为自定义类型/结构体。
+- 从磁盘加载图像文件并将它们转换为纹理不属于 Dear ImGui 的职责范围（这是有充分理由的），但上面链接的示例可能是有用的参考。
 
-**Short explanation:**
-- You may use functions such as `ImGui::Image()`, `ImGui::ImageButton()` or lower-level `ImDrawList::AddImage()` to emit draw calls that will use your own textures.
-- To load and display your own textures, refer to [Image Loading and Displaying Examples](https://github.com/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples) on the [Wiki](https://github.com/ocornut/imgui/wiki).
-- Actual textures are identified in a way that is up to the user/engine. Those identifiers are stored and passed as an opaque ImTextureID value.
-- By default ImTextureID can store up to 64-bits. You may `#define` it to a custom type/structure if you need.
-- Loading image files from the disk and turning them into a texture is not within the scope of Dear ImGui (for a good reason), but the examples linked above may be useful references.
+**详情：**
 
-**Details:**
+1.92 在 2025 年 6 月引入了 `ImTextureRef`。
+- 所有使用 `ImTextureID` 的绘制函数都已改为使用 `ImTextureRef`。
+- 你可以轻松地从 `ImTextureID` 创建 `ImTextureRef`。
+- **如果你将 Image 函数用于你自己加载/创建的纹理，那么你很可能只需在自己这一侧存储/操作 `ImTextureID`，然后将其作为 `ImTextureRef` 传入。**
+- 只有在处理由后端自身管理的纹理（目前主要是指 atlas 纹理）时，你才_需要_操作 `ImTextureRef`。
+- 我们有意不提供 `ImTextureRef` -> `ImTextureID` 的隐式转换运算符，因为在渲染前将 ImTextureRef 转换为 ImTextureID 在技术上是有损的。
 
-1.92 introduced `ImTextureRef` in June 2025.
-- All drawing functions using `ImTextureID` were changed to use `ImTextureRef`.
-- You can trivially create a `ImTextureRef` from a `ImTextureID`.
-- **If you use Image functions with textures that you have loaded/created yourself, you will mostly likely only ever store/manipulate `ImTextureID` and then pass them as `ImTextureRef`.**
-- You only NEED to manipulate `ImTextureRef` when dealing with textures managed by the backend itself, aka mainly the atlas texture for now.
-- We intentionally do not provide an implicit `ImTextureRef` -> `ImTextureID` cast operator because it is technically lossy to convert ImTextureRef to ImTextureID before rendering.
-
-**ImTextureID = backend specific, low-level identifier for a texture uploaded in GPU/graphics system.**
+**ImTextureID = 后端特定的低层标识符，用于标识已上传到 GPU/图形系统中的纹理。**
 ```cpp
 #ifndef ImTextureID
 typedef ImU64 ImTextureID;  // Default: store up to 64-bits (any pointer or integer). A majority of backends are ok with that.
 #endif
 ```
-- When a Rendered Backend creates a texture, it store its native identifier into a ImTextureID value (e.g. Used by DX11 backend to a `ID3D11ShaderResourceView*`; Used by OpenGL backends to store `GLuint`; Used by SDLGPU backend to store a `SDL_GPUTextureSamplerBinding*`, etc.).
-- User may submit their own textures to e.g. `ImGui::Image()` function by passing this value.
-- During the rendering loop, the Renderer Backend retrieve the ImTextureID, which stored inside a ImTextureRef, which is stored inside ImDrawCmd.
-- Compile-time type configuration:
-  - To use something other than a 64-bit value: add '#define ImTextureID MyTextureType*' in your imconfig.h file.
-  - This can be whatever to you want it to be! read the FAQ entry about textures for details.
-  - You may decide to store a higher-level structure containing texture, sampler, shader etc. with various constructors if you like. You will need to implement ==/!= operators.
+- 当渲染后端创建纹理时，它会将其原生标识符存入一个 ImTextureID 值中（例如：DX11 后端使用 `ID3D11ShaderResourceView*`；OpenGL 后端存储 `GLuint`；SDLGPU 后端存储 `SDL_GPUTextureSamplerBinding*`，等等）。
+- 用户可以通过传递该值，将自己的纹理提交给 `ImGui::Image()` 等函数。
+- 在渲染循环期间，渲染后端会取出 ImTextureID，它存放在 ImTextureRef 中，而 ImTextureRef 又存放在 ImDrawCmd 中。
+- 编译期类型配置：
+  - 若要使用 64 位值以外的类型：在你的 imconfig.h 文件中添加 '#define ImTextureID MyTextureType*'。
+  - 你想让它是什么就可以是什么！详情请阅读关于纹理的 FAQ 条目。
+  - 如果你愿意，也可以决定存储一个包含 texture、sampler、shader 等的高层结构体，并配以各种构造函数。你需要实现 ==/!= 运算符。
 
-**ImTextureRef = higher-level identifier for a texture.**
+**ImTextureRef = 用于标识纹理的高层标识符。**
 ```cpp
 // Store a ImTextureID _or_ a ImTextureData*.
 struct ImTextureRef
@@ -579,27 +573,27 @@ struct ImTextureRef
     ImTextureID         _TexID;             // _OR_ Low-level backend texture identifier, if already uploaded or created by user/app. Generally provided to e.g. ImGui::Image() calls.
 };
 ```
-- The identifier is valid even before the texture has been uploaded to the GPU/graphics system.
-- This is what gets passed to functions such as `ImGui::Image()`, `ImDrawList::AddImage()`.
-- This is what gets stored in draw commands (`ImDrawCmd`) to identify a texture during rendering.
- - When a texture is created by user code (e.g. custom images), we directly store the low-level `ImTextureID`.
-   - Because of this, when displaying your own texture you are likely to ever only manage ImTextureID values on your side.
- - When a texture is created by the backend, we store a `ImTextureData*` which becomes an indirection to extract the `ImTextureID` value during rendering, after texture upload has happened.
- - To create a `ImTextureRef` from a `ImTextureData*` you can use `ImTextureData::GetTexRef()`.
-   We intentionally do not provide an `ImTextureRef` constructor for this: we don't expect this to be frequently useful to the end-user, and it would be erroneously called by many legacy code.
- - There is no constructor to create a `ImTextureRef` from a `ImTextureData*` as we don't expect this to be useful to the end-user, and it would be erroneously called by many legacy code.
- - If you want to bind the current atlas when using custom rectangles, you can use `io.Fonts->TexRef`.
- - Binding generators for languages such as C (which don't have constructors), should provide a helper, e.g. `inline ImTextureRef ImTextureRefFromID(ImTextureID tex_id) { ImTextureRef tex_ref = { ._TexData = nullptr, .TexID = tex_id }; return tex_ref; }`
+- 即使在纹理上传到 GPU/图形系统之前，该标识符也是有效的。
+- 这就是传递给 `ImGui::Image()`、`ImDrawList::AddImage()` 等函数的内容。
+- 这就是存储在绘制命令（`ImDrawCmd`）中、用于在渲染期间标识纹理的内容。
+ - 当纹理由用户代码创建（例如自定义图像）时，我们直接存储低层的 `ImTextureID`。
+   - 因此，在显示你自己的纹理时，你很可能只需在自己这一侧管理 ImTextureID 值。
+ - 当纹理由后端创建时，我们存储一个 `ImTextureData*`，它充当一个间接层，用于在纹理上传完成后、渲染期间提取 `ImTextureID` 值。
+ - 若要从 `ImTextureData*` 创建 `ImTextureRef`，你可以使用 `ImTextureData::GetTexRef()`。
+   我们有意不为此提供 `ImTextureRef` 构造函数：我们认为它对最终用户不会经常有用，而且许多遗留代码会错误地调用它。
+ - 我们未提供从 `ImTextureData*` 创建 `ImTextureRef` 的构造函数，因为我们认为它对最终用户没有用，而且许多遗留代码会错误地调用它。
+ - 如果你想在使用自定义矩形时绑定当前 atlas，可以使用 `io.Fonts->TexRef`。
+ - 针对 C 等语言（没有构造函数）的绑定生成器应提供一个辅助函数，例如 `inline ImTextureRef ImTextureRefFromID(ImTextureID tex_id) { ImTextureRef tex_ref = { ._TexData = nullptr, .TexID = tex_id }; return tex_ref; }`
 
-**Please read documentations or tutorials on your graphics API to understand how to display textures on the screen before moving onward.**
+**在继续之前，请先阅读你所使用图形 API 的文档或教程，以了解如何将纹理显示到屏幕上。**
 
-Long explanation:
-- Dear ImGui's job is to create "meshes", defined in a renderer-agnostic format made of draw commands and vertices. At the end of the frame, those meshes (ImDrawList) will be displayed by your rendering function. They are made up of textured polygons and the code to render them is generally fairly short (a few dozen lines). In the examples/ folder, we provide functions for popular graphics APIs (OpenGL, DirectX, etc.).
-- Each rendering function decides on a data type to represent "textures". The concept of what is a "texture" is entirely tied to your underlying engine/graphics API.
-We carry the information to identify a "texture" in the ImTextureID type, which itself tends to be stored inside a ImTextureRef.
-ImTextureID default to ImU64 aka 8 bytes worth of data: just enough to store one pointer or integer of your choice.
-Dear ImGui doesn't know or understand what you are storing in ImTextureID, it merely passes values until they reach your rendering function.
-- In the [examples/](https://github.com/ocornut/imgui/tree/master/examples) backends, for each graphics API we decided on a type that is likely to be a good representation for specifying an image from the end-user perspective. This is what the _examples_ rendering functions are using:
+详细解释：
+- Dear ImGui 的职责是创建“网格（mesh）”，它们以与渲染器无关的格式定义，由绘制命令和顶点组成。在帧末尾，这些网格（ImDrawList）将由你的渲染函数显示出来。它们由带纹理的多边形组成，而渲染它们的代码通常相当简短（几十行）。在 examples/ 文件夹中，我们为流行的图形 API（OpenGL、DirectX 等）提供了相应函数。
+- 每个渲染函数都会决定用某种数据类型来表示“纹理”。“纹理”的概念完全取决于你底层的引擎/图形 API。
+我们用 ImTextureID 类型承载标识“纹理”的信息，而 ImTextureID 本身通常又存放在 ImTextureRef 中。
+ImTextureID 默认为 ImU64，也就是 8 字节的数据：刚好足以存储你选择的任意一个指针或整数。
+Dear ImGui 并不知道、也不理解你在 ImTextureID 中存储了什么，它只是传递这些值，直到它们到达你的渲染函数。
+- 在 [examples/](https://github.com/ocornut/imgui/tree/master/examples) 后端中，我们为每种图形 API 选定了一个类型，它很可能能很好地表示从最终用户视角指定一张图像的方式。_examples_ 中的渲染函数使用的正是这些类型：
 ```cpp
 OpenGL:
 - ImTextureID should contains 'GLuint' (GL texture identifier).
@@ -620,34 +614,34 @@ DirectX12:
 - ImTextureID should contain a 'D3D12_GPU_DESCRIPTOR_HANDLE' (always 64-bits)
 - See ImGui_ImplDX12_RenderDrawData() function in imgui_impl_dx12.cpp
 ```
-For example, in the OpenGL example backend we store raw OpenGL texture identifier (GLuint) inside ImTextureID.
-Whereas in the DirectX11 example backend we store a pointer to ID3D11ShaderResourceView inside ImTextureID, which is a higher-level structure tying together both the texture and information about its format and how to read it.
+例如，在 OpenGL 示例后端中，我们在 ImTextureID 里存储原始的 OpenGL 纹理标识符（GLuint）。
+而在 DirectX11 示例后端中，我们在 ImTextureID 里存储指向 ID3D11ShaderResourceView 的指针，它是一个更高层的结构体，把纹理本身以及关于其格式和读取方式的信息绑定在一起。
 
-- If you have a custom engine built over e.g. OpenGL, instead of passing GLuint around you may decide to use a high-level data type to carry information about the texture as well as how to display it (shaders, etc.). The decision of what to use as ImTextureID can always be made better by knowing how your codebase is designed. If your engine has high-level data types for "textures" and "material" then you may want to use them.
-If you are starting with OpenGL or DirectX or Vulkan and haven't built much of a rendering engine over them, keeping the default ImTextureID representation suggested by the example backends is probably the best choice.
-(Advanced users may also decide to keep a low-level type in ImTextureID, use ImDrawList callback and pass information to their renderer)
+- 如果你有一个基于 OpenGL 等构建的自定义引擎，除了到处传递 GLuint，你也可以决定使用一种高层数据类型，同时携带纹理信息以及如何显示它（shader 等）的信息。只要了解你的代码库是如何设计的，就能更好地决定该用什么作为 ImTextureID。如果你的引擎有用于“纹理”和“材质”的高层数据类型，那你可能就想用它们。
+如果你是刚开始接触 OpenGL、DirectX 或 Vulkan，还没有在其上构建多少渲染引擎，那么保留示例后端建议的默认 ImTextureID 表示方式可能是最好的选择。
+（高级用户也可以决定在 ImTextureID 中保留低层类型，使用 ImDrawList 回调，并把信息传递给自己的渲染器）
 
-User code may do:
+用户代码可以这样写：
 ```cpp
 // Cast our texture type to ImTextureID
 MyTexture* texture = g_CoffeeTableTexture;
 ImGui::Image((ImTextureID)(intptr_t)texture, ImVec2(texture->Width, texture->Height));
 ```
-The renderer function called after ImGui::Render() will receive that same value that the user code passed:
+在 ImGui::Render() 之后被调用的渲染函数将收到用户代码所传入的同一个值：
 ```cpp
 // Cast ImTextureID stored in the draw command as our texture type
 MyTexture* texture = (MyTexture*)(intptr_t)pcmd->GetTexID();
 MyEngineBindTexture2D(texture);
 ```
-Once you understand this design, you will understand that loading image files and turning them into displayable textures is not within the scope of Dear ImGui.
-This is by design and is a good thing because it means your code has full control over your data types and how you display them.
-If you want to display an image file (e.g. PNG file) on the screen, please refer to documentation and tutorials for the graphics API you are using.
+一旦你理解了这一设计，你就会明白：加载图像文件并将它们转换为可显示的纹理不属于 Dear ImGui 的职责范围。
+这是有意为之的，也是一件好事，因为这意味着你的代码可以完全控制自己的数据类型以及显示它们的方式。
+如果你想在屏幕上显示某个图像文件（例如 PNG 文件），请参阅你所使用图形 API 的文档和教程。
 
-Refer to [Image Loading and Displaying Examples](https://github.com/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples) on the [Wiki](https://github.com/ocornut/imgui/wiki) to find simplified examples for loading textures with OpenGL, DirectX9 and DirectX11.
+请参阅 [Wiki](https://github.com/ocornut/imgui/wiki) 上的 [Image Loading and Displaying Examples](https://github.com/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples)，以查找使用 OpenGL、DirectX9 和 DirectX11 加载纹理的简化示例。
 
-C/C++ tip: a u64 is 8 bytes. You may safely store any pointer or integer into it by casting your value to ImTextureID, and vice-versa.
-Because both end-points (user code and rendering function) are under your control, you know exactly what is stored inside the ImTextureID.
-Here are some examples:
+C/C++ 提示：u64 是 8 字节。你可以放心地把任意指针或整数强制转换为 ImTextureID 存进去，反之亦然。
+因为两端（用户代码和渲染函数）都在你的掌控之下，所以你完全清楚 ImTextureID 中存储的是什么。
+以下是一些示例：
 ```cpp
 GLuint my_tex = XXX;
 ImTextureID my_imtexid;
@@ -659,61 +653,60 @@ ImTextureID my_imtexid;
 my_imtexid = (ImTextureID)(intptr_t)my_dx11_srv;                // cast a ID3D11ShaderResourceView* into an opaque ImTextureID
 my_dx11_srv = (ID3D11ShaderResourceView*)(intptr_t)_my_imtexid; // cast a ImTextureID into a ID3D11ShaderResourceView*
 ```
-Finally, you may call `ImGui::ShowMetricsWindow()` to explore/visualize/understand how the ImDrawList are generated.
+最后，你可以调用 `ImGui::ShowMetricsWindow()` 来浏览/可视化/理解 ImDrawList 是如何生成的。
 
-##### [Return to Index](#index)
-
----
-
-### Q: How can I use maths operators with ImVec2?
-
-We do not export maths operators by default in imgui.h in order to not conflict with the use of your own maths types and maths operators. As a convenience, you may use `#define IMGUI_DEFINE_MATH_OPERATORS` + `#include "imgui.h"` to access our basic maths operators.
-
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
 ---
 
-### Q: How can I use my own maths types instead of ImVec2/ImVec4?
+### <a id="q-how-can-i-use-maths-operators-with-imvec2"></a>问：如何在 ImVec2 上使用数学运算符？
 
-You can setup your [imconfig.h](https://github.com/ocornut/imgui/blob/master/imconfig.h) file with `IM_VEC2_CLASS_EXTRA`/`IM_VEC4_CLASS_EXTRA` macros to add implicit type conversions to our own maths types.
-This way you will be able to use your own types everywhere, e.g. passing `MyVector2` or `glm::vec2` to ImGui functions instead of `ImVec2`.
+我们默认不在 imgui.h 中导出数学运算符，以免与你自己的数学类型和数学运算符的使用产生冲突。为方便起见，你可以使用 `#define IMGUI_DEFINE_MATH_OPERATORS` + `#include "imgui.h"` 来访问我们的基本数学运算符。
 
-##### [Return to Index](#index)
-
----
-
-### Q: How can I interact with standard C++ types (such as std::string and std::vector)?
-
-- Being highly portable (backends/bindings for several languages, frameworks, programming styles, obscure or older platforms/compilers), and aiming for compatibility & performance suitable for every modern real-time game engine, Dear ImGui does not use any of std C++ types. We use raw types (e.g. char* instead of std::string) because they adapt to more use cases.
-- To use ImGui::InputText() with a std::string or any resizable string class, see [misc/cpp/imgui_stdlib.h](https://github.com/ocornut/imgui/blob/master/misc/cpp/imgui_stdlib.h).
-- To use combo boxes and list boxes with `std::vector` or any other data structure: the `BeginCombo()/EndCombo()` API
-lets you iterate and submit items yourself, so does the `ListBoxHeader()/ListBoxFooter()` API.
-Prefer using them over the old and awkward `Combo()/ListBox()` api.
-- Generally for most high-level types you should be able to access the underlying data type.
-You may write your own one-liner wrappers to facilitate user code (tip: add new functions in ImGui:: namespace from your code).
-- Dear ImGui applications often need to make intensive use of strings. It is expected that many of the strings you will pass
-to the API are raw literals (free in C/C++) or allocated in a manner that won't incur a large cost on your application.
-Please bear in mind that using `std::string` on applications with a large amount of UI may incur unsatisfactory performances.
-Modern implementations of `std::string` often include small-string optimization (which is often a local buffer) but those
-are not configurable and not the same across implementations.
-- If you are finding your UI traversal cost to be too large, make sure your string usage is not leading to an excessive amount
-of heap allocations. Consider using literals, statically sized buffers, and your own helper functions. A common pattern
-is that you will need to build lots of strings on the fly, and their maximum length can be easily scoped ahead.
-One possible implementation of a helper to facilitate printf-style building of strings: https://github.com/ocornut/Str
-This is a small helper where you can instance strings with configurable local buffers length. Many game engines will
-provide similar or better string helpers.
-
-Using string views:
-
-- String view types such as `std::string_view` may be used with the [feature/string_view](https://github.com/ocornut/imgui/tree/features/string_view) branch. This branch is actively maintained and supported. Please provide feedback if you use it. We are waiting for a good moment to merge it.
-
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
 ---
 
-### Q: How can I display custom shapes? (using low-level ImDrawList API)
+### <a id="q-how-can-i-use-my-own-maths-types-instead-of-imvec2imvec4"></a>问：如何用自己的数学类型替代 ImVec2/ImVec4？
 
-- You can use the low-level `ImDrawList` api to render shapes within a window.
+你可以在 [imconfig.h](https://github.com/ocornut/imgui/blob/master/imconfig.h) 文件中用 `IM_VEC2_CLASS_EXTRA`/`IM_VEC4_CLASS_EXTRA` 宏进行设置，为你的数学类型添加隐式类型转换。
+这样你就能在任何地方使用自己的类型，例如向 ImGui 函数传递 `MyVector2` 或 `glm::vec2` 而不是 `ImVec2`。
+
+##### [返回索引](#index)
+
+---
+
+### <a id="q-how-can-i-interact-with-standard-c-types-such-as-stdstring-and-stdvector"></a>问：如何与标准 C++ 类型（如 std::string 和 std::vector）交互？
+
+- 出于高度可移植性（面向多种语言、框架、编程风格、冷门或较旧平台/编译器的后端/绑定），并追求适合每个现代实时游戏引擎的兼容性与性能，Dear ImGui 不使用任何 std C++ 类型。我们使用原始类型（例如用 char* 而不是 std::string），因为它们能适应更多的使用场景。
+- 若要将 ImGui::InputText() 与 std::string 或任何可调整大小的字符串类一起使用，请参见 [misc/cpp/imgui_stdlib.h](https://github.com/ocornut/imgui/blob/master/misc/cpp/imgui_stdlib.h)。
+- 若要将组合框和列表框与 `std::vector` 或任何其他数据结构一起使用：`BeginCombo()/EndCombo()` API
+允许你自己遍历并提交项目，`ListBoxHeader()/ListBoxFooter()` API 也是如此。
+请优先使用它们，而不是老旧而笨拙的 `Combo()/ListBox()` api。
+- 一般来说，对于大多数高层类型，你应该能够访问其底层数据类型。
+你可以编写自己的一行式包装函数来方便用户代码（提示：在你自己的代码中向 ImGui:: 命名空间添加新函数）。
+- Dear ImGui 应用经常需要密集使用字符串。你传给 API 的许多字符串预计都是原始字面量（在 C/C++ 中无需额外开销），或者以不会给你的应用带来很大开销的方式分配。
+请记住，在 UI 数量很大的应用中使用 `std::string` 可能会导致性能不尽如人意。
+`std::string` 的现代实现通常包含小字符串优化（往往是一个本地缓冲区），但这些
+是不可配置的，且不同实现之间并不相同。
+- 如果你发现 UI 遍历开销过大，请确保你的字符串使用不会导致过多的
+堆分配。考虑使用字面量、静态大小的缓冲区以及你自己的辅助函数。一种常见的模式
+是，你需要即时构建大量字符串，而它们的最大长度可以很容易地提前界定。
+一个便于以 printf 风格构建字符串的辅助函数的可能实现：https://github.com/ocornut/Str
+这是一个小型辅助工具，可以用可配置的本地缓冲区长度来实例化字符串。许多游戏引擎都会
+提供类似或更好的字符串辅助工具。
+
+使用 string view：
+
+- 诸如 `std::string_view` 之类的 string view 类型可用于 [feature/string_view](https://github.com/ocornut/imgui/tree/features/string_view) 分支。该分支正在积极维护和支持。如果你使用了它，请提供反馈。我们正在等待合适的时机将其合并。
+
+##### [返回索引](#index)
+
+---
+
+### <a id="q-how-can-i-display-custom-shapes-using-low-level-imdrawlist-api"></a>问：如何显示自定义形状？（使用低层 ImDrawList API）
+
+- 你可以使用低层 `ImDrawList` api 在窗口内渲染形状。
 ```cpp
 ImGui::Begin("My shapes");
 
@@ -735,93 +728,92 @@ ImGui::End();
 ```
 ![ImDrawList usage](https://raw.githubusercontent.com/wiki/ocornut/imgui/tutorials/CustomRendering01.png)
 
-- Refer to "Demo > Examples > Custom Rendering" in the demo window and read the code of `ShowExampleAppCustomRendering()` in `imgui_demo.cpp` from more examples.
-- To generate colors: you can use the macro `IM_COL32(255,255,255,255)` to generate them at compile time, or use `ImGui::GetColorU32(IM_COL32(255,255,255,255))` or `ImGui::GetColorU32(ImVec4(1.0f,1.0f,1.0f,1.0f))` to generate a color that is multiplied by the current value of `style.Alpha`.
-- Math operators: if you have setup `IM_VEC2_CLASS_EXTRA` in `imconfig.h` to bind your own math types, you can use your own math types and their natural operators instead of ImVec2. ImVec2 by default doesn't export any math operators in the public API. You may use `#define IMGUI_DEFINE_MATH_OPERATORS` `#include "imgui.h"` to use our math operators, but instead prefer using your own math library and set it up in `imconfig.h`.
-- You can use `ImGui::GetBackgroundDrawList()` or `ImGui::GetForegroundDrawList()` to access draw lists which will be displayed behind and over every other Dear ImGui window (one bg/fg drawlist per viewport). This is very convenient if you need to quickly display something on the screen that is not associated with a Dear ImGui window.
-- You can also create your own empty window and draw inside it. Call Begin() with the NoBackground | NoDecoration | NoSavedSettings | NoInputs flags (The `ImGuiWindowFlags_NoDecoration` flag itself is a shortcut for NoTitleBar | NoResize | NoScrollbar | NoCollapse). Then you can retrieve the ImDrawList* via `GetWindowDrawList()` and draw to it in any way you like.
-- You can create your own ImDrawList instance. You'll need to initialize them with `ImGui::GetDrawListSharedData()`, or create your own instancing `ImDrawListSharedData`, and then call your renderer function with your own ImDrawList or ImDrawData data.
-- Looking for fun? The [ImDrawList coding party 2020](https://github.com/ocornut/imgui/issues/3606) thread is full of "don't do this at home" extreme uses of the ImDrawList API.
+- 请参考演示窗口中的 "Demo > Examples > Custom Rendering"，并阅读 `imgui_demo.cpp` 中 `ShowExampleAppCustomRendering()` 的代码，以获取更多示例。
+- 生成颜色：你可以使用宏 `IM_COL32(255,255,255,255)` 在编译期生成颜色，或者使用 `ImGui::GetColorU32(IM_COL32(255,255,255,255))` 或 `ImGui::GetColorU32(ImVec4(1.0f,1.0f,1.0f,1.0f))` 生成一个会乘以 `style.Alpha` 当前值的颜色。
+- 数学运算符：如果你已在 `imconfig.h` 中设置 `IM_VEC2_CLASS_EXTRA` 来绑定你自己的数学类型，那么你可以使用自己的数学类型及其自然运算符，而不是 ImVec2。ImVec2 默认不在公共 API 中导出任何数学运算符。你可以使用 `#define IMGUI_DEFINE_MATH_OPERATORS` `#include "imgui.h"` 来使用我们的数学运算符，但更好的做法是使用你自己的数学库，并在 `imconfig.h` 中设置好。
+- 你可以使用 `ImGui::GetBackgroundDrawList()` 或 `ImGui::GetForegroundDrawList()` 访问将显示在每个其他 Dear ImGui 窗口之下和之上的绘制列表（每个 viewport 一个 bg/fg drawlist）。如果你需要快速在屏幕上显示一些与 Dear ImGui 窗口无关的内容，这会非常方便。
+- 你也可以创建自己的空窗口并在其中绘制。用 NoBackground | NoDecoration | NoSavedSettings | NoInputs 标志调用 Begin()（`ImGuiWindowFlags_NoDecoration` 标志本身就是 NoTitleBar | NoResize | NoScrollbar | NoCollapse 的快捷方式）。然后你可以通过 `GetWindowDrawList()` 获取 ImDrawList*，并以任意方式向其中绘制。
+- 你可以创建自己的 ImDrawList 实例。你需要用 `ImGui::GetDrawListSharedData()` 初始化它们，或者创建你自己的 `ImDrawListSharedData` 实例，然后用你自己的 ImDrawList 或 ImDrawData 数据调用你的渲染函数。
+- 想找点乐子？[ImDrawList coding party 2020](https://github.com/ocornut/imgui/issues/3606) 这个话题帖子里充满了 ImDrawList API 的“请勿在家模仿”式极端用法。
 
-##### [Return to Index](#index)
-
----
-
-### About Multi-Threading
-
-A same Dear ImGui context may be not used from multiple threads in parallel.
-
-If you want to use a same context within parallel tasks for occasional debug purpose, consider using a lock.
-
-If you want to submit contents from a main/update thread but render Dear ImGui output in a dedicated render thread, you'll need to stage `ImDrawData` and texture requests. See the `ImDrawDataSnapshot` and `ImTextureQueue` helpers in [imgui_threaded_rendering](https://github.com/ocornut/imgui_club#imgui_threaded_rendering). Also see topics with [label: multi-threading](https://github.com/ocornut/imgui/issues?q=label%3Amulti-threading).
-
-If you use multiple Dear ImGui contexts and want to use them from multiple threads, you need to `#define GImGui` to become a TLS variable (see details near the definition of `GImGui`. If you need to display multiple contexts simultaneously, consider using [imgui_multicontext_compositor](https://github.com/ocornut/imgui_club#imgui_multicontext_compositor). Also see topics with [label: multi-contexts](https://github.com/ocornut/imgui/issues?q=label%3Amulti-contexts).
-
-There is a script/patch to make the API take an explicit context pointer: [#5856](https://github.com/ocornut/imgui/pull/5856). It is presently unmaintained and likely to easy to update. It has been decided that the change is not currently worth applying to main-line but maybe will be in a future version.
+##### [返回索引](#index)
 
 ---
 
-# Q&A: Fonts, Text
+### <a id="about-multi-threading"></a>关于多线程
 
-### Q: How should I handle DPI in my application?
+同一个 Dear ImGui context 不可被多个线程并行使用。
 
-Since 1.92 (June 2025) fonts may be dynamically used at any size.
+如果你想在并行任务中使用同一个 context 以进行偶尔的调试，可以考虑使用锁。
 
-**Scaling fonts**
+如果你想从主/更新线程提交内容，但在专用的渲染线程中渲染 Dear ImGui 输出，你需要暂存 `ImDrawData` 和纹理请求。参见 [imgui_threaded_rendering](https://github.com/ocornut/imgui_club#imgui_threaded_rendering) 中的 `ImDrawDataSnapshot` 和 `ImTextureQueue` 辅助工具。另见 [label: multi-threading](https://github.com/ocornut/imgui/issues?q=label%3Amulti-threading) 相关话题。
 
-Select default size:
+如果你使用多个 Dear ImGui context 并想从多个线程中使用它们，你需要 `#define GImGui` 使其成为 TLS 变量（详见 `GImGui` 定义附近的内容）。如果你需要同时显示多个 context，可以考虑使用 [imgui_multicontext_compositor](https://github.com/ocornut/imgui_club#imgui_multicontext_compositor)。另见 [label: multi-contexts](https://github.com/ocornut/imgui/issues?q=label%3Amulti-contexts) 相关话题。
+
+有一个脚本/补丁可以让 API 接受一个显式的 context 指针：[#5856](https://github.com/ocornut/imgui/pull/5856)。它目前无人维护，但可能很容易更新。已决定目前不值得将该改动应用到主线，但也许会在未来版本中应用。
+
+---
+# <a id="qa-fonts-text"></a>问答：字体、文本
+
+### <a id="q-how-should-i-handle-dpi-in-my-application"></a>问：我的应用程序中应该如何处理 DPI？
+
+自 1.92 起（2025 年 6 月），字体可以在任意尺寸下动态使用。
+
+**缩放字体**
+
+选择默认尺寸：
 ```cpp
 style.FontSizeBase = 20.0f;
 ```
-Scale all fonts:
+缩放所有字体：
 ```cpp
 style.FontScaleDpi = 2.0f;
 ```
 
-To change font size:
+如需更改字号：
 ```cpp
 ImGui::PushFont(nullptr, 42.0f); // This will be multiplied by style.FontScaleDpi
 ```
-To change font and font size:
+如需同时更改字体和字号：
 ```cpp
 ImGui::PushFont(new_font, 42.0f);
 ```
 
-In `docking` branch or with multi-viewports:
+在 `docking` 分支中，或使用多视口（multi-viewports）时：
 ```cpp
 io.ConfigDpiScaleFonts = true;          // (Docking branch only) Automatically overwrite style.FontScaleDpi in Begin() when Monitor DPI changes. This will scale fonts but _NOT_ scale sizes/padding for now.
 io.ConfigDpiScaleViewports = true;      // (Docking branch only) Scale Dear ImGui and Platform Windows when Monitor DPI changes.
 ```
 
-**Scaling style** (paddings, spacings, thicknesses)
+**缩放样式**（内边距、间距、粗细）
 
-This is still massively work in progress, expect turbulence.
-Style values are currently not easily scalable dynamically.
-For single viewport application you can call once:
+这部分仍处于大规模开发中，预计会有较大变动。
+目前样式数值还无法方便地动态缩放。
+对于单视口应用程序，可以调用一次：
 ```cpp
 style.ScaleAllSizes(factor); // call once!
 ```
-If you need to change the scaling factor, it is currently most practical to reset the style and call this again with a new value.
+如果你需要更改缩放系数，目前最实际的做法是重置样式，然后用新的数值再次调用它。
 
-Your UI code should avoid using hardcoded constants for size and positioning. Prefer to express values as multiple of reference values such as `ImGui::GetFontSize()` or `ImGui::GetFrameHeight()`. So e.g. instead of seeing a hardcoded height of 500 for a given item/window, you may want to use `30*ImGui::GetFontSize()` instead.
+你的 UI 代码应避免对尺寸和定位使用硬编码常量。最好把数值表示为参考值的倍数，例如 `ImGui::GetFontSize()` 或 `ImGui::GetFrameHeight()`。因此，比如对于某个控件/窗口，与其写死高度为 500，不如改用 `30*ImGui::GetFontSize()`。
 
-Down the line Dear ImGui will provide a variety of standardized reference values to facilitate using this. This is expected to happen during subsequent 1.92.x releases.
+后续 Dear ImGui 将提供各种标准化的参考值，以便于采用这种做法。这预计会在之后的 1.92.x 版本中实现。
 
-Applications in the `examples/` folder are partly DPI aware but they are unable to load a custom font from the file-system, so they look ugly (may change that in the future).
+`examples/` 文件夹中的应用程序部分支持 DPI，但它们无法从文件系统加载自定义字体，因此看起来比较粗糙（将来可能会改变这一点）。
 
-The reason DPI is not auto-magically solved in stock examples is that we don't yet have a satisfying solution for the "multi-dpi" problem (using the `docking` branch: when multiple viewport windows are over multiple monitors using different DPI scales) specifically for the `ImGuiStyle` structure. Fonts are however now perfectly scalable.
+自带示例之所以没能自动、神奇地解决 DPI 问题，是因为针对 `ImGuiStyle` 结构体，我们还没有令人满意的方案来解决“multi-dpi”问题（在 `docking` 分支中：当多个视口窗口分布在采用不同 DPI 缩放比例的多个显示器上时）。不过字体现在已可以完美缩放。
 
-**On Windows, you need to inform Windows that your application is DPI aware!**
-If this is not done, Windows will scale the application window and the UI text will be blurry. Potential solutions to indicate DPI awareness on Windows are:
-- For SDL2: the flag `SDL_WINDOW_ALLOW_HIGHDPI` needs to be passed to `SDL_CreateWindow()` + call `::SetProcessDPIAware()`.
-- For SDL3: the flag `SDL_WINDOW_HIGH_PIXEL_DENSITY` needs to be passed to `SDL_CreateWindow()`.
-- For GLFW: this is done automatically.
-- For other Windows projects with other backends, or wrapper projects:
-  - We provide a `ImGui_ImplWin32_EnableDpiAwareness()` helper method in the Win32 backend.
-  - Use an [application manifest file](https://learn.microsoft.com/en-us/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process) to set the `<dpiAware>` property.
+**在 Windows 上，你需要告知 Windows 你的应用程序是 DPI 感知的！**
+如果不这样做，Windows 会缩放应用程序窗口，UI 文字会变得模糊。在 Windows 上表明 DPI 感知的可行方案包括：
+- SDL2：需要把 `SDL_WINDOW_ALLOW_HIGHDPI` 标志传给 `SDL_CreateWindow()`，并调用 `::SetProcessDPIAware()`。
+- SDL3：需要把 `SDL_WINDOW_HIGH_PIXEL_DENSITY` 标志传给 `SDL_CreateWindow()`。
+- GLFW：会自动完成。
+- 对于使用其他后端的其他 Windows 项目，或封装项目（wrapper projects）：
+  - 我们在 Win32 后端中提供了 `ImGui_ImplWin32_EnableDpiAwareness()` 辅助方法。
+  - 使用[应用程序清单文件](https://learn.microsoft.com/en-us/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process)来设置 `<dpiAware>` 属性。
 
-### Q: How can I load a different font than the default?
-Use the font atlas to load the TTF/OTF file you want:
+### <a id="q-how-can-i-load-a-different-font-than-the-default"></a>问：如何加载一个不同于默认字体的字体？
+使用字体图集（font atlas）加载你想要的 TTF/OTF 文件：
 
 ```cpp
 ImGuiIO& io = ImGui::GetIO();
@@ -829,14 +821,14 @@ io.Fonts->AddFontFromFileTTF("myfontfile.ttf", size_in_pixels);
 io.Fonts->GetTexDataAsRGBA32() or GetTexDataAsAlpha8()
 ```
 
-Default is ProggyClean.ttf, monospace, rendered at size 13, embedded in dear imgui's source code.
+默认字体是 ProggyClean.ttf，等宽字体，以 13 号尺寸渲染，内嵌在 dear imgui 的源代码中。
 
-(Tip: monospace fonts are convenient because they allow to facilitate horizontal alignment directly at the string level.)
+（提示：等宽字体很方便，因为它们便于直接在字符串层面实现水平对齐。）
 
-(Read the [docs/FONTS.md](https://github.com/ocornut/imgui/blob/master/docs/FONTS.md) file for more details about font loading.)
+（有关字体加载的更多细节，请阅读 [docs/FONTS.md](https://github.com/ocornut/imgui/blob/master/docs/FONTS.md) 文件。）
 
-New programmers: remember that in C/C++ and most programming languages if you want to use a
-backslash \ within a string literal, you need to write it double backslash "\\":
+新手程序员请注意：在 C/C++ 以及大多数编程语言中，如果你想在字符串字面量里使用
+反斜杠 \，需要把它写成双反斜杠 "\\"：
 
 ```cpp
 io.Fonts->AddFontFromFileTTF("MyFolder\MyFont.ttf", size);  // WRONG (you are escaping the M here!)
@@ -844,32 +836,32 @@ io.Fonts->AddFontFromFileTTF("MyFolder\\MyFont.ttf", size); // CORRECT (Windows 
 io.Fonts->AddFontFromFileTTF("MyFolder/MyFont.ttf", size);  // ALSO CORRECT
 ```
 
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
 ---
 
-### Q: How can I easily use icons in my application?
-The most convenient and practical way is to merge an icon font such as FontAwesome inside your
-main font. Then you can refer to icons within your strings.
-Read the [docs/FONTS.md](https://github.com/ocornut/imgui/blob/master/docs/FONTS.md) file for more details about icons font loading.
+### <a id="q-how-can-i-easily-use-icons-in-my-application"></a>问：如何在我的应用程序中方便地使用图标？
+最方便、最实用的做法是把 FontAwesome 之类的图标字体合并进你的
+主字体中。这样你就可以在字符串里引用图标了。
+有关图标字体加载的更多细节，请阅读 [docs/FONTS.md](https://github.com/ocornut/imgui/blob/master/docs/FONTS.md) 文件。
 
-##### [Return to Index](#index)
-
----
-
-### Q: How can I load multiple fonts?
-
-Use the font atlas to pack them into a single texture. Read [docs/FONTS.md](https://github.com/ocornut/imgui/blob/master/docs/FONTS.md) for more details.
-
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
 ---
 
-### Q: How can I display and input non-Latin characters such as Chinese, Japanese, Korean, Cyrillic?
+### <a id="q-how-can-i-load-multiple-fonts"></a>问：如何加载多个字体？
 
-Since 1.92 (June 2025) and with an updated backend, it is not necessary to specify glyph ranges at all.
+使用字体图集把它们打包进单个纹理中。更多细节请阅读 [docs/FONTS.md](https://github.com/ocornut/imgui/blob/master/docs/FONTS.md)。
 
-Before 1.92, when loading a font, pass custom Unicode ranges to specify the glyphs to load.
+##### [返回索引](#index)
+
+---
+
+### <a id="q-how-can-i-display-and-input-non-latin-characters-such-as-chinese-japanese-korean-cyrillic"></a>问：如何显示和输入非拉丁字符，例如中文、日文、韩文、西里尔文？
+
+自 1.92 起（2025 年 6 月），配合更新后的后端，已经完全没有必要指定字形范围（glyph ranges）。
+
+在 1.92 之前，加载字体时需要传入自定义的 Unicode 范围来指定要加载的字形。
 ```cpp
 // [BEFORE 1.92]
 // Add default Japanese ranges
@@ -885,80 +877,79 @@ builder.BuildRanges(&ranges);                          // Build the final result
 io.Fonts->AddFontFromFileTTF("myfontfile.ttf", 16.0f, nullptr, ranges.Data);
 ```
 
-All your strings need to use UTF-8 encoding.
-You need to tell your compiler to use UTF-8, or in C++11 you can encode a string literal in UTF-8 by using the u8"hello" syntax.
-Specifying literal in your source code using a local code page (such as CP-923 for Japanese or CP-1251 for Cyrillic) will NOT work!
-See [About UTF-8 Encoding](https://github.com/ocornut/imgui/blob/master/docs/FONTS.md#about-utf-8-encoding) section
-of [FONTS.md](https://github.com/ocornut/imgui/blob/master/docs/FONTS.md) for details about UTF-8 Encoding.
+你所有的字符串都需要使用 UTF-8 编码。
+你需要让编译器使用 UTF-8，或者在 C++11 中可以通过 u8"hello" 语法把字符串字面量编码为 UTF-8。
+在源代码中使用本地代码页（例如日文的 CP-923 或西里尔文的 CP-1251）指定字面量是不行的！
+有关 UTF-8 编码的细节，请参阅
+[FONTS.md](https://github.com/ocornut/imgui/blob/master/docs/FONTS.md) 中的 [About UTF-8 Encoding](https://github.com/ocornut/imgui/blob/master/docs/FONTS.md#about-utf-8-encoding) 一节。
 
-Text input: it is up to your application to pass the right character code by calling `io.AddInputCharacter()`.
-The applications in examples/ are doing that.
-Windows: you can use the WM_CHAR or WM_UNICHAR or WM_IME_CHAR message (depending if your app is built using Unicode or MultiByte mode).
-You may also use `MultiByteToWideChar()` or `ToUnicode()` to retrieve Unicode codepoints from MultiByte characters or keyboard state.
-Windows: if your language is relying on an Input Method Editor (IME), you can write your HWND to `ImGui::GetMainViewport()->PlatformHandleRaw`
-for the default implementation of `GetPlatformIO().Platform_SetImeDataFn()` to set your Microsoft IME position correctly.
+文本输入：需要由你的应用程序通过调用 `io.AddInputCharacter()` 来传入正确的字符编码。
+examples/ 中的应用程序就是这样做的。
+Windows：你可以使用 WM_CHAR 或 WM_UNICHAR 或 WM_IME_CHAR 消息（取决于你的应用是以 Unicode 还是 MultiByte 模式构建的）。
+你也可以使用 `MultiByteToWideChar()` 或 `ToUnicode()` 从 MultiByte 字符或键盘状态中取出 Unicode 码点。
+Windows：如果你的语言依赖输入法编辑器（IME），可以把你的 HWND 写入 `ImGui::GetMainViewport()->PlatformHandleRaw`，
+这样 `GetPlatformIO().Platform_SetImeDataFn()` 的默认实现就能正确设置你的 Microsoft IME 位置。
 
-##### [Return to Index](#index)
-
----
-
-# Q&A: Concerns
-
-### Q: Who uses Dear ImGui?
-
-You may take a look at:
-
-- [Quotes](https://github.com/ocornut/imgui/wiki/Quotes)
-- [Software using Dear ImGui](https://github.com/ocornut/imgui/wiki/Software-using-dear-imgui)
-- [Funding & Sponsors](https://github.com/ocornut/imgui/wiki/Funding)
-- [Gallery](https://github.com/ocornut/imgui/issues?q=label%3Agallery)
-
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
 ---
 
-### Q: Can you create elaborate/serious tools with Dear ImGui?
+# <a id="qa-concerns"></a>问答：顾虑
 
-Yes. People have written game editors, data browsers, debuggers, profilers, and all sorts of non-trivial tools with the library. In my experience, the simplicity of the API is very empowering. Your UI runs close to your live data. Make the tools always-on and everybody in the team will be inclined to create new tools (as opposed to more "offline" UI toolkits where only a fraction of your team effectively creates tools). The list of sponsors below is also an indicator that serious game teams have been using the library.
+### <a id="q-who-uses-dear-imgui"></a>问：有哪些人在使用 Dear ImGui？
 
-Dear ImGui is very programmer-centric and the immediate-mode GUI paradigm might require you to readjust some habits before you can realize its full potential. Dear ImGui is about making things that are simple, efficient, and powerful.
+你可以看看以下内容：
 
-Dear ImGui is built to be efficient and scalable toward the needs for AAA-quality applications running all day. The IMGUI paradigm offers different opportunities for optimization than the more typical RMGUI paradigm.
+- [使用者评价](https://github.com/ocornut/imgui/wiki/Quotes)
+- [使用 Dear ImGui 的软件](https://github.com/ocornut/imgui/wiki/Software-using-dear-imgui)
+- [资助与赞助者](https://github.com/ocornut/imgui/wiki/Funding)
+- [作品展示](https://github.com/ocornut/imgui/issues?q=label%3Agallery)
 
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
 ---
 
-### Q: Can you reskin the look of Dear ImGui?
+### <a id="q-can-you-create-elaborateserious-tools-with-dear-imgui"></a>问：可以用 Dear ImGui 创建精巧/正经的工具吗？
 
-Somewhat. You can alter the look of the interface to some degree: changing colors, sizes, padding, rounding, and fonts. However, as Dear ImGui is designed and optimized to create debug tools, the amount of skinning you can apply is limited. There is only so much you can stray away from the default look and feel of the interface. Dear ImGui is NOT designed to create a user interface for games, although with ingenious use of the low-level API you can do it.
+可以。人们已经用这个库编写了游戏编辑器、数据浏览器、调试器、性能分析器以及各种非平凡的工具。以我的经验来看，API 的简洁性非常赋能。你的 UI 运行在贴近实时数据的地方。让这些工具始终保持运行，团队里的每个人都会倾向于创建新工具（相比之下，那些更“离线”的 UI 工具包中，只有一小部分团队成员会真正去创建工具）。下面列出的赞助者也表明，正经的游戏团队一直在使用这个库。
 
-A reasonably skinned application may look like (screenshot from [#2529](https://github.com/ocornut/imgui/issues/2529#issuecomment-524281119)):
+Dear ImGui 非常以程序员为中心，即时模式 GUI（immediate-mode GUI）范式可能需要你先重新调整一些习惯，才能充分发挥它的潜力。Dear ImGui 追求的是让东西简单、高效且强大。
+
+Dear ImGui 在构建时就考虑了高效与可扩展，以满足全天运行的 AAA 级应用的需求。与更典型的 RMGUI 范式相比，IMGUI 范式提供了不同的优化机会。
+
+##### [返回索引](#index)
+
+---
+
+### <a id="q-can-you-reskin-the-look-of-dear-imgui"></a>问：可以给 Dear ImGui 换外观（reskin）吗？
+
+某种程度上可以。你可以在一定程度上改变界面的外观：更改颜色、尺寸、内边距、圆角和字体。不过，由于 Dear ImGui 是为创建调试工具而设计和优化的，你能施加的换肤程度是有限的。你偏离界面默认外观和感觉的空间就那么大。Dear ImGui 并非为创建游戏用户界面而设计，尽管巧妙地使用底层 API 也能做到。
+
+一个经过合理换肤的应用程序可能看起来像这样（截图来自 [#2529](https://github.com/ocornut/imgui/issues/2529#issuecomment-524281119)）：
 ![minipars](https://user-images.githubusercontent.com/314805/63589441-d9794f00-c5b1-11e9-8d96-cfc1b93702f7.png)
 
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
 ---
 
-### Q: Why using C++ (as opposed to C)?
+### <a id="q-why-using-c-as-opposed-to-c"></a>问：为什么使用 C++（而不是 C）？
 
-Dear ImGui takes advantage of a few C++ language features for convenience but nothing anywhere Boost insanity/quagmire. Dear ImGui doesn't use any C++ header file. Dear ImGui uses a very small subset of C++11 features. In particular, function overloading and default parameters are used to make the API easier to use and code terser. Doing so I believe the API is sitting on a sweet spot and giving up on those features would make the API more cumbersome. Other features such as namespace, constructors, and templates (in the case of the ImVector<> class) are also relied on as a convenience.
+Dear ImGui 为了便利而利用了少量 C++ 语言特性，但完全没有 Boost 那种疯狂/泥潭式的东西。Dear ImGui 不使用任何 C++ 头文件。Dear ImGui 只使用极小一部分 C++11 特性。特别是，利用函数重载和默认参数让 API 更易用、代码更简洁。我认为这样做让 API 处在一个恰到好处的位置，而放弃这些特性会让 API 更加笨重。命名空间、构造函数以及模板（就 ImVector<> 类而言）等其他特性也被当作便利手段加以依赖。
 
-There is an auto-generated [c-api for Dear ImGui (cimgui)](https://github.com/cimgui/cimgui) by Sonoro1234 and Stephan Dilly. It is designed for creating bindings to other languages. If possible, I would suggest using your target language functionalities to try replicating the function overloading and default parameters used in C++ else the API may be harder to use. Also see [Bindings](https://github.com/ocornut/imgui/wiki/Bindings) for various third-party bindings.
+Sonoro1234 和 Stephan Dilly 提供了一个自动生成的 [Dear ImGui 的 C API（cimgui）](https://github.com/cimgui/cimgui)。它旨在用于为其他语言创建绑定。如果可能的话，我建议利用目标语言的功能来尝试复刻 C++ 中使用的函数重载和默认参数，否则 API 可能会更难使用。另请参阅 [Bindings](https://github.com/ocornut/imgui/wiki/Bindings) 了解各种第三方绑定。
 
-##### [Return to Index](#index)
+##### [返回索引](#index)
 
 ---
 
-# Q&A: Community
+# <a id="qa-community"></a>问答：社区
 
-### Q: How can I help?
-- Businesses: please reach out to `omar AT dearimgui.com` if you work in a place using Dear ImGui! We can discuss ways for your company to fund development via invoiced technical support, maintenance, or sponsoring contacts. This is among the most useful thing you can do for Dear ImGui. With increased funding, we can hire more people to work on this project. Please see [Funding](https://github.com/ocornut/imgui/wiki/Funding) page.
-- Individuals: you can support continued maintenance and development via PayPal donations. See [README](https://github.com/ocornut/imgui/blob/master/docs/README.md).
-- If you are experienced with Dear ImGui and C++, look at [GitHub Issues](https://github.com/ocornut/imgui/issues), [GitHub Discussions](https://github.com/ocornut/imgui/discussions), the [Wiki](https://github.com/ocornut/imgui/wiki), read [docs/TODO.txt](https://github.com/ocornut/imgui/blob/master/docs/TODO.txt), and see how you want to help and can help!
-- Disclose your usage of Dear ImGui via a dev blog post, a tweet, a screenshot, a mention somewhere, etc.
-You may post screenshots or links in the [gallery threads](https://github.com/ocornut/imgui/issues?q=label%3Agallery). Visuals are ideal as they inspire other programmers. Disclosing your use of Dear ImGui helps the library grow credibility, and helps other teams and programmers with taking decisions.
-- If you have issues or if you need to hack into the library, even if you don't expect any support it is useful that you share your issues or sometimes incomplete PR.
+### <a id="q-how-can-i-help"></a>问：我怎样才能提供帮助？
+- 企业：如果你所在的公司在使用 Dear ImGui，请联系 `omar AT dearimgui.com`！我们可以讨论贵公司通过开具发票的技术支持、维护或赞助合作等方式为开发提供资金。这是你能为 Dear ImGui 做的最有用的事情之一。有了更多资金，我们就能聘请更多人来参与这个项目。请参见 [资助](https://github.com/ocornut/imgui/wiki/Funding) 页面。
+- 个人：你可以通过 PayPal 捐款来支持持续的维护与开发。请参见 [README](https://github.com/ocornut/imgui/blob/master/docs/README.md)。
+- 如果你熟悉 Dear ImGui 和 C++，可以看看 [GitHub Issues](https://github.com/ocornut/imgui/issues)、[GitHub Discussions](https://github.com/ocornut/imgui/discussions)、[Wiki](https://github.com/ocornut/imgui/wiki)，阅读 [docs/TODO.txt](https://github.com/ocornut/imgui/blob/master/docs/TODO.txt)，然后看看你想以何种方式帮忙、又能帮上哪些忙！
+- 通过开发博客文章、推文、截图、在某个地方提及等方式公开你正在使用 Dear ImGui。
+你可以在 [gallery 帖子](https://github.com/ocornut/imgui/issues?q=label%3Agallery)中发布截图或链接。视觉内容最理想，因为它们能启发其他程序员。公开你对 Dear ImGui 的使用有助于这个库建立可信度，也能帮助其他团队和程序员做出决策。
+- 如果你遇到问题，或者需要深入改造这个库，即使你不期望获得任何支持，分享你的问题、乃至有时尚不完整的 PR，也是很有用的。
 
-##### [Return to Index](#index)
-
+##### [返回索引](#index)

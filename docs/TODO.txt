@@ -1,312 +1,312 @@
 dear imgui
-ISSUES & TODO LIST
+问题与待办列表
 
-Issue numbers (#) refer to GitHub issues listed at https://github.com/ocornut/imgui/issues/XXXX
+issue 编号（#）对应 https://github.com/ocornut/imgui/issues/XXXX 中列出的 GitHub issue
 
-THIS LIST IS NOT WELL MAINTAINED. MOST OF THE WORK HAPPENS ON GITHUB NOWADAYS.
+本列表维护得并不好。如今大部分工作都在 GitHub 上进行。
 
-The list below consist mostly of ideas noted down before they are requested/discussed by users (at which point they usually exist on the github issue tracker).
-It's mostly a bunch of personal notes, probably incomplete. Feel free to query if you have any questions.
+以下列表主要包含在用户提出请求/讨论之前记录下来的想法（一旦被用户请求/讨论，它们通常就已经存在于 GitHub issue 跟踪器中了）。
+这主要是一堆个人笔记，可能并不完整。如有任何疑问，欢迎提出。
 
- - doc: checklist app to verify backends/integration of imgui (test inputs, rendering, callback, etc.).
- - doc: add a proper documentation system (maybe relying on automation? #435)
- - doc/tips: tips of the day: website? applet in imgui_club?
+ - doc: 用于验证 imgui 后端/集成的清单式应用（测试输入、渲染、回调等）。
+ - doc: 添加一套完善的文档系统（也许依赖自动化？#435）
+ - doc/tips: 每日提示：网站？imgui_club 中的小程序？
 
- - window: preserve/restore relative focus ordering (persistent or not), and e.g. of multiple reappearing windows (#2304) -> also see docking reference to same #.
- - window: calling SetNextWindowSize() every frame with <= 0 doesn't do anything, may be useful to allow (particularly when used for a single axis). (#690)
- - window: add a way for very transient windows (non-saved, temporary overlay over hundreds of objects) to "clean" up from the global window list. perhaps a lightweight explicit cleanup pass.
- - window: auto-fit feedback loop when user relies on any dynamic layout (window width multiplier, column) appears weird to end-user. clarify.
- - window: begin with *p_open == false could return false.
- - window: get size/pos helpers given names (see discussion in #249)
- - window: when window is very small, prioritize resize button over close button.
- - window: double-clicking on title bar to minimize isn't consistent interaction, perhaps move to single-click on left-most collapse icon?
- - window: expose contents size. (#1045)
- - window: using SetWindowPos() inside Begin() and moving the window with the mouse reacts a very ugly glitch. We should just defer the SetWindowPos() call.
- - window: GetWindowSize() returns (0,0) when not calculated? (#1045)
- - window: investigate better auto-positioning for new windows.
- - window: top most window flag? more z-order control? (#2574)
- - window/size: manually triggered auto-fit (double-click on grip) shouldn't resize window down to viewport size?
- - window/size: how to allow to e.g. auto-size vertically to fit contents, but be horizontally resizable? Assuming SetNextWindowSize() is modified to treat -1.0f on each axis as "keep as-is" (would be good but might break erroneous code): Problem is UpdateWindowManualResize() and lots of code treat (window->AutoFitFramesX > 0 || window->AutoFitFramesY > 0) together.
- - window/opt: freeze window flag: if not focused/hovered, return false, render with previous ImDrawList. and/or reduce refresh rate. -> this may require enforcing that it is illegal to submit contents if Begin returns false.
- - window/clipping: some form of clipping when DisplaySize (or corresponding viewport) is zero.
- - window/tabbing: add a way to signify that a window or docked window requires attention (e.g. blinking title bar, trying to click behind a modal).
- - window/id_stack: add e.g. window->GetIDFromPath() with support for leading / and ../ (#1390, #331) -> model from test engine.
+ - window: 保留/恢复相对焦点顺序（持久或非持久），例如多个反复出现的窗口之间（#2304）-> 另见 docking 中对同一 issue 编号的引用。
+ - window: 每帧调用 SetNextWindowSize() 且参数 <= 0 时不会做任何事，允许这样做可能更有用（尤其是只用于单个轴时）。（#690）
+ - window: 为非常临时的窗口（不保存、临时覆盖在成百上千个对象之上的覆盖层）提供一种从全局窗口列表中“清理”掉的方式。也许可以做一次轻量级的显式清理遍历。
+ - window: 当用户依赖任何动态布局（窗口宽度乘数、列）时，自动适配的反馈循环在最终用户看来很奇怪。需要澄清。
+ - window: 以 *p_open == false 调用 Begin 时，或许可以返回 false。
+ - window: 提供按名称获取 size/pos 的辅助函数（见 #249 中的讨论）
+ - window: 当窗口非常小时，调整大小按钮应优先于关闭按钮。
+ - window: 双击标题栏最小化的交互不够一致，也许改为单击最左侧的折叠图标？
+ - window: 对外暴露内容尺寸。（#1045）
+ - window: 在 Begin() 内部使用 SetWindowPos() 并用鼠标移动窗口时，会出现非常难看的故障。我们应该直接推迟 SetWindowPos() 调用。
+ - window: GetWindowSize() 在尚未计算时返回 (0,0)？（#1045）
+ - window: 研究为新窗口提供更好的自动定位。
+ - window: 最顶层窗口标志？更多的 z 序控制？（#2574）
+ - window/size: 手动触发的自动适配（双击手柄）不应该把窗口缩小到视口大小？
+ - window/size: 如何做到例如在垂直方向自动调整大小以适配内容，同时水平方向可调整大小？假设修改 SetNextWindowSize()，把每个轴上的 -1.0f 视为“保持原样”（这想法不错，但可能会让有问题的代码出错）：问题在于 UpdateWindowManualResize() 和大量代码都把 (window->AutoFitFramesX > 0 || window->AutoFitFramesY > 0) 放在一起处理。
+ - window/opt: 冻结窗口标志：如果未聚焦/未悬停，则返回 false，并使用之前的 ImDrawList 渲染。和/或降低刷新率。-> 这可能要求强制规定：如果 Begin 返回 false，提交内容是非法行为。
+ - window/clipping: 当 DisplaySize（或对应的视口）为零时进行某种形式的裁剪。
+ - window/tabbing: 提供一种方式来表示某个窗口或停靠窗口需要注意（例如标题栏闪烁、尝试点击模态窗口后面的内容）。
+ - window/id_stack: 添加例如 window->GetIDFromPath()，并支持开头的 / 和 ../（#1390、#331）-> 参照测试引擎的模型。
 
- ! scrolling: exposing horizontal scrolling with Shift+Wheel even when scrollbar is disabled expose various issues (#2424, #1463)
- - scrolling: while holding down a scrollbar, try to keep the same contents visible (at least while not moving mouse)
- - scrolling: forward mouse wheel scrolling to parent window when at the edge of scrolling limits? (useful for listbox,tables?)
- - scrolling/style: shadows on scrollable areas to denote that there is more contents (see e.g. DaVinci Resolve ui)
+ ! scrolling: 即使滚动条被禁用，也允许用 Shift+滚轮进行水平滚动，这会暴露出各种问题（#2424、#1463）
+ - scrolling: 按住滚动条时，尽量保持相同的内容可见（至少在不移动鼠标时）
+ - scrolling: 当到达滚动边界时，是否将鼠标滚轮滚动转发给父窗口？（对 listbox、tables 有用？）
+ - scrolling/style: 在可滚动区域上显示阴影，以表示还有更多内容（例如参见 DaVinci Resolve 的 UI）
 
- - drawdata: make it easy to deep-copy (or swap?) a full ImDrawData so user can easily save that data if they use threaded rendering. (#1860 see ImDrawDataSnapshot)
- ! drawlist: add CalcTextSize() func to facilitate consistent code from user pov (currently need to use ImGui or ImFont alternatives!)
- - drawlist: maintaining bounding box per command would allow to merge draw command when clipping isn't relied on (typical non-scrolling window or non-overflowing column would merge with previous command). (WIP branch)
- - drawlist: make it easier to toggle AA per primitive, so we can use e.g. non-AA fill + AA borders more naturally
- - drawlist: non-AA strokes have gaps between points (#593, #288), glitch especially on RenderCheckmark() and ColorPicker4().
- - drawlist: callback: add an extra void* in ImDrawCallback to expose render state instead of pulling from Renderer_RenderState (would break API).
- - drawlist: AddRect vs AddLine position confusing (#2441)
- - drawlist/opt: store rounded corners in texture to use 1 quad per corner (filled and wireframe) to lower the cost of rounding. (#1962)
- - drawlist/opt: AddRect() axis aligned pixel aligned (no-aa) could use 8 triangles instead of 16 and no normal calculation.
- - drawlist/opt: thick AA line could be doable in same number of triangles as 1.0 AA line by storing gradient+full color in atlas.
+ - drawdata: 让完整 ImDrawData 的深拷贝（或交换？）变得容易，这样用户在使用多线程渲染时可以轻松保存该数据。（#1860 见 ImDrawDataSnapshot）
+ ! drawlist: 添加 CalcTextSize() 函数，以便从用户角度写出更一致的代码（目前需要使用 ImGui 或 ImFont 的替代方案！）
+ - drawlist: 为每个命令维护包围盒，就能在不依赖裁剪的情况下合并绘制命令（典型的非滚动窗口或不溢出的列会与前一条命令合并）。（WIP 分支）
+ - drawlist: 使按图元切换 AA 更容易，这样我们就能更自然地使用例如非 AA 填充 + AA 边框
+ - drawlist: 非 AA 描边在点与点之间存在缝隙（#593、#288），在 RenderCheckmark() 和 ColorPicker4() 上尤其明显。
+ - drawlist: callback: 在 ImDrawCallback 中增加一个额外的 void* 来暴露渲染状态，而不是从 Renderer_RenderState 中获取（会破坏 API）。
+ - drawlist: AddRect 与 AddLine 的位置含义令人困惑（#2441）
+ - drawlist/opt: 将圆角存储在纹理中，使每个圆角只用一个四边形（填充和线框），以降低圆角处理的开销。（#1962）
+ - drawlist/opt: 轴对齐且像素对齐的 AddRect()（无 AA）可以使用 8 个三角形而不是 16 个，并且无需计算法线。
+ - drawlist/opt: 通过在图集中存储渐变+纯色，粗 AA 线或许可以用与 1.0 AA 线相同数量的三角形来实现。
 
- - items: IsItemHovered() info stored in a stack? so that 'if TreeNode() { Text; TreePop; } if IsHovered' return the hover state of the TreeNode?
+ - items: 把 IsItemHovered() 的信息存储在栈中？这样 'if TreeNode() { Text; TreePop; } if IsHovered' 就能返回该 TreeNode 的悬停状态？
 
- - widgets: display mode: widget-label, label-widget (aligned on column or using fixed size), label-newline-tab-widget etc. (#395)
- - widgets: clean up widgets internal toward exposing everything and stabilizing imgui_internals.h.
- - widgets: add always-allow-overlap mode. This should perhaps be the default? one problem is that highlight after mouse-wheel scrolling gets deferred, makes scrolling more flickery.
- - widgets: alignment options in style (e.g. center Selectable, Right-Align within Button, etc.) #1260
- - widgets: activate by identifier (trigger button, focus given id)
- - widgets: custom glyph/shapes replacements for stock shapes. (also #6090 #2431 #2235 #6517)
- - widgets: coloredit: keep reporting as active when picker is on?
- - widgets: group/ScalarN functions: expose more per-component information. e.g. store NextItemData.ComponentIdx set by scalarn function, groups can expose them back somehow.
- - selectable: using (size.x == 0.0f) and (SelectableTextAlign.x > 0.0f) followed by SameLine() is currently not supported.
- - selectable: generic BeginSelectable()/EndSelectable() mechanism. (work out alongside range-select branch)
- - selectable: a way to visualize partial/mixed selection (e.g. parent tree node has children with mixed selection)
+ - widgets: 显示模式：控件-标签、标签-控件（按列对齐或使用固定尺寸）、标签-换行-Tab-控件等。（#395）
+ - widgets: 清理控件内部实现，朝着暴露所有内容并稳定 imgui_internals.h 的方向努力。
+ - widgets: 添加始终允许重叠的模式。也许这应该成为默认值？一个问题是鼠标滚轮滚动后的高亮会被推迟，使滚动看起来更闪烁。
+ - widgets: 样式中的对齐选项（例如 Selectable 居中、Button 内右对齐等）#1260
+ - widgets: 通过标识符激活（触发按钮、聚焦给定 id）
+ - widgets: 用自定义字形/形状替换内置形状。（另见 #6090 #2431 #2235 #6517）
+ - widgets: coloredit: 当取色器开启时，是否继续报告为 active？
+ - widgets: group/ScalarN 函数：暴露更多逐组件信息。例如存储由 Scalarn 函数设置的 NextItemData.ComponentIdx，group 可以以某种方式再把它们暴露出来。
+ - selectable: 目前不支持使用 (size.x == 0.0f) 和 (SelectableTextAlign.x > 0.0f) 后再跟 SameLine()。
+ - selectable: 通用的 BeginSelectable()/EndSelectable() 机制。（与 range-select 分支一起完善）
+ - selectable: 一种可视化部分/混合选择状态的方式（例如父树节点下子节点选择状态不一致）
 
- - input text: flag to disable live update of the user buffer (also applies to float/int text input) (#701)
- - input text: preserve scrolling when unfocused?
- - input text: reorganize event handling, allow CharFilter to modify buffers, allow multiple events? (#541)
- - input text: hover tooltip could show unclamped text
- - input text: support for INSERT key to toggle overwrite mode. currently disabled because stb_textedit behavior is unsatisfactory on multi-line. (#2863)
- - input text: option to Tab after an Enter validation.
- - input text: add ImGuiInputTextFlags_EnterToApply? (off #218)
- - input text: easier ways to update buffer (from source char*) while owned. preserve some sort of cursor position for multi-line text.
- - input text: add discard flag (e.g. ImGuiInputTextFlags_DiscardActiveBuffer) or make it easier to clear active focus for text replacement during edition (#725)
- - input text: allow centering/positioning text so that ctrl+clicking Drag or Slider keeps the textual value at the same pixel position.
- - input text: decorrelate display layout from inputs with custom template - e.g. what's the easiest way to implement a nice IP/Mac address input editor?
- - input text: callback system (global) so user can plug in an expression evaluator easily. (#1691)
- - input text: force scroll to end or scroll to a given line/contents (so user can implement a log or a search feature)
- - input text: a way to preview completion (e.g. disabled text completing from the cursor)
- - input text: a side bar that could e.g. preview where errors are. probably left to the user to draw but we'd need to give them the info there.
- - input text: a way for the user to provide syntax coloring.
- - input text: Shift+TAB with ImGuiInputTextFlags_AllowTabInput could eat preceding blanks, up to tab_count.
- - input text multi-line: support for copy/cut without selection (copy/cut current line?)
- - input text multi-line: line numbers? status bar? (follow up on #200)
- - input text multi-line: behave better when user changes input buffer while editing is active (even though it is illegal behavior). namely, the change of buffer can create a scrollbar glitch (#725)
- - input text multi-line: better horizontal scrolling support (#383, #1224)
- - input number: optional range min/max for Input*() functions
- - input number: holding [-]/[+] buttons could increase the step speed non-linearly (or user-controlled)
- - input number: use mouse wheel to step up/down
+ - input text: 用于禁用用户缓冲区实时更新的标志（同样适用于 float/int 文本输入）（#701）
+ - input text: 失去焦点时保留滚动状态？
+ - input text: 重构事件处理，允许 CharFilter 修改缓冲区，允许多个事件？（#541）
+ - input text: 悬停提示可以显示未截断的文本
+ - input text: 支持 INSERT 键切换覆盖模式。目前被禁用，因为 stb_textedit 在多行情况下的行为不令人满意。（#2863）
+ - input text: 在按 Enter 确认后跳到下一个 Tab 停靠位的选项。
+ - input text: 添加 ImGuiInputTextFlags_EnterToApply？（源自 #218）
+ - input text: 在拥有缓冲区期间提供更简单的方式来更新它（从源 char* 更新）。为多行文本保留某种光标位置。
+ - input text: 添加丢弃标志（例如 ImGuiInputTextFlags_DiscardActiveBuffer），或使在编辑期间为替换文本而清除活动焦点变得更容易（#725）
+ - input text: 允许对文本进行居中/定位，以便 ctrl+点击 Drag 或 Slider 时，文本值能保持在相同的像素位置。
+ - input text: 使用自定义模板将显示布局与输入解耦 - 例如，实现一个漂亮的 IP/Mac 地址输入编辑器最简单的方法是什么？
+ - input text: 回调系统（全局），以便用户轻松接入表达式求值器。（#1691）
+ - input text: 强制滚动到末尾或滚动到指定行/内容（这样用户就能实现日志或搜索功能）
+ - input text: 一种预览补全内容的方式（例如从光标处开始补全的灰色文本）
+ - input text: 一个侧边栏，例如可以预览错误所在的位置。绘制可能交给用户，但我们需要在那里提供相应信息。
+ - input text: 一种让用户提供语法着色的方式。
+ - input text: 在 ImGuiInputTextFlags_AllowTabInput 下按 Shift+TAB 可以吞掉前面的空白，最多到 tab_count。
+ - input text multi-line: 支持在没有选区时复制/剪切（复制/剪切当前行？）
+ - input text multi-line: 行号？状态栏？（跟进 #200）
+ - input text multi-line: 当用户在编辑处于活动状态时修改输入缓冲区（即使这是非法行为），也能表现得更稳健。也就是说，缓冲区的变化会造成滚动条故障（#725）
+ - input text multi-line: 更好的水平滚动支持（#383、#1224）
+ - input number: 为 Input*() 函数提供可选的 min/max 范围
+ - input number: 按住 [-]/[+] 按钮时可以让步进速度非线性地加快（或由用户控制）
+ - input number: 使用鼠标滚轮来增大/减小
 
- - layout: helper or a way to express ImGui::SameLine(ImGui::GetCursorStartPos().x + ImGui::CalcItemWidth() + ImGui::GetStyle().ItemInnerSpacing.x); in a simpler manner.
- - layout, font: horizontal tab support, A) text mode: forward only tabs (e.g. every 4 characters/N pixels from pos x1), B) manual mode: explicit tab stops acting as mini columns, no clipping (for menu items, many kind of uses, also vaguely relate to #267, #395)
- - layout: horizontal layout helper (#97)
- - layout: horizontal flow until no space left (#404)
- - layout: more generic alignment state (left/right/centered) for single items?
- - layout: clean up the InputFloatN/SliderFloatN/ColorEdit4 layout code. item width should include frame padding.
- - layout: vertical alignment of mixed height items (e.g. buttons) within a same line (#1284)
- - layout: null layout mode were items are not rendered but user can query GetItemRectMin()/Max/Size.
- - layout: (R&D) local multi-pass layout mode.
- - layout: (R&D) bind authored layout data (created by an off-line tool), items fetch their pos/size at submission, self-optimize data structures to stable linear access.
+ - layout: 提供辅助函数，或一种更简单的方式来表达 ImGui::SameLine(ImGui::GetCursorStartPos().x + ImGui::CalcItemWidth() + ImGui::GetStyle().ItemInnerSpacing.x);
+ - layout, font: 水平制表符支持，A) 文本模式：仅向前制表（例如从起始位置 x1 开始每 4 个字符/N 像素），B) 手动模式：显式制表位充当迷你列，不裁剪（适用于菜单项及多种用途，也与 #267、#395 有些关联）
+ - layout: 水平布局辅助函数（#97）
+ - layout: 水平排列直到没有剩余空间（#404）
+ - layout: 为单个项提供更通用的对齐状态（左/右/居中）？
+ - layout: 清理 InputFloatN/SliderFloatN/ColorEdit4 的布局代码。item width 应包含 frame padding。
+ - layout: 同一行内不同高度项（例如按钮）的垂直对齐（#1284）
+ - layout: 空布局模式，在此模式下项不会被渲染，但用户可以查询 GetItemRectMin()/Max/Size。
+ - layout: (R&D) 局部多遍布局模式。
+ - layout: (R&D) 绑定预先制作的布局数据（由离线工具生成），项在提交时获取自己的 pos/size，自我优化数据结构以实现稳定的线性访问。
 
- - tables: see https://github.com/ocornut/imgui/issues/2957#issuecomment-569726095
+ - tables: 参见 https://github.com/ocornut/imgui/issues/2957#issuecomment-569726095
 
- - group: BeginGroup() needs a border option. (~#1496)
- - group: IsItemHovered() after EndGroup() covers whole AABB rather than the intersection of individual items. Is that desirable?
- - group: merge deactivation/activation within same group (fwd WasEdited flag). (#2550)
+ - group: BeginGroup() 需要一个边框选项。（~#1496）
+ - group: EndGroup() 之后的 IsItemHovered() 覆盖整个 AABB，而不是各个项的交集。这样合适吗？
+ - group: 在同一 group 内合并停用/激活（转发 WasEdited 标志）。（#2550）
 
-!- color: the color conversion helpers/types are a mess and needs sorting out.
- - color: (api breaking) ImGui::ColorConvertXXX functions should be loose ImColorConvertXX to match imgui_internals.h
+ !- color: 颜色转换辅助函数/类型一团糟，需要整理。
+ - color: (api breaking) ImGui::ColorConvertXXX 函数应改为独立的 ImColorConvertXX，以与 imgui_internals.h 保持一致
 
- - clipper: ability to disable the clipping through a simple flag/bool.
- - clipper: horizontal clipping support. (#2580)
+ - clipper: 能够通过简单的标志/布尔值禁用裁剪。
+ - clipper: 水平裁剪支持。（#2580）
 
- - separator: expose flags (#759)
- - separator: take indent into consideration (optional)
- - separator: width, thickness, centering (#1643, #2657)
- - splitter: formalize the splitter idiom into an official api (we want to handle n-way split) (#319)
+ - separator: 暴露标志（#759）
+ - separator: 将缩进纳入考虑（可选）
+ - separator: 宽度、粗细、居中（#1643、#2657）
+ - splitter: 将 splitter 惯用法正式化为官方 API（我们希望支持 n 路分割）（#319）
 
- - docking: merge docking branch (#2109)
+ - docking: 合并 docking 分支（#2109）
 
- - tabs: "there is currently a problem because TabItem() will try to submit their own tooltip after 0.50 second, and this will have the effect of making your tooltip flicker once." -> tooltip priority work (WIP branch)
- - tabs: make EndTabBar fail if users doesn't respect BeginTabBar return value, for consistency/future-proofing.
- - tabs: persistent order/focus in BeginTabBar() api (#261, #351)
- - tabs: explicit api (even if internal) to cleanly manipulate tab order.
+ - tabs: “目前存在一个问题：TabItem() 会在 0.50 秒后尝试提交自己的 tooltip，这会导致你的 tooltip 闪烁一次。”-> tooltip 优先级工作（WIP 分支）
+ - tabs: 如果用户不遵守 BeginTabBar 的返回值，就让 EndTabBar 失败，以保持一致并防患于未然。
+ - tabs: 在 BeginTabBar() API 中持久化顺序/焦点（#261、#351）
+ - tabs: 提供显式 API（即使是内部的），以干净地操作选项卡顺序。
 
- - image/image button: misalignment on padded/bordered button?
- - image/image button: parameters are confusing, image() has tint_col,border_col whereas imagebutton() has bg_col/tint_col. Even thou they are different parameters ordering could be more consistent. can we fix that?
- - slider: allow using the [-]/[+] buttons used by InputFloat()/InputInt()
- - slider: add dragging-based widgets to edit values with mouse (on 2 axes), saving screen real-estate.
- - slider: tint background based on value (e.g. v_min -> v_max, or use 0.0f either side of the sign)
- - slider: relative dragging? + precision dragging
- - slider: step option (#1183)
- - slider: style: fill % of the bar instead of positioning a drag.
- - knob: rotating knob widget (#942)
- - drag float: support for reversed drags (min > max) (removed is_locked, also see fdc526e)
- - drag float: up/down axis
- - drag float: added leeway on edge (e.g. a few invisible steps past the clamp limits)
+ - image/image button: 在带 padding/边框的按钮上存在错位？
+ - image/image button: 参数令人困惑，image() 有 tint_col,border_col，而 imagebutton() 有 bg_col/tint_col。即使它们是不同的参数，顺序也可以更一致一些。我们能修复这个问题吗？
+ - slider: 允许使用 InputFloat()/InputInt() 所使用的 [-]/[+] 按钮
+ - slider: 添加基于拖拽的控件，用鼠标编辑数值（双轴），以节省屏幕空间。
+ - slider: 根据数值对背景着色（例如 v_min -> v_max，或在符号两侧使用 0.0f）
+ - slider: 相对拖拽？+ 精确拖拽
+ - slider: 步进选项（#1183）
+ - slider: 样式：填充条的百分比，而不是定位一个拖拽柄。
+ - knob: 旋转旋钮控件（#942）
+ - drag float: 支持反向拖拽（min > max）（is_locked 已被移除，另见 fdc526e）
+ - drag float: 上/下轴
+ - drag float: 在边界处增加余量（例如超过钳制限制的几个不可见步进）
 
- - combo: a way/helper to customize the combo preview (#1658) -> experimental BeginComboPreview()
- - combo/listbox: keyboard control. need InputText-like non-active focus + key handling. considering keyboard for custom listbox (pr #203)
- - listbox: unselect option (#1208)
- - listbox: user may want to initial scroll to focus on the one selected value?
- - listbox: disable capturing mouse wheel if the listbox has no scrolling. (#1681)
- - listbox: scrolling should track modified selection.
- - listbox: future api should allow to enable horizontal scrolling (#2510)
+ - combo: 一种自定义 combo 预览的方式/辅助函数（#1658）-> 实验性的 BeginComboPreview()
+ - combo/listbox: 键盘控制。需要类似 InputText 的非活动焦点 + 按键处理。正在考虑为自定义 listbox 添加键盘支持（pr #203）
+ - listbox: 取消选择选项（#1208）
+ - listbox: 用户可能希望初始滚动以聚焦到已选中的值？
+ - listbox: 如果 listbox 没有滚动，则禁用鼠标滚轮捕获。（#1681）
+ - listbox: 滚动应跟随被修改的选择。
+ - listbox: 未来的 API 应允许启用水平滚动（#2510）
 
-!- popups/menus: clarify usage of popups id, how MenuItem/Selectable closing parent popups affects the ID, etc. this is quite fishy needs improvement! (#331, #402)
- - modals: make modal title bar blink when trying to click outside the modal.
- - modals: technically speaking, we could make Begin() with ImGuiWindowFlags_Modal work without involving popup. May help untangle a few things, as modals are more like regular windows than popups. (#402)
- - popups: if the popup functions took explicit ImGuiID it would allow the user to manage the scope of those ID. (#331)
- - popups: clicking outside (to close popup) and holding shouldn't drag window below.
- - popups: add variant using global identifier similar to Begin/End (#402)
- - popups: border options. richer api like BeginChild() perhaps? (#197)
- - popups/modals: although it is sometimes convenient that popups/modals lifetime is owned by imgui, we could also a bool-owned-by-user api as long as Begin() return value testing is enforced.
+ !- popups/menus: 需要澄清 popup id 的用法，MenuItem/Selectable 关闭父 popup 如何影响 ID 等。这相当可疑，需要改进！（#331、#402）
+ - modals: 当尝试点击模态窗口外部时，让模态标题栏闪烁。
+ - modals: 从技术上讲，我们可以让带 ImGuiWindowFlags_Modal 的 Begin() 在不涉及 popup 的情况下工作。这可能有助于理清一些事情，因为模态窗口更像普通窗口而不是 popup。（#402）
+ - popups: 如果 popup 函数接受显式的 ImGuiID，就能让用户管理这些 ID 的作用域。（#331）
+ - popups: 点击外部（以关闭 popup）并按住鼠标时，不应拖动下面的窗口。
+ - popups: 添加使用全局标识符的变体，类似于 Begin/End（#402）
+ - popups: 边框选项。也许像 BeginChild() 那样提供更丰富的 API？（#197）
+ - popups/modals: 尽管 popup/模态窗口的生命周期由 imgui 拥有有时很方便，但只要强制检查 Begin() 的返回值，我们也可以提供由用户用布尔值管理的 API。
 
- - tooltip: drag and drop with tooltip near monitor edges lose/changes its last direction instead of locking one. The drag and drop tooltip should always follow without changing direction.
- - tooltip: allow to set the width of a tooltip to allow TextWrapped() etc. while keeping the height automatic.
- - tooltip: drag tooltip hovering over source widget with IsItemHovered/SetTooltip flickers (WIP branch)
- - tooltip: tooltip priorities to override a stock tooltip (e.g. shortcut tooltip)
+ - tooltip: 当拖放提示靠近显示器边缘时，它会丢失/改变最后的方向，而不是锁定某个方向。拖放提示应始终保持方向不变地跟随。
+ - tooltip: 允许设置 tooltip 的宽度，以便使用 TextWrapped() 等，同时保持高度自动。
+ - tooltip: 使用 IsItemHovered/SetTooltip 时，悬停在源控件上的拖拽提示会闪烁（WIP 分支）
+ - tooltip: tooltip 优先级，用于覆盖内置 tooltip（例如快捷键提示）
 
- - status-bar: add a per-window status bar helper similar to what menu-bar does. generalize concept of layer0 rect in window (can make _MenuBar window flag obsolete too).
- - shortcuts: store multiple keychords in ImGuiKeyChord
- - shortcuts: Hovered route (lower than Focused, higher than Global)
- - shortcuts: local-style shortcut api, e.g. parse "&Save"
- - shortcuts,menus: global-style shortcut api e.g. "Save (CTRL+S)" -> explicit flag for recursing into closed menu
- - menus: hovering from menu to menu on a menu-bar has 1 frame without any menu, which is a little annoying. ideally zero.
- - menus: would be nice if the Selectable() supported horizontal alignment (must be given the equivalent of WorkRect.Max.x matching the position of the shortcut column)
+ - status-bar: 添加类似 menu-bar 那样的逐窗口状态栏辅助函数。推广窗口内 layer0 矩形的概念（也可以让 _MenuBar 窗口标志变得多余）。
+ - shortcuts: 在 ImGuiKeyChord 中存储多个按键组合
+ - shortcuts: Hovered 路由（低于 Focused，高于 Global）
+ - shortcuts: 局部风格的快捷键 API，例如解析 "&Save"
+ - shortcuts,menus: 全局风格的快捷键 API，例如 "Save (CTRL+S)" -> 用于递归进入已关闭菜单的显式标志
+ - menus: 在菜单栏上从一个菜单悬停到另一个菜单时，会有 1 帧没有任何菜单，这有点烦人。理想情况下应为零。
+ - menus: 如果 Selectable() 支持水平对齐就更好了（必须给出相当于 WorkRect.Max.x、与快捷键列位置相匹配的值）
 
- - tree node: add treenode/treepush int variants? not there because (void*) cast from int warns on some platforms/settings?
- - tree node: try to apply scrolling at time of TreePop() if node was just opened and end of node is past scrolling limits?
- - tree node / selectable render mismatch which is visible if you use them both next to each other (e.g. cf. property viewer)
- - tree node: tweak color scheme to distinguish headers from selected tree node (#581)
- - tree node: leaf/non-leaf highlight mismatch.
- - tree node/opt: could avoid formatting when clipped (flag assuming we don't care about width/height, assume single line height? format only %s/%c to be able to count height?)
+ - tree node: 添加接受 int 的 treenode/treepush 变体？没有提供是因为从 int 到 (void*) 的转换在某些平台/设置下会发出警告？
+ - tree node: 如果节点刚刚被展开，且节点末尾超出了滚动限制，是否可以尝试在 TreePop() 时应用滚动？
+ - tree node / selectable 渲染不一致，如果将它们相邻使用就能看出来（例如参见属性查看器）
+ - tree node: 调整配色方案，以区分标题栏和选中的树节点（#581）
+ - tree node: 叶子/非叶子节点高亮不一致。
+ - tree node/opt: 在被裁剪时可以避免格式化（假设我们不关心宽度/高度，假定为单行高度？只格式化 %s/%c 以便能计算高度？）
 
- - settings: write more decent code to allow saving/loading new fields: columns, selected tree nodes?
- - settings: facilitate extension lazily calling AddSettingsHandler() while running and still getting their data call the ReadXXX handlers immediately.
- - settings: api for per-tool simple persistent data (bool,int,float,columns sizes,etc.) in .ini file (#437)
- - settings/persistence: helpers to make TreeNodeBehavior persist (even during dev!) - may need to store some semantic and/or data type in ImGuiStoragePair
+ - settings: 编写更完善的代码，以便保存/加载新字段：列、选中的树节点？
+ - settings: 方便扩展在运行时延迟调用 AddSettingsHandler()，并仍能立即让 ReadXXX 处理函数读取它们的数据。
+ - settings: 用于在每个工具中把简单持久化数据（bool、int、float、列宽等）保存到 .ini 文件的 API（#437）
+ - settings/persistence: 让 TreeNodeBehavior 持久化的辅助函数（即使在开发期间！）- 可能需要在 ImGuiStoragePair 中存储一些语义和/或数据类型
 
- - style: better default styles. (#707)
- - style: add a highlighted text color (for headers, etc.)
- - style: border types: out-screen, in-screen, etc. (#447)
- - style: add window shadow (fading away from the window. Paint-style calculation of vertices alpha after drawlist would be easier)
- - style: a concept of "compact style" that the end-user can easily rely on (e.g. PushStyleCompact()?) that maps to other settings? avoid implementing duplicate helpers such as SmallCheckbox(), etc.
- - style: try to make PushStyleVar() more robust to incorrect parameters (to be more friendly to edit & continues situation).
- - style: global scale setting.
- - style: FramePadding could be different for up vs down (#584)
- - style: WindowPadding needs to be EVEN as the 0.5 multiplier used on this value probably have a subtle effect on clip rectangle
- - style: have a more global HSV setter (e.g. alter hue on all elements). consider replacing active/hovered by offset in HSV space? (#438, #707, #1223)
- - style: gradients fill (#4722, #1223) ~ 2 bg colors for each fill? tricky with rounded shapes and using textures for corners.
- - style editor: color child window height expressed in multiple of line height.
+ - style: 更好的默认样式。（#707）
+ - style: 添加高亮文本颜色（用于标题栏等）
+ - style: 边框类型：屏外、屏内等。（#447）
+ - style: 添加窗口阴影（从窗口向外淡出。像 Paint 那样在 drawlist 之后计算顶点 alpha 会更容易）
+ - style: “紧凑样式”的概念，让最终用户可以轻松依赖（例如 PushStyleCompact()？），并映射到其他设置？避免实现 SmallCheckbox() 等重复的辅助函数。
+ - style: 尽量让 PushStyleVar() 对不正确的参数更健壮（更友好地应对“编辑并继续”的场景）。
+ - style: 全局缩放设置。
+ - style: FramePadding 在按下与弹起时可以不同（#584）
+ - style: WindowPadding 需要是偶数，因为对该值使用 0.5 乘数可能会对裁剪矩形产生细微影响
+ - style: 提供一种更全局的 HSV 设置方式（例如改变所有元素的色相）。考虑用在 HSV 空间中的偏移量来替代 active/hovered？（#438、#707、#1223）
+ - style: 渐变填充（#4722、#1223）~ 每个填充使用 2 种背景色？在圆角形状和用纹理处理圆角时会比较棘手。
+ - style editor: 颜色子窗口的高度以行高的倍数表示。
 
- - log: improve logging of ArrowButton, ListBox, TabItem
- - log: carry on indent / tree depth when opening a child window
- - log: enabling log ends up pushing and growing vertices buffers because we don't distinguish layout vs render clipping
- - log: have more control over the log scope (e.g. stop logging when leaving current tree node scope)
- - log: be able to log anything (e.g. right-click on a window/tree-node, shows context menu? log into tty/file/clipboard)
- - log: let user copy any window content to clipboard easily (CTRL+C on windows? while moving it? context menu?). code is commented because it fails with multiple Begin/End pairs.
- - log: obsolete LogButtons().... (was: LogButtons() options for specifying depth and/or hiding depth slider)
+ - log: 改进 ArrowButton、ListBox、TabItem 的日志记录
+ - log: 在打开子窗口时延续缩进/树深度
+ - log: 启用日志最终会不断压入并增大顶点缓冲区，因为我们不区分布局裁剪与渲染裁剪
+ - log: 对日志作用域有更多控制（例如离开当前树节点作用域时停止记录）
+ - log: 能够记录任何内容（例如右键点击窗口/树节点弹出上下文菜单？记录到 tty/文件/剪贴板）
+ - log: 让用户能轻松将任意窗口内容复制到剪贴板（在窗口上按 CTRL+C？移动窗口时？上下文菜单？）。相关代码已被注释掉，因为它在存在多对 Begin/End 时会失败。
+ - log: 已废弃的 LogButtons()……（原为：LogButtons() 用于指定深度和/或隐藏深度滑块的选项）
 
- - filters: set a current filter that certain items (e.g. tree node) can automatically query to hide themselves
- - filters: handle wild-cards (with implicit leading/trailing *), reg-exprs
- - filters: fuzzy matches (may use code at blog.forrestthewoods.com/4cffeed33fdb)
+ - filters: 设置一个当前过滤器，某些项（例如树节点）可以自动查询它来隐藏自身
+ - filters: 处理通配符（隐含前导/尾随 *）、正则表达式
+ - filters: 模糊匹配（可以使用 blog.forrestthewoods.com/4cffeed33fdb 上的代码）
 
- - drag and drop: focus drag target window on hold (even without open)
- - drag and drop: drag source on a group object (would need e.g. an invisible button covering group in EndGroup) https://twitter.com/paniq/status/1121446364909535233
- - drag and drop: have some way to know when a drag begin from BeginDragDropSource() pov. (see 2018/01/11 post in #143)
- - drag and drop: allow preview tooltip to be submitted from a different place than the drag source. (#1725)
- - drag and drop: make it easier and provide a demo to have tooltip both are source and target site, with a more detailed one on target site (tooltip ordering problem)
- - drag and drop: demo with reordering nodes (in a list, or a tree node). (#143)
- - drag and drop: test integrating with os drag and drop (make it easy to do a naive WM_DROPFILE integration)
- - drag and drop: allow for multiple payload types. (#143)
- - drag and drop: make payload optional? payload promise? (see 2018/01/11 post in #143)
- - drag and drop: (#143) "both an in-process pointer and a promise to generate a serialized version, for whether the drag ends inside or outside the same process"
- - drag and drop: feedback when hovering a region blocked by modal (mouse cursor "NO"?)
+ - drag and drop: 按住时聚焦拖拽目标窗口（即使未打开）
+ - drag and drop: 以 group 对象作为拖拽源（例如需要在 EndGroup 中用一个覆盖 group 的不可见按钮）https://twitter.com/paniq/status/1121446364909535233
+ - drag and drop: 从 BeginDragDropSource() 的角度提供某种方式来知道拖拽何时开始。（见 #143 中 2018/01/11 的帖子）
+ - drag and drop: 允许预览提示从与拖拽源不同的位置提交。（#1725）
+ - drag and drop: 让它更容易，并提供一个演示，使源和目标位置都有提示，其中目标位置的提示更详细（提示排序问题）
+ - drag and drop: 节点重排序的演示（在列表或树节点中）。（#143）
+ - drag and drop: 测试与操作系统拖放的集成（让简单的 WM_DROPFILE 集成变得容易）
+ - drag and drop: 允许使用多种 payload 类型。（#143）
+ - drag and drop: 让 payload 成为可选？payload promise？（见 #143 中 2018/01/11 的帖子）
+ - drag and drop: （#143）“既有一个进程内指针，也有一个生成序列化版本的 promise，用于处理拖拽在同一进程内部还是外部结束”
+ - drag and drop: 悬停在被模态窗口阻挡的区域时给出反馈（鼠标指针显示“禁止”？）
 
- - markup: simple markup language for color change? (#902, #3130)
+ - markup: 用于颜色变化的简单标记语言？（#902、#3130）
 
- - text: selectable text (for copy) as a generic feature (ItemFlags?)
- - text: proper alignment options in imgui_internal.h
- - text: provided a framed text helper, e.g. https://pastebin.com/1Laxy8bT
- - text: refactor TextUnformatted (or underlying function) to more explicitly request if we need width measurement or not
- - text/layout/tabs: \t pulling position from base pos + step, or offset array (e.g. could be used in text edit, menus for simple icon+text alignment, etc.)
- - text link/url button: underlined. should api expose an ID or use text contents as ID? which colors enum to use?
- - text/wrapped: should be a more first-class citizen, e.g. wrapped text within a Selectable with known width.
- - text/wrapped: custom separator for text wrapping. (#3002)
- - text/wrapped: figure out better way to use TextWrapped() in an always auto-resize context (tooltip, etc.) (#249)
+ - text: 将可选文本（用于复制）作为通用功能（ItemFlags？）
+ - text: 在 imgui_internal.h 中提供恰当的对齐选项
+ - text: 提供带边框文本的辅助函数，例如 https://pastebin.com/1Laxy8bT
+ - text: 重构 TextUnformatted（或底层函数），以更明确地请求是否需要测量宽度
+ - text/layout/tabs: \t 从基准位置 + 步进或偏移数组获取位置（例如可用于文本编辑、菜单中简单的图标+文本对齐等）
+ - text link/url button: 带下划线。API 应暴露一个 ID，还是使用文本内容作为 ID？应使用哪个颜色枚举？
+ - text/wrapped: 应成为更一等的公民，例如在宽度已知的 Selectable 内使用自动换行文本。
+ - text/wrapped: 用于文本换行的自定义分隔符。（#3002）
+ - text/wrapped: 找出在始终自动调整大小的上下文（tooltip 等）中更好地使用 TextWrapped() 的方法（#249）
 
- - font: arbitrary line spacing. (#2945)
- - font: MergeMode: flags to select overwriting or not (this is now very easy with refactored ImFontAtlasBuildWithStbTruetype)
- - font: better CalcTextSizeA() API, at least for simple use cases. current one is horrible (perhaps have simple vs extended versions).
- - font: for the purpose of RenderTextEllipsis(), it might be useful that CalcTextSizeA() can ignore the trailing padding?
- - font: a CalcTextHeight() helper could run faster than CalcTextSize().y
- - font: enforce monospace through ImFontConfig (for icons?) + create dual ImFont output from same input, reusing rasterized data but with different glyphs/AdvanceX
- - font: make it easier to submit own bitmap font (same texture, another texture?). (#2127, #2575)
- - font: MemoryTTF taking ownership confusing/not obvious, maybe default should be opposite?
- - font: storing MinAdvanceX per font would allow us to skip calculating line width (under a threshold of character count) in loops looking for block width
- - font/draw: vertical and/or rotated text renderer (#705) - vertical is easier clipping wise
- - font/draw: need to be able to specify wrap start position.
- - font/draw: better reserve policy for large horizontal block of text (shouldn't reserve for all clipped lines). also see #3349.
- - font/draw: fix for drawing 16k+ visible characters in same call.
- - font/draw: underline, squiggle line rendering helpers.
- - font: optimization: for monospace font (like the default one) we can trim IndexXAdvance as long as trailing value is == FallbackXAdvance (need to make sure TAB is still correct), would save on cache line.
- - font: add support for kerning, probably optional. A) perhaps default to (32..128)^2 matrix ~ 9K entries = 36KB, then hash for non-ascii?. B) or sparse lookup into per-char list?
- - font: add a simpler CalcTextSizeA() api? current one ok but not welcome if user needs to call it directly (without going through ImGui::CalcTextSize)
- - font: (api breaking) remove "TTF" from symbol names. also because it now supports OTF.
- - font/opt: Considering storing standalone AdvanceX table as 16-bit fixed point integer?
- - font/opt: Glyph currently 40 bytes (2+9*4). Consider storing UV as 16-bits integer? (->32 bytes). X0/Y0/X1/Y1 as 16 fixed-point integers? Or X0/Y0 as float and X1/Y1 as fixed8_8?
+ - font: 任意行距。（#2945）
+ - font: MergeMode: 用于选择是否覆盖的标志（在重构后的 ImFontAtlasBuildWithStbTruetype 下，这现在非常容易）
+ - font: 更好的 CalcTextSizeA() API，至少对简单用例而言。目前的非常糟糕（也许可以提供简单版与扩展版）。
+ - font: 为了 RenderTextEllipsis() 的目的，如果 CalcTextSizeA() 能忽略尾部 padding 可能会有用？
+ - font: CalcTextHeight() 辅助函数可能比 CalcTextSize().y 运行得更快
+ - font: 通过 ImFontConfig 强制等宽（用于图标？）+ 从相同输入创建双份 ImFont 输出，复用光栅化数据但使用不同的字形/AdvanceX
+ - font: 使提交自己的位图字体更容易（相同纹理，还是另一个纹理？）。（#2127、#2575）
+ - font: MemoryTTF 取得所有权这一点令人困惑/不明显，也许默认行为应该反过来？
+ - font: 为每个字体存储 MinAdvanceX 可以让我们在寻找块宽的循环中跳过计算行宽（在字符数低于某个阈值时）
+ - font/draw: 垂直和/或旋转文本渲染器（#705）- 从裁剪角度看垂直更容易
+ - font/draw: 需要能够指定换行起始位置。
+ - font/draw: 为大片水平文本提供更好的预留策略（不应为所有被裁剪的行都预留）。另见 #3349。
+ - font/draw: 修复在同一次调用中绘制 16k+ 可见字符的问题。
+ - font/draw: 下划线、波浪线的渲染辅助函数。
+ - font: 优化：对于等宽字体（如默认字体），只要尾部值 == FallbackXAdvance，我们就可以裁剪 IndexXAdvance（需要确保 TAB 仍然正确），这样可以节省缓存行。
+ - font: 添加字距调整支持，可能是可选的。A) 也许默认使用 (32..128)^2 矩阵，约 9K 项 = 36KB，然后对非 ASCII 字符使用哈希？B) 或者使用逐字符列表的稀疏查找？
+ - font: 添加更简单的 CalcTextSizeA() api？目前这个还行，但如果用户需要直接调用它（而不经过 ImGui::CalcTextSize）就不太受欢迎
+ - font: (api breaking) 从符号名称中移除 "TTF"。也是因为它现在支持 OTF。
+ - font/opt: 考虑将独立的 AdvanceX 表存储为 16 位定点整数？
+ - font/opt: Glyph 目前为 40 字节（2+9*4）。考虑将 UV 存储为 16 位整数？（->32 字节）。将 X0/Y0/X1/Y1 存储为 16 位定点整数？或者将 X0/Y0 存储为 float，X1/Y1 存储为 fixed8_8？
 
- - nav: some features such as PageUp/Down/Home/End should probably work without ImGuiConfigFlags_NavEnableKeyboard? (where do we draw the line? how about CTRL+Tab)
- - nav: Home/End behavior when navigable item is not fully visible at the edge of scrolling? should be backtrack to keep item into view?
- - nav: NavScrollToBringItemIntoView() with item bigger than view should focus top-right? Repro: using Nav in "About Window"
- - nav: expose wrap around flags/logic to allow e.g. grid based layout (pressing NavRight on the right-most element would go to the next row, etc.). see internal's NavMoveRequestTryWrapping().
- - nav: patterns to make it possible for arrows key to update selection (see JustMovedTo in range_select branch)
- - nav: restore/find nearest NavId when current one disappear (e.g. pressed a button that disappear, or perhaps auto restoring when current button change name)
- - nav: SetItemDefaultFocus() level of priority, so widgets like Selectable when inside a popup could claim a low-priority default focus on the first selected item
- - nav: holding space to repeat a button doesn't show button activated during hold.
- - nav: NavFlattened: init requests don't work properly on flattened siblings.
- - nav: NavFlattened: pageup/pagedown/home/end don't work properly on flattened siblings.
- - nav: NavFlattened: ESC on a flattened child should select something.
- - nav: NavFlattened: broken: in typical usage scenario, the items of a fully clipped child are currently not considered to enter into a NavFlattened child.
- - nav: NavFlattened: cannot access menu-bar of a flattened child window with Alt/menu key (not a very common use case..).
- - nav/popup: esc/enter default behavior for popups, e.g. be able to mark an "ok" or "cancel" button that would get triggered by those keys, default validation button, etc.
- - nav/treenode: left within a tree node block as a fallback (ImGuiTreeNodeFlags_NavLeftJumpsBackHere by default?)
- - nav/menus: pressing left-right on a vertically clipped menu bar tends to jump to the collapse/close buttons.
- - nav/menus: allow pressing Menu to leave a sub-menu.
- ! nav/menus: a way to access the main menu bar with Alt? (currently needs CTRL+TAB) or last focused window menu bar?
- - nav/menus: when using the main menu bar, even though we restore focus after, the underlying window loses its title bar highlight during menu manipulation. could we prevent it?
- - nav/menus: main menu bar currently cannot restore a nullptr focus. Could save NavWindow at the time of being focused, similarly to what popup do?
- - nav/menus: Alt,Up could open the first menu (e.g. "File") currently it tends to nav into the window/collapse menu. Do do that we would need custom transition?
- - nav/windowing: when CTRL+Tab/windowing is active, the HoveredWindow detection doesn't take account of the window display re-ordering.
- - nav/windowing: Resizing window will currently fail with certain types of resizing constraints/callback applied
- - focus: preserve ActiveId/focus stack state, e.g. when opening a menu and close it, previously selected InputText() focus gets restored (#622)
+ - nav: 某些功能（如 PageUp/Down/Home/End）或许应该在没有 ImGuiConfigFlags_NavEnableKeyboard 的情况下也能工作？（界限在哪里？CTRL+Tab 又如何？）
+ - nav: 当可导航项在滚动边缘未完全可见时，Home/End 的行为应如何？是否应回退以保持该项可见？
+ - nav: 当项比视图还大时，NavScrollToBringItemIntoView() 应聚焦右上角？复现：在 "About Window" 中使用 Nav
+ - nav: 暴露环绕标志/逻辑，以支持例如基于网格的布局（在最右侧元素上按 NavRight 会跳到下一行等）。见内部的 NavMoveRequestTryWrapping()。
+ - nav: 使方向键能够更新选择状态的模式（见 range_select 分支中的 JustMovedTo）
+ - nav: 当当前 NavId 消失时恢复/查找最近的 NavId（例如按下的按钮消失了，或者当前按钮改名时自动恢复）
+ - nav: SetItemDefaultFocus() 的优先级级别，这样像 Selectable 这样的控件在 popup 内时，可以以低优先级声明默认聚焦到第一个选中的项
+ - nav: 按住空格重复触发按钮时，按住期间不会显示按钮处于激活状态。
+ - nav: NavFlattened: 初始化请求在扁平化的兄弟节点上不能正常工作。
+ - nav: NavFlattened: pageup/pagedown/home/end 在扁平化的兄弟节点上不能正常工作。
+ - nav: NavFlattened: 在扁平化子节点上按 ESC 应该选中某个东西。
+ - nav: NavFlattened: 已损坏：在典型使用场景中，完全被裁剪的子节点的项目前不会被考虑进入 NavFlattened 子节点。
+ - nav: NavFlattened: 无法用 Alt/菜单键访问扁平化子窗口的菜单栏（不是很常见的用例……）。
+ - nav/popup: popup 的 esc/enter 默认行为，例如能够标记一个会被这些键触发的 "ok" 或 "cancel" 按钮、默认确认按钮等。
+ - nav/treenode: 在树节点块内按左键作为回退（默认使用 ImGuiTreeNodeFlags_NavLeftJumpsBackHere？）
+ - nav/menus: 在垂直裁剪的菜单栏上按左右键，往往跳到折叠/关闭按钮。
+ - nav/menus: 允许按 Menu 键离开子菜单。
+ ! nav/menus: 一种用 Alt 访问主菜单栏的方式？（目前需要 CTRL+TAB）或者最后聚焦窗口的菜单栏？
+ - nav/menus: 使用主菜单栏时，即使我们之后会恢复焦点，底层窗口在操作菜单期间也会失去标题栏高亮。我们能防止这种情况吗？
+ - nav/menus: 主菜单栏目前无法恢复 nullptr 焦点。能否像 popup 那样，在获得焦点时保存 NavWindow？
+ - nav/menus: Alt,Up 本可以打开第一个菜单（例如 "File"），目前它往往导航到窗口/折叠菜单。要做到这一点我们需要自定义过渡？
+ - nav/windowing: 当 CTRL+Tab/windowing 处于活动状态时，HoveredWindow 检测没有考虑窗口显示的重排序。
+ - nav/windowing: 应用某些类型的调整大小约束/回调时，目前调整窗口大小会失败
+ - focus: 保留 ActiveId/焦点栈状态，例如打开菜单再关闭它时，之前选中的 InputText() 焦点会被恢复（#622）
 
- - inputs: support track pad style scrolling & slider edit.
- - inputs/io: backspace and arrows in the context of a text input could use system repeat rate.
- - inputs/io: clarify/standardize/expose repeat rate and repeat delays (#1808)
- - inputs/scrolling: support for smooth scrolling (#2462, #2569)
+ - inputs: 支持触控板风格的滚动与滑块编辑。
+ - inputs/io: 文本输入中的退格键和方向键可以使用系统重复速率。
+ - inputs/io: 澄清/标准化/暴露重复速率与重复延迟（#1808）
+ - inputs/scrolling: 支持平滑滚动（#2462、#2569）
 
- - misc: idle: expose "woken up" boolean (set by inputs) and/or animation time (for cursor blink) for backend to be able stop refreshing easily.
- - misc: idle: if cursor blink if the _only_ visible animation, core imgui could rewrite vertex alpha to avoid CPU pass on ImGui:: calls.
- - misc: idle: if cursor blink if the _only_ visible animation, could even expose a dirty rectangle that optionally can be leverage by some app to render in a smaller viewport, getting rid of much pixel shading cost.
- - misc: no way to run a root-most GetID() with ImGui:: api since there's always a Debug window in the stack. (mentioned in #2960)
- - misc: make the ImGuiCond values linear (non-power-of-two). internal storage for ImGuiWindow can use integers to combine into flags (Why?)
- - misc: PushItemFlag(): add a flag to disable keyboard capture when used with mouse? (#1682)
- - misc: support for string view/range instead of char* would e.g. facilitate usage with Rust (#683, #3038, WIP string_view branch)
+ - misc: idle: 暴露 "woken up" 布尔值（由输入设置）和/或动画时间（用于光标闪烁），以便后端能轻松停止刷新。
+ - misc: idle: 如果光标闪烁是_唯一_可见的动画，imgui 核心可以重写顶点 alpha，以避免在 ImGui:: 调用上进行 CPU 遍历。
+ - misc: idle: 如果光标闪烁是_唯一_可见的动画，甚至可以暴露一个脏矩形，某些应用可选择利用它在更小的视口中渲染，从而省去大量像素着色开销。
+ - misc: 无法用 ImGui:: api 运行最根部的 GetID()，因为栈中总是有一个 Debug 窗口。（在 #2960 中提到）
+ - misc: 让 ImGuiCond 的值变为线性的（非 2 的幂）。ImGuiWindow 的内部存储可以使用整数组合成标志（为什么？）
+ - misc: PushItemFlag(): 添加一个标志，用于在与鼠标一起使用时禁用键盘捕获？（#1682）
+ - misc: 支持 string view/range 而非 char*，例如会便于在 Rust 中使用（#683、#3038，WIP string_view 分支）
 
- - demo: demonstrate using PushStyleVar() in more details.
- - demo: add vertical separator demo
- - demo: add virtual scrolling example?
- - demo: demonstrate Plot offset
- - demo: window size constraint: square demo is broken when resizing from edges (#1975), would need to rework the callback system to solve this
+ - demo: 更详细地演示 PushStyleVar() 的用法。
+ - demo: 添加垂直分隔符演示
+ - demo: 添加虚拟滚动示例？
+ - demo: 演示 Plot offset
+ - demo: 窗口大小约束：从边缘调整大小时，正方形演示会出问题（#1975），需要重做回调系统来解决这个问题
 
- - examples: window minimize, maximize (#583)
- - examples: provide a zero frame-rate/idle example.
- - examples: dx11/dx12: try to use new swapchain blit models (#2970, #9031)
- - backends: report it better when not able to create texture?
- - backends: glfw: could go idle when minimized? if (glfwGetWindowAttrib(window, GLFW_ICONIFIED)) { glfwWaitEvents(); continue; } // issue: DeltaTime will be super high on resume, perhaps provide a way to let impl know (#440)
- - backends: opengl: rename imgui_impl_opengl2 to impl_opengl_legacy and imgui_impl_opengl3 to imgui_impl_opengl? (#1900)
- - backends: opengl: could use a single vertex buffer and glBufferSubData for uploads?
- - backends: opengl: explicitly disable GL_STENCIL_TEST in bindings.
- - backends: vulkan: viewport: support for synchronized swapping of multiple swap chains.
- - backends: emscripten: dedicated backend? (#8178, #9120, eg. https://github.com/floooh/sokol-samples/blob/master/html5/imgui-emsc.cc#L42)
+ - examples: 窗口最小化、最大化（#583）
+ - examples: 提供一个零帧率/空闲示例。
+ - examples: dx11/dx12: 尝试使用新的交换链 blit 模型（#2970、#9031）
+ - backends: 在无法创建纹理时给出更好的报告？
+ - backends: glfw: 最小化时能否进入空闲状态？if (glfwGetWindowAttrib(window, GLFW_ICONIFIED)) { glfwWaitEvents(); continue; } // 问题：恢复时 DeltaTime 会非常高，或许可以提供一种方式让实现层知晓（#440）
+ - backends: opengl: 将 imgui_impl_opengl2 重命名为 impl_opengl_legacy，将 imgui_impl_opengl3 重命名为 imgui_impl_opengl？（#1900）
+ - backends: opengl: 能否使用单个顶点缓冲和 glBufferSubData 进行上传？
+ - backends: opengl: 在绑定中显式禁用 GL_STENCIL_TEST。
+ - backends: vulkan: viewport: 支持多个交换链的同步交换。
+ - backends: emscripten: 专用后端？（#8178、#9120，例如 https://github.com/floooh/sokol-samples/blob/master/html5/imgui-emsc.cc#L42 ）
 
- - bindings: ways to use clang ast dump to generate bindings or helpers for bindings? (e.g. clang++ -Xclang -ast-dump=json imgui.h) (--> use https://github.com/dearimgui/dear_bindings)
+ - bindings: 能否用 clang ast dump 生成绑定或绑定的辅助代码？（例如 clang++ -Xclang -ast-dump=json imgui.h）（--> 使用 https://github.com/dearimgui/dear_bindings ）
 
- - optimization: replace vsnprintf with stb_printf? using IMGUI_USE_STB_SPRINTF. (#1038 + needed for string_view)
- - optimization: add clipping for multi-component widgets (SliderFloatX, ColorEditX, etc.). one problem is that nav branch can't easily clip parent group when there is a move request.
- - optimization: add a flag to disable most of rendering, for the case where the user expect to skip it (#335)
- - optimization: fully covered window (covered by another with non-translucent bg + WindowRounding worth of padding) may want to clip rendering.
- - optimization: use another hash function than crc32, e.g. FNV1a
- - optimization: turn some the various stack vectors into statically-sized arrays
+ - optimization: 用 stb_printf 替换 vsnprintf？使用 IMGUI_USE_STB_SPRINTF。（#1038 + string_view 所需）
+ - optimization: 为多组件控件（SliderFloatX、ColorEditX 等）添加裁剪。一个问题是当存在移动请求时，nav 分支无法轻松裁剪父 group。
+ - optimization: 添加一个标志来禁用大部分渲染，适用于用户期望跳过它的场景（#335）
+ - optimization: 被完全覆盖的窗口（被另一个具有非半透明背景 + WindowRounding 大小的 padding 的窗口覆盖）可能希望裁剪渲染。
+ - optimization: 使用 crc32 之外的哈希函数，例如 FNV1a
+ - optimization: 将各种栈式 vector 中的一些改为固定大小的数组

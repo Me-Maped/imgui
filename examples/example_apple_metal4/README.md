@@ -1,10 +1,10 @@
-# iOS / OSX Metal4 example
+# iOS / OSX Metal4 示例
 
-## Introduction
+## 简介
 
-This example shows how to integrate Dear ImGui with Metal4. It is based on the "cross-platform" game template provided with Xcode as of Xcode 9.
+本示例展示如何将 Dear ImGui 与 Metal4 集成。它基于 Xcode 9 起随 Xcode 提供的“跨平台”游戏模板。
 
-Consider basing your work off the example_glfw_metal/ or example_sdl2_metal/ examples. They are better supported and will be portable unlike this one.
+建议在你的工作中以 example_glfw_metal/ 或 example_sdl2_metal/ 示例为基础。与本示例不同，它们得到更好的支持，并且具备可移植性。
 
 
 
