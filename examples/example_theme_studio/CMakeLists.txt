@@ -1,0 +1,58 @@
+cmake_minimum_required(VERSION 3.16)
+project(imgui_theme_studio LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+option(THEME_STUDIO_BUILD_APP "Build the GLFW/OpenGL3 application" ON)
+set(IMGUI_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../..")
+
+add_library(theme_imgui STATIC
+    ${IMGUI_DIR}/imgui.cpp ${IMGUI_DIR}/imgui_draw.cpp
+    ${IMGUI_DIR}/imgui_tables.cpp ${IMGUI_DIR}/imgui_widgets.cpp)
+target_include_directories(theme_imgui PUBLIC ${IMGUI_DIR})
+add_library(imgui_themes STATIC ${IMGUI_DIR}/misc/themes/imgui_themes.cpp)
+target_include_directories(imgui_themes PUBLIC ${IMGUI_DIR}/misc/themes)
+target_link_libraries(imgui_themes PUBLIC theme_imgui)
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    target_compile_options(imgui_themes PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+enable_testing()
+add_executable(theme_tests tests.cpp)
+target_link_libraries(theme_tests PRIVATE imgui_themes)
+add_test(NAME theme_contracts COMMAND theme_tests)
+
+add_library(theme_studio_ui STATIC studio.cpp)
+target_link_libraries(theme_studio_ui PUBLIC imgui_themes)
+target_include_directories(theme_studio_ui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+add_executable(studio_tests studio_tests.cpp ${IMGUI_DIR}/backends/imgui_impl_null.cpp)
+target_include_directories(studio_tests PRIVATE ${IMGUI_DIR}/backends)
+target_link_libraries(studio_tests PRIVATE theme_studio_ui)
+add_test(NAME studio_contracts COMMAND studio_tests)
+add_library(theme_benchmark STATIC benchmark.cpp)
+target_link_libraries(theme_benchmark PUBLIC imgui_themes)
+target_include_directories(theme_benchmark PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+add_executable(benchmark_tests benchmark_tests.cpp ${IMGUI_DIR}/backends/imgui_impl_null.cpp)
+target_include_directories(benchmark_tests PRIVATE ${IMGUI_DIR}/backends)
+target_link_libraries(benchmark_tests PRIVATE theme_benchmark)
+add_test(NAME benchmark_contracts COMMAND benchmark_tests)
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    target_compile_options(theme_studio_ui PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(theme_benchmark PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+if(THEME_STUDIO_BUILD_APP)
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(GLFW3 REQUIRED IMPORTED_TARGET glfw3)
+    find_package(OpenGL REQUIRED)
+    add_executable(theme_studio main.cpp
+        ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
+        ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp)
+    target_include_directories(theme_studio PRIVATE ${IMGUI_DIR}/backends)
+    target_compile_definitions(theme_studio PRIVATE
+        THEME_STUDIO_PRESET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/themes"
+        THEME_STUDIO_FONT_PATH="${IMGUI_DIR}/misc/fonts/DroidSans.ttf")
+    target_link_libraries(theme_studio PRIVATE theme_studio_ui theme_benchmark PkgConfig::GLFW3 OpenGL::GL ${CMAKE_DL_LIBS})
+    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        target_compile_options(theme_studio PRIVATE -Wall -Wextra -Wpedantic)
+    endif()
+endif()

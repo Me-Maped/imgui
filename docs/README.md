@@ -13,7 +13,7 @@ Dear ImGui
 <br>&nbsp;&nbsp;_E-mail: contact @ dearimgui dot com_
 <br>个人：在[此处](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WGHNC6MBFLZ2S)支持持续的开发与维护。另请参阅 [Funding](https://github.com/ocornut/imgui/wiki/Funding) 页面。
 
-| [简介](#the-pitch) - [用法](#usage) - [工作原理](#how-it-works) - [版本发布与更新日志](#releases--changelogs) - [演示](#demo) - [入门与集成](#getting-started--integration) |
+| [简介](#the-pitch) - [用法](#usage) - [主题与样式](#themes--styles) - [工作原理](#how-it-works) - [版本发布与更新日志](#releases--changelogs) - [演示](#demo) - [入门与集成](#getting-started--integration) |
 :----------------------------------------------------------: |
 | [画廊](#gallery) - [支持、常见问题](#support-frequently-asked-questions-faq) -  [如何提供帮助](#how-to-help) - **[资金支持与赞助者](https://github.com/ocornut/imgui/wiki/Funding)** - [鸣谢](#credits) - [许可证](#license) |
 | [Wiki](https://github.com/ocornut/imgui/wiki) - [扩展](https://github.com/ocornut/imgui/wiki/Useful-Extensions) - [语言绑定与框架后端](https://github.com/ocornut/imgui/wiki/Bindings) - [使用 Dear ImGui 的软件](https://github.com/ocornut/imgui/wiki/Software-using-dear-imgui) - [用户评价](https://github.com/ocornut/imgui/wiki/Quotes) |
@@ -93,6 +93,53 @@ ImGui::End();
 ![my_first_tool_v192 6](https://github.com/user-attachments/assets/6c76658c-302f-403b-af26-d517e2bfb0d4)
 
 Dear ImGui 让你既可以**创建复杂的工具**，也可以创建极其短命的工具。在“短命”的极端情况下：利用现代编译器的 Edit&Continue（热重载）功能，你可以在应用运行时添加几个控件来调整变量，一分钟后再把代码删掉！Dear ImGui 不只是用来调整数值的。你可以只用发出文本命令来追踪正在运行的算法。你可以结合自己的反射数据实时浏览数据集。你可以用它暴露引擎中某个子系统的内部信息，创建日志记录器、检查工具、性能分析器、调试器，乃至整个游戏制作编辑器/框架等等。
+
+### <a id="themes--styles"></a>主题与样式（本仓库扩展）
+
+[Theme Studio](../examples/example_theme_studio/README.md) 提供五套可编辑主题和一个只读原生基准。主题模块独立于 ImGui 核心与业务数据，支持运行时切换、修改颜色/尺寸、保存 INI 和重新加载。
+
+| 编号 | 主题 | 启动参数 | 特点 |
+| --- | --- | --- | --- |
+| 00 | ImGui Default | `--theme default` | 默认尺寸、深色配色和原生按钮，只读基准 |
+| 01 | 赛博朋克 | `--theme cyberpunk` | 深蓝黑、青色与品红，无发光 |
+| 03 | 简约留白 | `--theme minimal` | 暖白、灰阶与低饱和绿 |
+| 04 | 精密线条 | `--theme wireframe` | 石墨灰、细描边与轮廓按钮 |
+| 07 | 新粗野主义 | `--theme brutalist` | 黑描边、蓝黄撞色与实色硬阴影 |
+| 10 | 深色模块卡片 | `--theme bento` | 石墨色卡片、青柠强调与小圆角；默认主题 |
+
+![六款主题的实际 ImGui/OpenGL 验证截图](themes/images/overview.png)
+
+[查看单款高清截图](themes/README.md) · [完整使用与接入说明](../examples/example_theme_studio/README.md) · [性能验证记录](themes/benchmark.md)
+
+需要 CMake、C++11 编译器、pkg-config、GLFW3 和 OpenGL 开发依赖。从仓库根目录构建并运行：
+
+```sh
+cmake -S examples/example_theme_studio -B examples/example_theme_studio/build-release -DCMAKE_BUILD_TYPE=Release
+cmake --build examples/example_theme_studio/build-release -j 4
+examples/example_theme_studio/build-release/theme_studio --theme bento
+```
+
+在顶部切换主题，在右侧编辑外观。**Save theme** 保存当前主题，**Reload** 读取文件修改；未保存的编辑不会在退出时自动持久化。五份配置位于 [themes/](../examples/example_theme_studio/themes/)，00 不使用配置文件。
+
+接入自己的程序时，将 [imgui_themes.cpp](../misc/themes/imgui_themes.cpp) 加入构建，并把 `misc/themes/` 加入头文件搜索路径。在创建 ImGui context 后、`NewFrame()` 前初始化或更新主题：
+
+```cpp
+#include "imgui_themes.h"
+
+ImGuiThemes::Theme theme = ImGuiThemes::Make(ImGuiThemes::Id::Bento);
+ImGuiThemes::Apply(theme, 1.0f); // 基准 DPI；由宿主传入实际缩放值。
+```
+
+主题仅在初始化、编辑、切换或 DPI 改变时重新应用。常规控件仍使用原有 ImGui API；需要主按钮、危险按钮或硬阴影时，使用模块中的 `ImGuiThemes::Button()` 封装。
+
+比较相对原生主题的开销：
+
+```sh
+examples/example_theme_studio/build-release/theme_studio --benchmark /tmp/imgui-theme-benchmark.csv
+ctest --test-dir examples/example_theme_studio/build-release --output-on-failure
+```
+
+比较固定窗口、字体、DPI 和数据，隐藏编辑器并请求关闭 VSync；每款默认预热 120 帧、采样 600 帧，导出 UI 构建 CPU 中位数/P95、几何量和相对 00 的增量。**这些指标不是 GPU 耗时。** 当前已验证 Linux/GLFW/OpenGL3，其他平台的运行验收见完整说明。
 
 ### <a id="how-it-works"></a>工作原理
 

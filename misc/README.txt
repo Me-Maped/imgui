@@ -21,3 +21,8 @@ misc/single_file/
   我们用它来验证在同一编译单元中编译所有 *.cpp 文件。
   使用该技术（也称为 "Unity builds"）的用户通常可以自己提供这一文件，
   因此我们并不太建议你在自己的项目中使用它。
+
+misc/themes/
+  本仓库新增的应用层主题模块：五套可编辑主题与 00 原生只读基准。
+  只依赖 imgui.h 与 C++ 标准库，提供外观应用、INI 配置和语义按钮封装。
+  使用说明见 examples/example_theme_studio/README.md，验证截图见 docs/themes/README.md。

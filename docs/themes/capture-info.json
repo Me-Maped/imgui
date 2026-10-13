@@ -1,0 +1,17 @@
+{
+  "source": "Actual OpenGL framebuffer captures, not generated mockups",
+  "size": [
+    1440,
+    960
+  ],
+  "command": "theme_studio --capture-dir /tmp/imgui-theme-baseline-captures",
+  "themes": [
+    "00-default",
+    "01-cyberpunk",
+    "03-minimal",
+    "04-wireframe",
+    "07-brutalist",
+    "10-bento"
+  ],
+  "notes": "Ordinary studio views; benchmark hides the editor and uses its own fixed scene."
+}

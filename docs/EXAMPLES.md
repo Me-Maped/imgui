@@ -49,6 +49,12 @@ Dear ImGui 集成到你自己的应用程序/游戏/引擎中。
 
 ### 示例应用程序
 
+[example_theme_studio/](../examples/example_theme_studio/README.md) <BR>
+本仓库新增的 GLFW + OpenGL3 主题工作台，使用 CMake 构建。<BR>
+提供 00 原生只读基准及 01、03、04、07、10 五款自定义主题，支持外观编辑、INI 保存/重载和固定条件的 CPU/几何量比较。<BR>
+主题实现独立于核心，位于 [misc/themes/](../misc/themes/)。查看[主题预览](themes/README.md)和[构建、运行、接入说明](../examples/example_theme_studio/README.md)。<BR>
+当前实际运行验证覆盖 Linux。
+
 [example_allegro5/](https://github.com/ocornut/imgui/blob/master/examples/example_allegro5/) <BR>
 Allegro 5 示例。<BR>
 = main.cpp + imgui_impl_allegro5.cpp
