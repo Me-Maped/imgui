@@ -160,7 +160,7 @@ _一个常见的误解是把即时模式 GUI（immediate mode GUI）与即时模
 - [imgui_explorer](https://pthom.github.io/imgui_explorer)：演示的 Web 版本，带有源代码浏览器，由 [@pthom](https://github.com/pthom) 提供。
 
 你应该能够从源码构建这些示例。如果做不到，请告诉我们！如果你想快速了解 Dear ImGui 的一些功能，可以在此处下载演示应用的 Windows 二进制文件：
-- [imgui-demo-binaries-20260225.zip](https://www.dearimgui.com/binaries/imgui-demo-binaries-20260225.zip)（Windows，1.92.6，构建于 2026/02/25，master）或[更早的二进制文件](https://www.dearimgui.com/binaries)。
+- [imgui-demo-binaries-20261015-win32.zip](https://www.dearimgui.com/binaries/imgui-demo-binaries-20261015-win32.zip)（Win32，1.93.0，构建于 2026/10/15，master）或[更早的二进制文件](https://www.dearimgui.com/binaries)。
 
 ### <a id="gallery"></a>画廊
 
