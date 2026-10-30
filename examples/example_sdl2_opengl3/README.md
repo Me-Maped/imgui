@@ -7,7 +7,7 @@
 
 ## 在 Windows 上使用 Visual Studio 命令行
 
-使用 build_win32.bat，或直接执行：
+使用 build_win.bat，或直接执行：
 ```
 set SDL2_DIR=path_to_your_sdl2_folder
 cl /Zi /MD /utf-8 /I.. /I..\.. /I%SDL2_DIR%\include main.cpp ..\..\backends\imgui_impl_sdl2.cpp ..\..\backends\imgui_impl_opengl3.cpp ..\..\imgui*.cpp /FeDebug/example_sdl2_opengl3.exe /FoDebug/ /link /libpath:%SDL2_DIR%\lib\x86 SDL2.lib SDL2main.lib opengl32.lib /subsystem:console
