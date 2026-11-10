@@ -67,7 +67,7 @@ Autumn cleanup of stuff marked obsolete more than two years ago:
 Other Changes:
 
 - Style:
-  - `StyleColorsDark()`: tweaked WindowBg to be darker than in 1.93.0.
+  - `StyleColorsDark()`: tweaked WindowBg, PopupBg, ChildBg to be darker than in 1.93.0.
   - Added `style.SymbolArrowSizeFactor`, `style.SymbolArrowThicknessFactor` to tweak the
     shape and look of arrows. Made default arrow stroked. (#5233, #2431, #2235, #6730, #8243)
     Legacy arrow: size: (0.60f,0.70f), thickness: 0.0f
@@ -98,6 +98,8 @@ Other Changes:
     end of storage when trailing items are unselected (#9604) [@MilosLord]
 - Drags: fixed handling of `ImGuiSliderFlags_WrapAround`: value could temporarily
   escape the range when dragging fast. (#9612, #9611, #7749) [@swayie, @ocornut]
+- Checkbox: indeterminate/mixed value inner rectangle never has rounding,
+  to reduce confusion with a radio button. (#5518, #5677, #6865, #2644)
 - ColorEdit:
   - ColorButton, ColorEdit, ColorPicker: fixed an issue rendering colors when
     inside a `BeginDisabled(false)` block, caused by the alpha cancelling-out
@@ -110,6 +112,13 @@ Other Changes:
   to reflect that they can also build X64 or ARM64, given the right environment.
   Made the script detect the environment when needed (e.g. to specify library path).
 - Examples: added support for ARM64 in selected build_win.bat helpers. (#9593) [@Harishmcw]
+- Backends:
+  - GLFW, SDL2: Emscripten implementation of `Platform_OpenInShellFn` calls
+    `window.open()` with `noopener`: prevents newly opened tab from keeping a
+    reference to opening page. (#9615, #7660, #7851) [@pthom]
+  - SDL2: on iOS, also restore calling `SDL_StartTextInput()/SDL_StopTextInput()`
+    in IME handler. Match Android change in 1.93.0. [@pthom]  (#7636, #9474, #9617)
+
 
 
 -----------------------------------------------------------------------
