@@ -136,6 +136,12 @@ Other Changes:
     reference to opening page. (#9615, #7660, #7851) [@pthom]
   - SDL2: on iOS, also restore calling `SDL_StartTextInput()/SDL_StopTextInput()`
     in IME handler. Match Android change in 1.93.0. [@pthom]  (#7636, #9474, #9617)
+  - Metal4: worked around rendering artifacts (e.g. flickering diagonal lines) with
+    16-bit indices by aligning each draw command index buffer address to 4 bytes.
+  - Metal4: fixed vertex/index buffers being reused by a later draw in the same frame
+    before the GPU had processed them. (#9622, #9625) [@lailoken]
+  - Metal4: remove the residency set from the command queue on shutdown to avoid
+    hitting Metal's residency set limit when reinitializing on the same queue.
   - Vulkan: don't transition swapchain images from `VK_IMAGE_LAYOUT_UNDEFINED` to
     `VK_IMAGE_LAYOUT_PRESENT_SRC_KHR` on window creation, prevent validation errors in
     examples and multi-viewport support. (#9553, #9496, #9152) [@sarpsenturk, @LewisJustin]
